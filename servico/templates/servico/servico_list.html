@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- START DEFAULT DATATABLE -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Servicos</h3>
+                        <ul class="panel-controls">
+                            <li><a href="{% url 'servicos:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
+                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Nome</th>
+                                    <th>descricao</th>
+                                    <th>status_ativo</th>
+                                    <th>valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for servico in servico_list %}
+                                    <tr>
+                                        <td>{{ servico.cod_servico }}</td>
+                                        <td>{{ servico.nome }}</td>
+                                        <td>{{ servico.descricao }}</td>
+                                        <td>{{ servico.status_ativo }}</td>
+                                        <td>{{ servico.valor }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END DEFAULT DATATABLE -->
+
+            </div>
+        </div>
+
+    </div>
+    <!-- PAGE CONTENT WRAPPER -->
+{% endblock %}

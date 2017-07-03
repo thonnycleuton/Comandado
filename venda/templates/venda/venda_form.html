@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <form class="form-horizontal" method="post" action="">
+                    {% csrf_token %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Vendas</strong></h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.cod_venda.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.cod_venda }}
+                                            </div>
+                                            <span class="help-block">Cod do Venda</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.cod_cliente.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.cod_cliente }}
+                                            </div>
+                                            <span class="help-block">Nome do Servico</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.cod_servico.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.cod_servico }}
+                                            </div>
+                                            <span class="help-block">Descricao</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.tipo.label_tag }}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                {{ form.tipo}}
+                                            </div>
+                                            <span class="help-block">Nome do Cliente</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.vendedor.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.vendedor}}
+                                            </div>
+                                            <span class="help-block">Nome do Cliente</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-default">Limpar Campos</button>
+                            <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
+{% endblock %}

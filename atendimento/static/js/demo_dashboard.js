@@ -69,9 +69,9 @@ $(function(){
     Morris.Donut({
         element: 'dashboard-donut-1',
         data: [
-            {label: "Returned", value: 2513},
-            {label: "New", value: 764},
-            {label: "Registred", value: 311}
+            {label: "Lucro", value: 2513},
+            {label: "Compras", value: 764},
+            {label: "Vendas", value: 311}
         ],
         colors: ['#33414E', '#1caf9a', '#FEA223'],
         resize: true
@@ -83,13 +83,13 @@ $(function(){
     Morris.Bar({
         element: 'dashboard-bar-1',
         data: [
-            { y: 'Oct 10', a: 75, b: 35 },
-            { y: 'Oct 11', a: 64, b: 26 },
-            { y: 'Oct 12', a: 78, b: 39 },
-            { y: 'Oct 13', a: 82, b: 34 },
-            { y: 'Oct 14', a: 86, b: 39 },
-            { y: 'Oct 15', a: 94, b: 40 },
-            { y: 'Oct 16', a: 96, b: 41 }
+            { y: 'Out 10', a: 75, b: 35 },
+            { y: 'Out 11', a: 64, b: 26 },
+            { y: 'Out 12', a: 78, b: 39 },
+            { y: 'Out 13', a: 82, b: 34 },
+            { y: 'Out 14', a: 86, b: 39 },
+            { y: 'Out 15', a: 94, b: 40 },
+            { y: 'Out 16', a: 96, b: 41 }
         ],
         xkey: 'y',
         ykeys: ['a', 'b'],

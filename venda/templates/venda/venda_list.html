@@ -34,7 +34,7 @@
                             <tbody>
                                 {% for venda in venda_list %}
                                     <tr>
-                                        <td>{{ venda.cod_venda }}</td>
+                                        <td><a href="{% url 'vendas:edite' venda.id %}" >{{ venda.cod_venda }}</a></td>
                                         <td>{{ venda.cod_cliente }}</td>
                                         <td>{{ venda.cod_servico }}</td>
                                         <td>{{ venda.data_venda }}</td>

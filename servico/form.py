@@ -6,7 +6,7 @@ class ServicoForm(forms.ModelForm):
 
     class Meta:
         model = Servico
-        fields = '__all__'
+        fields = ['cod_servico', 'nome', 'descricao', 'valor', 'foto', 'status_ativo']
         widgets = {
             'cod_servico': forms.TextInput(attrs={'class': 'form-control'}),
             'nome': forms.TextInput(attrs={'class': 'form-control'}),

@@ -9,7 +9,7 @@ class Servico(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.CharField(max_length=250)
     valor = models.FloatField()
-    foto = models.ImageField(upload_to='servico')
+    foto = models.ImageField(upload_to='servico', blank=True)
     status_ativo = models.BooleanField()
 
     class Meta:

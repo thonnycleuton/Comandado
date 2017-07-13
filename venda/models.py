@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -9,14 +10,13 @@ from servico.models import Servico
 
 
 class Venda(models.Model):
-
-    cod_venda = models.TextField(max_length=10)
-    cod_cliente = models.ForeignKey(Cliente)
-    cod_servico = models.ForeignKey(Servico)
+    cod_venda = models.CharField(max_length=10, blank=True)
+    cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
+    itens_venda = models.ManyToManyField(Servico)
     data_venda = models.DateTimeField(auto_now=True)
     tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo')))
-    valor_venda = models.FloatField()
-    vendedor = models.ForeignKey(User)
+    valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = 'venda'
@@ -25,9 +25,16 @@ class Venda(models.Model):
     def __unicode__(self):
         return self.cod_venda
 
-    def save(self, *args, **kwargs):
 
-        valor = Servico.objects.get(cod_servico=self.cod_servico.cod_servico).valor
-        self.valor_venda = valor
-        super(Venda, self).save(*args, **kwargs)
+class ItensVenda(models.Model):
+    cod_item = models.CharField(max_length=10, blank=True)
+    cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
+    cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
+    valor = models.DecimalField(max_digits=6, decimal_places=2, default=0, blank=True)
 
+    class Meta:
+        verbose_name = 'item'
+        verbose_name_plural = 'itens'
+
+    def __unicode__(self):
+        return self.cod_item

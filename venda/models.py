@@ -25,12 +25,20 @@ class Venda(models.Model):
     def __unicode__(self):
         return self.cod_venda
 
+    def update_valores(self):
+        valor_total = 0
+        itens = ItensVenda.objects.filter(cod_venda=self.pk)
+        for item in itens:
+            valor_total += item.valor
+        self.valor_venda = valor_total
+        self.save()
+
 
 class ItensVenda(models.Model):
     cod_item = models.CharField(max_length=10, blank=True)
     cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
     cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
-    valor = models.DecimalField(max_digits=6, decimal_places=2, default=0, blank=True)
+    valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = 'item'
@@ -42,3 +50,8 @@ class ItensVenda(models.Model):
     def save(self, *args, **kwargs):
         self.valor = Servico.objects.get(pk=self.cod_servico.id).valor
         super(ItensVenda, self).save(*args, **kwargs)
+        Venda.update_valores(Venda.objects.get(pk=self.cod_venda.pk))
+
+    def delete(self, *args, **kwargs):
+        super(ItensVenda, self).delete(*args, **kwargs)
+        Venda.update_valores(Venda.objects.get(pk=self.cod_venda.pk))

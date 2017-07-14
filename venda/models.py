@@ -38,3 +38,7 @@ class ItensVenda(models.Model):
 
     def __unicode__(self):
         return self.cod_item
+
+    def save(self, *args, **kwargs):
+        self.valor = Servico.objects.get(pk=self.cod_servico.id).valor
+        super(ItensVenda, self).save(*args, **kwargs)

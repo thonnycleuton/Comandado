@@ -24,6 +24,7 @@ class VendaCreate(FormView):
         form.instance.created_by = self.request.user
         f = form.save(commit=False)
         f.save()
+        form.save_m2m()
         return super(VendaCreate, self).form_valid(form)
 
 

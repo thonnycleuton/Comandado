@@ -13,7 +13,7 @@ class Venda(models.Model):
     cod_venda = models.CharField(max_length=10, blank=True)
     cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
-    itens_venda = models.ManyToManyField(Servico)
+    servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), )
     data_venda = models.DateTimeField(auto_now=True)
     tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo')))
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
@@ -28,8 +28,8 @@ class Venda(models.Model):
 
 class ItensVenda(models.Model):
     cod_item = models.CharField(max_length=10, blank=True)
-    cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
+    cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0, blank=True)
 
     class Meta:

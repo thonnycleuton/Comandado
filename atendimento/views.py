@@ -2,10 +2,17 @@ from django.shortcuts import render
 
 # Create your views here.
 from atendimento.models import Cliente, Servico
+from venda.models import Venda
 
 
 def home(request):
-    return render(request, 'index.html')
+    total_vendas = 0
+    vendas = Venda.objects.all()
+    for item in vendas:
+        total_vendas += item.valor_venda
+    context = {'total_vendas': total_vendas}
+    print total_vendas
+    return render(request, 'index.html', context)
 
 
 def clientes(request):

@@ -33,6 +33,13 @@ class Venda(models.Model):
         self.valor_venda = valor_total
         self.save()
 
+    def get_total_vendas(self):
+
+        total_vendas = 0
+        for item in self.objects.all():
+            total_vendas += item.valor_venda
+        return total_vendas
+
 
 class ItensVenda(models.Model):
     cod_item = models.CharField(max_length=10, blank=True)

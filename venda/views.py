@@ -3,8 +3,9 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
 
+from servico.models import Servico
 from venda.form import VendaForm
-from .models import Venda
+from .models import Venda, ItensVenda
 
 
 class VendaList(ListView):
@@ -19,12 +20,10 @@ class VendaCreate(FormView):
     success_url = reverse_lazy('vendas:list')
 
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        form.instance.created_by = self.request.user
         f = form.save(commit=False)
         f.save()
-        form.save_m2m()
+        for item in self.request.POST.getlist('servico'):
+            ItensVenda.objects.create(cod_item='20180001', cod_venda=f, cod_servico=Servico.objects.get(pk=item))
         return super(VendaCreate, self).form_valid(form)
 
 

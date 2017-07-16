@@ -30,34 +30,17 @@ class VendaCreate(FormView):
 class VendaUpdate(UpdateView):
     model = Venda
     success_url = reverse_lazy('vendas:list')
-    fields = ['itens_venda', 'cod_cliente', 'tipo']
+    fields = ['servico', 'cod_cliente', 'tipo', 'valor_venda']
+
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.save()
+        for item in self.request.POST.getlist('servico'):
+            item_vendas = ItensVenda(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
+            item_vendas.save()
+        form.save_m2m()
 
 
 class VendaDelete(DeleteView):
     model = Venda
     success_url = reverse_lazy('vendas:list')
-
-
-class ItemVendaList(ListView):
-    model = Venda
-    queryset = Venda.objects.all()
-    context_object_name = 'itemvenda_list'
-
-
-class ItemVendaCreate(FormView):
-    form_class = VendaForm
-    template_name = 'venda/item_venda_form.html'
-    success_url = reverse_lazy('vendas:list')
-
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        form.instance.created_by = self.request.user
-        form.save()
-        return super(VendaCreate, self).form_valid(form)
-
-
-class ItemVendaUpdate(UpdateView):
-    model = Venda
-    success_url = reverse_lazy('vendas:list')
-    fields = ['itens_venda', 'cod_cliente', 'tipo']

@@ -40,6 +40,17 @@ class Venda(models.Model):
             total_vendas += item.valor_venda
         return total_vendas
 
+    def save(self, *args, **kwargs):
+
+        if self.cod_venda is "" or None:
+            mes_em_curso = str(datetime.now().year) + str(datetime.now().month)
+            ultimo = str(int(Venda.objects.filter(cod_venda__contains=mes_em_curso).last().cod_venda[-4:]) + 1)
+            while len(str(ultimo)) < 4:
+                ultimo = "0" + ultimo
+            self.cod_venda = mes_em_curso + "V" + str(ultimo)
+
+        return super(Venda, self).save(*args, **kwargs)
+
 
 class ItensVenda(models.Model):
     cod_item = models.CharField(max_length=10, blank=True)
@@ -55,6 +66,7 @@ class ItensVenda(models.Model):
         return self.cod_item
 
     def save(self, *args, **kwargs):
+
         self.valor = Servico.objects.get(pk=self.cod_servico.id).valor
         super(ItensVenda, self).save(*args, **kwargs)
         Venda.update_valores(Venda.objects.get(pk=self.cod_venda.pk))

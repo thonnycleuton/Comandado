@@ -24,5 +24,4 @@ class Servico(models.Model):
         vendas = Venda.objects.filter(servico=self.pk)
         for venda in vendas:
             valor_total += venda.valor_venda
-        print valor_total
         return valor_total

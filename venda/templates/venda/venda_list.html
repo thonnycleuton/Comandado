@@ -36,8 +36,8 @@
                                         <td><a href="{% url 'vendas:edite' venda.id %}" >{{ venda.cod_venda }}</a></td>
                                         <td>{{ venda.cod_cliente }}</td>
                                         <td>{{ venda.data_venda }}</td>
-                                        <td>{{ venda.tipo }}</td>
-                                        <td>{{ venda.valor_venda }}</td>
+                                        <td>{% if venda.tipo == 1 %}À vista{% else %}Prazo{% endif %}
+                                        <td>R$ {{ venda.valor_venda }}</td>
                                         <td>{{ venda.vendedor }}</td>
                                     </tr>
                                 {% endfor %}

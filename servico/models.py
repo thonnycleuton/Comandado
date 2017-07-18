@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-# Create your models here.
 class Servico(models.Model):
 
     cod_servico = models.CharField(max_length=10)
@@ -18,3 +17,12 @@ class Servico(models.Model):
 
     def __unicode__(self):
         return self.nome
+
+    def get_faturamento(self):
+        from venda.models import Venda
+        valor_total = 0
+        vendas = Venda.objects.filter(servico=self.pk)
+        for venda in vendas:
+            valor_total += venda.valor_venda
+        print valor_total
+        return valor_total

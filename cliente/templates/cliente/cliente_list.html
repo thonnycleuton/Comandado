@@ -40,7 +40,7 @@
                                         </td>
                                         <td><a href="{% url 'clientes:edite' cliente.id %}">{{ cliente.nome }}</a></td>
                                         <td>{{ cliente.email }}</td>
-                                        <td>{{ cliente.telefone }}</td>
+                                        <td>{{ cliente.get_gasto_total }}</td>
                                         <td>{{ cliente.status_ativo }}</td>
                                     </tr>
                                 {% endfor %}

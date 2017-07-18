@@ -2,8 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from venda.models import Venda
-
 
 class Endereco(models.Model):
     nome = models.CharField(max_length=100)
@@ -47,8 +45,9 @@ class Cliente(models.Model):
         return self.nome
 
     def get_gasto_total(self):
+        from venda.models import Venda
 
         valor = 0
         for item in Venda.objects.filter(cod_cliente=self.pk):
             valor += item.valor_venda
-        return
+        return valor

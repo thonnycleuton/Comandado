@@ -22,39 +22,29 @@
             <div class="login-box animated fadeInDown">
                 <div class="login-logo"></div>
                 <div class="login-body">
-                    <div class="login-title"><strong>Welcome</strong>, Please login</div>
-                    <form action="{% url 'home' %}" class="form-horizontal" method="post">
+                    <div class="login-title"><strong>Olá</strong>, Faça o Login.</div>
+                    <form class="form-horizontal" method="post">
                         {% csrf_token %}
                         {{ form.non_fields_error }}
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" placeholder="Username"/>
+                                {{ form.username }}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" placeholder="Password"/>
+                                {{ form.password }}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
-                                <a href="#" class="btn btn-link btn-block">Forgot your password?</a>
+                                <a href="#" class="btn btn-link btn-block">Esqueceu sua senha</a>
                             </div>
                             <div class="col-md-6">
-                                <button class="btn btn-info btn-block">Log In</button>
+                                <button class="btn btn-info btn-block">Entrar</button>
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="login-footer">
-                    <div class="pull-left">
-                        &copy; 2014 AppName
-                    </div>
-                    <div class="pull-right">
-                        <a href="#">About</a> |
-                        <a href="#">Privacy</a> |
-                        <a href="#">Contact Us</a>
-                    </div>
                 </div>
             </div>
             

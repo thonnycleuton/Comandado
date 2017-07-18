@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static thumbnail%}
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
@@ -32,6 +32,11 @@
                             <tbody>
                                 {% for servico in servico_list %}
                                     <tr>
+                                        <td>
+                                            {% thumbnail servico.foto "40x40" crop="80% top" as im %}
+                                                <img src="{{ im.url }}">
+                                            {% endthumbnail %}
+                                        </td>
                                         <td>{{ servico.cod_servico }}</td>
                                         <td>{{ servico.nome }}</td>
                                         <td>{{ servico.descricao }}</td>

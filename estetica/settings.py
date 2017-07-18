@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Fortaleza'
 
 USE_I18N = True
 
@@ -140,6 +140,6 @@ EMAIL_PORT = 587
 CONTACT_EMAIL = 'thonnycleuton@gmail.com'
 
 # Auth
-LOGIN_URL = 'accounts:login'
+LOGIN_URL = 'contas:login'
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_URL = 'accounts:logout'
+LOGOUT_URL = 'contas:logout'

@@ -28,6 +28,8 @@ class Servico(models.Model):
         return valor_total
 
     def save(self, *args, **kwargs):
-        ultimo = int(Servico.objects.last().cod_servico) + 1
-        self.cod_servico = "S00" + str(ultimo) if ultimo < 9 else "S0" + str(ultimo)
+        ultimo = str(int(Servico.objects.last().cod_servico[-3:]) + 1)
+        while len(ultimo) < 3:
+            ultimo = "0" + ultimo
+        self.cod_servico = "S" + ultimo
         return super(Servico, self).save(*args, **kwargs)

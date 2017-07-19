@@ -41,7 +41,7 @@ class Cliente(models.Model):
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nome
 
     def get_gasto_total(self):

@@ -16,7 +16,7 @@ class Servico(models.Model):
         verbose_name = 'servico'
         verbose_name_plural = 'servicos'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nome
 
     def get_faturamento(self):

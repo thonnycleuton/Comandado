@@ -22,7 +22,7 @@ class Venda(models.Model):
         verbose_name = 'venda'
         verbose_name_plural = 'vendas'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.cod_venda
 
     def update_valores(self):

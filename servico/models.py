@@ -28,7 +28,7 @@ class Servico(models.Model):
         return valor_total
 
     def save(self, *args, **kwargs):
-        ultimo = '000' if Servico.objects.last().cod_servico[-3:] is None or "" else Servico.objects.last().cod_servico[-3:]
+        ultimo = '000' if Servico.objects.last() is None or "" else Servico.objects.last().cod_servico[-3:]
         ultimo = str(int(ultimo) + 1)
 
         while len(ultimo) < 3:

@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import unicode_literals
 
 import datetime
@@ -14,7 +15,7 @@ class Servico(models.Model):
 
     class Meta:
         verbose_name = 'servico'
-        verbose_name_plural = 'servicos'
+        verbose_name_plural = 'serviços'
 
     def __str__(self):
         return self.nome

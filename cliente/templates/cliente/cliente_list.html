@@ -34,10 +34,9 @@
                                 {% for cliente in cliente_list %}
                                     <tr>
                                         <td>
-                                            {% thumbnail cliente.foto "40x40" crop="80% top" as im %}
-                                                <img src="{{ im.url }}">
-                                            {% endthumbnail %}
+                                            <img src="{% thumbnail cliente.foto 50x50 crop %}" alt="" />
                                         </td>
+
                                         <td><a href="{% url 'clientes:edite' cliente.id %}">{{ cliente.nome }}</a></td>
                                         <td>{{ cliente.email }}</td>
                                         <td>{{ cliente.get_gasto_total }}</td>

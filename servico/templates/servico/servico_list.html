@@ -32,12 +32,10 @@
                             </thead>
                             <tbody>
                                 {% for servico in servico_list %}
-                                    <tr><!--
+                                    <tr>
                                         <td>
-                                            {% thumbnail servico.foto "40x40" crop="80% top" as im %}
-                                                <img src="{{ im.url }}">
-                                            {% endthumbnail %}
-                                        </td>-->
+                                            <img src="{% thumbnail servico.foto 50x50 crop %}" alt="" />
+                                        </td>
                                         <td>{{ servico.cod_servico }}</td>
                                         <td>{{ servico.nome }}</td>
                                         <td>{{ servico.descricao }}</td>

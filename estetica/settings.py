@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sorl.thumbnail',
+    'easy_thumbnails',
     'atendimento',
     'accounts',
     'cliente',
@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/comandante')
+    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')
 }
 
 # Password validation
@@ -142,3 +142,9 @@ CONTACT_EMAIL = 'thonnycleuton@gmail.com'
 LOGIN_URL = 'contas:login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'contas:logout'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (50, 50), 'crop': True},
+    },
+}

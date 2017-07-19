@@ -11,7 +11,7 @@ class Servico(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.CharField(max_length=250)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
-    foto = models.ImageField(upload_to='servico', blank=True)
+    foto = models.ImageField(upload_to='servico', blank=True, default='no-image-box.png')
     status_ativo = models.BooleanField()
 
     class Meta:
@@ -30,10 +30,13 @@ class Servico(models.Model):
         return valor_total
 
     def save(self, *args, **kwargs):
-        ultimo = '000' if Servico.objects.last() is None or "" else Servico.objects.last().cod_servico[-3:]
-        ultimo = str(int(ultimo) + 1)
 
-        while len(ultimo) < 3:
-            ultimo = "0" + ultimo
-        self.cod_servico = "S" + ultimo
+        if self.cod_servico is None:
+            ultimo = '000' if Servico.objects.last() is None or "" else Servico.objects.last().cod_servico[-3:]
+            ultimo = str(int(ultimo) + 1)
+
+            while len(ultimo) < 3:
+                ultimo = "0" + ultimo
+            self.cod_servico = "S" + ultimo
+
         return super(Servico, self).save(*args, **kwargs)

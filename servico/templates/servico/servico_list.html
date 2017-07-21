@@ -37,11 +37,11 @@
                                             <img src="{% thumbnail servico.foto 50x50 crop %}" alt="" />
                                         </td>
                                         <td><a href="{% url 'servicos:edite' servico.id %}" >{{ servico.cod_servico }}</a></td>
-
-                                        <td>{{ servico.cod_servico }}</td>
                                         <td>{{ servico.nome }}</td>
                                         <td>{{ servico.descricao }}</td>
-                                        <td>{{ servico.status_ativo }}</td>
+                                        <td><span {% if servico.status_ativo == True %}class="fa fa-check" aria-hidden="true"
+                                            {% else %} class="fa fa-times" aria-hidden="true"
+                                        {% endif %}></span></td>
                                         <td>{{ servico.valor }}</td>
                                     </tr>
                                 {% endfor %}

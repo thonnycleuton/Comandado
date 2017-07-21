@@ -11,7 +11,7 @@ from .models import Cliente
 class ServerList(ListView):
     model = Cliente
     ordering = '-cod_cliente'
-    queryset = Cliente.objects.filter(status_ativo=True)
+    queryset = Cliente.objects.all()
     context_object_name = 'cliente_list'
 
 

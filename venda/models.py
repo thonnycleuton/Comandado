@@ -16,7 +16,7 @@ class Venda(models.Model):
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), )
     data_venda = models.DateTimeField(auto_now=True)
-    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo')))
+    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo')), default=1)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:

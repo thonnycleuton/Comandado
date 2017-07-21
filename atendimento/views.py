@@ -12,12 +12,15 @@ def home(request):
     faturamento = 0
 
     servico = Servico.objects.all()
+    # pegando quanitdade de todos os clientes, nao filtrados por data
+    quant_clientes = Cliente.objects.all().count()
     for s in servico:
         faturamento += s.get_faturamento()
     context = {
         'servicos': servico,
         'faturamento': faturamento,
         'data_atual': datetime.now(),
+        'quant_clientes': quant_clientes,
     }
     return render(request, 'index.html', context)
 

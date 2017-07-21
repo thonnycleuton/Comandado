@@ -11,7 +11,7 @@ from servico.models import Servico
 
 
 class Venda(models.Model):
-    cod_venda = models.CharField(max_length=10, blank=True)
+    cod_venda = models.CharField(max_length=10, blank=True, unique=True)
     cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), )
@@ -42,10 +42,12 @@ class Venda(models.Model):
         return total_vendas
 
     def save(self, *args, **kwargs):
-
-        if self.cod_venda is "" or None:
+        # 20177V0001
+        if self.cod_venda is "":
             mes_em_curso = str(datetime.now().year) + str(datetime.now().month)
-            ultimo = str(int(Venda.objects.filter(cod_venda__contains=mes_em_curso).last().cod_venda[-4:]) + 1)
+            ultimo = '0000' if Venda.objects.last() is None else Venda.objects.last().cod_venda[-4:]
+
+            ultimo = str(int(ultimo) + 1)
             while len(str(ultimo)) < 4:
                 ultimo = "0" + ultimo
             self.cod_venda = mes_em_curso + "V" + str(ultimo)
@@ -54,7 +56,7 @@ class Venda(models.Model):
 
 
 class ItensVenda(models.Model):
-    cod_item = models.CharField(max_length=10, blank=True)
+    cod_item = models.CharField(max_length=10, blank=True, unique=True)
     cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
     cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)

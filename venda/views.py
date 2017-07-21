@@ -21,6 +21,7 @@ class VendaCreate(FormView):
 
     def form_valid(self, form):
         f = form.save(commit=False)
+        f.vendedor = self.request.user
         f.save()
         for item in self.request.POST.getlist('servico'):
             ItensVenda.objects.create(cod_item='20180001', cod_venda=f, cod_servico=Servico.objects.get(pk=item))

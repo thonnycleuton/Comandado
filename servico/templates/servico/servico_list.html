@@ -36,6 +36,8 @@
                                         <td>
                                             <img src="{% thumbnail servico.foto 50x50 crop %}" alt="" />
                                         </td>
+                                        <td><a href="{% url 'servicos:edite' servico.id %}" >{{ servico.cod_servico }}</a></td>
+
                                         <td>{{ servico.cod_servico }}</td>
                                         <td>{{ servico.nome }}</td>
                                         <td>{{ servico.descricao }}</td>

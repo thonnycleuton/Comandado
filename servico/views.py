@@ -30,7 +30,7 @@ class ServicoCreate(FormView):
 class ServicoUpdate(UpdateView):
     model = Servico
     success_url = reverse_lazy('servico_list')
-    fields = ['cod_cliente', 'nome', 'email']
+    fields = '__all__'
 
 
 class ServicoDelete(DeleteView):

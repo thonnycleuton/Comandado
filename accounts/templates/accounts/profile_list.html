@@ -1,0 +1,7 @@
+﻿{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% for o in perfil_list %}
+        {{ o.email }}
+    {% endfor %}
+{% endblock %}

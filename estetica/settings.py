@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'easy_thumbnails',
+    'haystack',
     'atendimento',
     'accounts',
     'cliente',
     'servico',
     'venda',
+    'search',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -83,7 +85,11 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')
+    # 'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db1.sqlite3'),
+    }
 }
 
 # Password validation
@@ -129,13 +135,12 @@ MEDIA_URL = '/media/'
 
 # E-mails
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Nome <email@gmail.com>'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'email@gmail.com'
-EMAIL_HOST_PASSWORD = 'senha'
+EMAIL_HOST_USER = 'thonnycleuton@gmail.com'
+EMAIL_HOST_PASSWORD = 'Gh4r4p0v4'
 EMAIL_PORT = 587
-
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CONTACT_EMAIL = 'thonnycleuton@gmail.com'
 
 # Auth
@@ -146,5 +151,14 @@ LOGOUT_URL = 'contas:logout'
 THUMBNAIL_ALIASES = {
     '': {
         'avatar': {'size': (50, 50), 'crop': True},
+    },
+}
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'profiles',
+        'INCLUDE_SPELLING': True,
     },
 }

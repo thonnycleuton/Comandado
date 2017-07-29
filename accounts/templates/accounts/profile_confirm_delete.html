@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- START DEFAULT DATATABLE -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Usuarios</h3>
+                        <ul class="panel-controls">
+                            <li><a href="{% url 'contas:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
+                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th width="40"></th>
+                                    <th>Nome</th>
+                                    <th>email</th>
+                                    <th>Super User</th>
+                                    <th>Ativo</th>
+                                    <th>Apagar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for perfil in perfil_list %}
+                                    <tr>
+                                        <td>
+                                            <img src="{% thumbnail perfil.foto 50x50 crop %}" alt="" />
+                                        </td>
+
+                                        <td><a href="#">{{ perfil.first_name }}</a></td>
+                                        <td>{{ perfil.email }}</td>
+                                        <td><a data-box="#message-box-default" onclick="return confirm('Deseja realmente alterar esse status?')" href="{% url 'contas:alterar_privilegio' perfil.id %}"><span {% if perfil.is_superuser %}class="fa fa-check" aria-hidden="true"
+                                            {% else %} class="fa fa-times" aria-hidden="true"
+                                                              {% endif %}></span></a></td>
+                                        <td><a href="{% url 'contas:alterar_status' perfil.id %}"><span {% if perfil.is_active %}class="fa fa-check" aria-hidden="true"
+                                            {% else %} class="fa fa-times" aria-hidden="true"
+                                                              {% endif %}></span></a></td>
+                                        <td><a href="{% url 'contas:delete' perfil.id %}"><span class="fa fa-trash-o"></span></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END DEFAULT DATATABLE -->
+
+            </div>
+        </div>
+
+    </div>
+    <!-- PAGE CONTENT WRAPPER -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        $(document).ready(function() {
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            $.ajaxSetup({
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            // This function must be customized
+            var onDelete = function(){
+                $.post(this.href, function(data) {
+                    if (data.result == "ok"){
+                    alert("data deleted successfully");
+                } else {
+                    // handle error processed by server here
+                    alert("smth goes wrong");
+                }
+            }).fail(function() {
+                // handle unexpected error here
+                alert("error");
+            });
+            return false;
+        }
+
+        $(".delete").click(onDelete);
+    });
+</script>
+{% endblock %}

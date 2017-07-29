@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        <link rel="icon" href="{% static 'favicon.ico'%}" type="image/x-icon" />
+        <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
         <!-- END META SECTION -->
         
         <!-- CSS INCLUDE -->        
@@ -38,7 +38,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
-                                <a href="#" class="btn btn-link btn-block">Esqueceu sua senha</a>
+                                <a href="{% url 'contas:password_reset' %}" class="btn btn-link btn-block">Esqueceu sua senha</a>
                             </div>
                             <div class="col-md-6">
                                 <button class="btn btn-info btn-block">Entrar</button>

@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from accounts.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -12,6 +14,7 @@ def home(request):
     faturamento = 0
 
     servico = Servico.objects.all()
+    perfil = Profile.objects.filter(id=request.user.id)
     # pegando quanitdade de todos os clientes, nao filtrados por data
     quant_clientes = Cliente.objects.all().count()
     for s in servico:
@@ -21,6 +24,7 @@ def home(request):
         'faturamento': faturamento,
         'data_atual': datetime.now(),
         'quant_clientes': quant_clientes,
+        'perfil': perfil,
     }
     return render(request, 'index.html', context)
 

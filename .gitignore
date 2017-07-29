@@ -94,4 +94,4 @@ ENV/
 .idea/
 atendimento/static/assets/uploads/Welcome/
 atendimento/static/js/plugins/fileinput/fileinput/
-db.sqlite3
+db1.sqlite3

@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from accounts.views import autocomplete
 from django.conf.urls import url, include
 from django.contrib import admin
 
@@ -22,6 +23,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', home, name='home'),
+    url(r'^autocomplete/', autocomplete, name='autocomplete'),
+    url(r'^search/', include('haystack.urls')),
     url(r'^clientes/', include('cliente.url', namespace='clientes')),
     url(r'^servicos/', include('servico.url', namespace='servicos')),
     url(r'^vendas/', include('venda.url', namespace='vendas')),

@@ -7,10 +7,102 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form class="form-horizontal" enctype="multipart/form-data" method="post" action="">
+                <form class="form-horizontal" method="post" action="">
                     {% csrf_token %}
-                    {{ form.as_p }}
-
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Clientes</strong></h3>
+                        <ul class="panel-controls">
+                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Primeira coluna do formulario -->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">{{ form.nome.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            {{ form.nome }}
+                                        </div>
+                                        <span class="help-block">Nome do Cliente</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">{{ form.email.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            {{ form.email }}
+                                        </div>
+                                        <span class="help-block">Nome do Cliente</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">{{ form.telefone.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            {{ form.telefone }}
+                                        </div>
+                                        <span class="help-block">Nome do Cliente</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">{{ form.foto.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            {{ form.foto }}
+                                        </div>
+                                        <span class="help-block">Nome do Cliente</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Segunda coluna do formulario -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">{{ form.nascimento.label_tag }}</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                        {{ form.nascimento }}
+                                    </div>
+                                    <span class="help-block">Clique no campo acima pra escolher uma data</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">{{ form.estado_civil.label_tag }}</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                        {{ form.estado_civil }}
+                                    </div>
+                                    <span class="help-block">This is sample of text field</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">{{ form.sexo.label_tag }}</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                        {{ form.sexo }}
+                                    </div>
+                                    <span class="help-block">This is sample of text field</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">{{ form.status_ativo.label_tag }}</label>
+                                <div class="col-md-9">
+                                    <label class="check">{{ form.status_ativo }}</label>
+                                    <span class="help-block">Checkbox sample, easy to use</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel-footer">
                         <button class="btn btn-default">Limpar Campos</button>
                         <button class="btn btn-primary pull-right" type="submit">Salvar</button>

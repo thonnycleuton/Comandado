@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'easy_thumbnails',
     'haystack',
+    'widget_tweaks',
     'atendimento',
     'accounts',
     'cliente',

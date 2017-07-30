@@ -3,11 +3,13 @@ import json
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
+from accounts.form import ProfileForm
 from accounts.models import Profile
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -15,7 +17,6 @@ from haystack.query import SearchQuerySet
 
 
 def alterar_privilegio(request, pk):
-
     p = Profile.objects.get(pk=pk)
     p.is_superuser = not p.is_superuser
     p.save()
@@ -23,7 +24,6 @@ def alterar_privilegio(request, pk):
 
 
 def alterar_status(request, pk):
-
     p = Profile.objects.get(pk=pk)
     p.is_active = not p.is_active
     p.save()
@@ -59,7 +59,7 @@ class ListPerfis(ListView):
 
 class CreatePerfil(CreateView):
     model = Profile
-    fields = {'password', 'first_name', 'foto', 'email', 'is_superuser', 'is_active'}
+    form_class = ProfileForm
     success_url = reverse_lazy('contas:list')
 
     def form_valid(self, form):
@@ -72,3 +72,39 @@ class CreatePerfil(CreateView):
 class PerfilDelete(DeleteView):
     model = Profile
     success_url = "/contas/usuarios/"
+
+
+def save_book_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            profiles = Profile.objects.all()
+            data['html_profile_list'] = render_to_string('accounts/includes/partial_profile_list.html', {
+                'profiles': profiles
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def profile_delete(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    data = dict()
+    if request.method == 'POST':
+        profile.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        profiles = Profile.objects.all()
+        data['html_profile_list'] = render_to_string('accounts/includes/partial_profile_list.html', {
+            'profiles': profiles
+        })
+    else:
+        context = {'profile': profile}
+        data['html_form'] = render_to_string('accounts/includes/partial_profile_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)

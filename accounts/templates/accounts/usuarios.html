@@ -1,25 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load thumbnail %}
-{% block extra_head %}
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-    <script src="//jqueryui.com/jquery-wp-content/themes/jquery/js/plugins.js"></script>
-
-    <script src="//jqueryui.com/jquery-wp-content/themes/jquery/js/main.js"></script>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script type="text/javascript">
-        $('#id_q').autocomplete({
-            source: function (request, response) {
-                $.getJSON("/autocomplete/?q=" + request.term, function (data) {
-                    response(data);
-                });
-            }
-        });
-    </script>
-{% endblock %}
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
@@ -62,50 +42,60 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for perfil in perfil_list %}
-                                    <tr>
-                                        <td>
-                                            <img src="{% thumbnail perfil.foto 50x50 crop %}" alt="" />
-                                        </td>
-
-                                        <td><a href="#">{{ perfil.first_name }}</a></td>
-                                        <td>{{ perfil.email }}</td>
-                                        <td><a data-box="#message-box-default" onclick="return confirm('Deseja realmente alterar esse privilegio?')" href="{% url 'contas:alterar_privilegio' perfil.id %}"><span {% if perfil.is_superuser %}class="fa fa-check" aria-hidden="true"
-                                            {% else %} class="fa fa-times" aria-hidden="true"
-                                                              {% endif %}></span></a></td>
-                                        <td><a data-box="#message-box-default" onclick="return confirm('Deseja realmente alterar esse status?')" href="{% url 'contas:alterar_status' perfil.id %}"><span {% if perfil.is_active %}class="fa fa-check" aria-hidden="true"
-                                            {% else %} class="fa fa-times" aria-hidden="true"
-                                                              {% endif %}></span></a></td>
-                                        <td><a data-box="#message-box-default" onclick="return confirm('Deseja realmente excluir?')" href="{% url 'contas:delete' perfil.id %}"><span class="fa fa-trash-o"></span></a></td>
-                                    </tr>
-                                {% endfor %}
+                            {% include 'accounts/includes/partial_profile_list.html' %}
                             </tbody>
                         </table>
+                        <!-- warning -->
+                        <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+                            <div class="mb-container">
+                            </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <!-- END DEFAULT DATATABLE -->
-
             </div>
         </div>
 
     </div>
     <!-- PAGE CONTENT WRAPPER -->
 
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/jquery/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/bootstrap/bootstrap.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".js-delete-book").click(function () {
+              var btn = $(this);
+              $.ajax({
+                  url: btn.attr("data-url"),
+                  type: 'get',
+                  dataType: 'json',
+                  beforeSend: function () {
+                      $("#message-box-warning").modal("show");
+                  },
+                  success: function (data) {
+                      $("#message-box-warning .mb-container").html(data.html_form);
+                  }
+              });
 
-    <script src="//jqueryui.com/jquery-wp-content/themes/jquery/js/plugins.js"></script>
-
-    <script src="//jqueryui.com/jquery-wp-content/themes/jquery/js/main.js"></script>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script type="text/javascript">
-        $('#search').autocomplete({
-            source: function (request, response) {
-                $.getJSON("/autocomplete/?q=" + request.term, function (data) {
-                    response(data);
+              $.ajax({
+                  url: form.attr("action"),
+                  data: form.serialize(),
+                  type: form.attr("method"),
+                  dataType: 'json',
+                  success: function (data) {
+                    if (data.form_is_valid) {
+                      $("#message-box-warning tbody").html(data.html_book_list);
+                      $("#message-box-warning").modal("hide");
+                    }
+                    else {
+                      $("#modal-book .mb-container").html(data.html_form);
+                    }
+                  }
                 });
-            }
+            });
         });
     </script>
 {% endblock %}

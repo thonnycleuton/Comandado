@@ -1,0 +1,20 @@
+ <section class="block">
+    <div class="row">
+        <div class="large-12 medium-12 small-12 columns">
+            <div class="titulo-section">
+                <h2 class="titulo-block">Deletar Objeto</h2>
+            </div>
+
+            <div class="row">
+                <div class="large-12 medium-12 small-12 columns">
+                    <p> Você tem certeza que deseja excluir <b>data-url</b>?</p>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

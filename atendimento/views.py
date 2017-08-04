@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from django.contrib.auth.models import User
+
 from accounts.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -14,7 +16,8 @@ def home(request):
     faturamento = 0
 
     servico = Servico.objects.all()
-    perfil = Profile.objects.filter(id=request.user.id)
+    id_usuario = request.user.id
+    perfil = User.objects.get(pk=id_usuario) if id_usuario == 1 else Profile.objects.get(pk=id_usuario)
     # pegando quanitdade de todos os clientes, nao filtrados por data
     quant_clientes = Cliente.objects.all().count()
     for s in servico:

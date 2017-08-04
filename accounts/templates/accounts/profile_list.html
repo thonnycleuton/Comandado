@@ -1,7 +1,34 @@
 ﻿{% extends "base.html" %}
 {% load static %}
 {% block content %}
-    {% for o in perfil_list %}
-        {{ o.email }}
-    {% endfor %}
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- CONTACT ITEM -->
+                <div class="panel panel-default">
+                    <div class="panel-body profile">
+                        <div class="profile-image">
+                            <img src="/media/users/{{ user }}.jpg" alt="Nadia Ali"/>
+                        </div>
+                        <div class="profile-data">
+                            <div class="profile-data-name">{{ user }}</div>
+                            <div class="profile-data-title">{{ user.email }}</div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="contact-info">
+                            <p><small>E-mail</small><br/>{{ user.email }}</p>
+                            <p><small>Endereço</small><br/>{{ user.endereco }}</p>
+                            <p><small>Ultimo Login</small><br/>{{ user.last_login }}</p>
+                            <p><small>Membro desde</small><br/>{{ user.date_joined }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END CONTACT ITEM -->
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
 {% endblock %}

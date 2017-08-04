@@ -23,8 +23,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', home, name='home'),
-    url(r'^autocomplete/', autocomplete, name='autocomplete'),
     url(r'^search/', include('haystack.urls')),
+    url(r'^autocomplete/', autocomplete, name='autocomplete'),
     url(r'^clientes/', include('cliente.url', namespace='clientes')),
     url(r'^servicos/', include('servico.url', namespace='servicos')),
     url(r'^vendas/', include('venda.url', namespace='vendas')),

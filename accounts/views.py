@@ -47,7 +47,7 @@ class ListPerfil(ListView):
 
     def get_queryset(self):
         queryset = super(ListPerfil, self).get_queryset()
-        queryset = queryset.filter(id=self.request.user.id)
+        queryset = queryset.filter(pk=self.request.user.id)
         return queryset
 
 

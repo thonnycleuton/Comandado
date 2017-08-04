@@ -8,26 +8,27 @@
             <div class="col-md-12">
 
                 <!-- START DEFAULT DATATABLE -->
+                <h3 class="page-title">Usuários</h3>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Usuarios</h3>
-                        <!-- SEARCH -->
-                        <li class="xn-search">
-
-                          <form method="post" action="/search/" class="autocomplete-me">
-                              {% csrf_token %}
-                            <input type="text" id="id_q" name="q">
-                            <input type="submit" value="Search!">
-                          </form>
-
-                        </li>
-                        <!-- END SEARCH -->
                         <ul class="panel-controls">
                             <li><a href="{% url 'contas:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
                             <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                             <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                         </ul>
+                        <!-- SEARCH -->
+                        <div class="input-group push-down-10 col-md-6">
+                              <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                          <form method="post" action="/search/" class="autocomplete-me">
+                              {% csrf_token %}
+                            <input id="id_q" name="q" type="text" class="form-control" placeholder="Digite aqui" value="">
+                          </form>
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Buscar</button>
+                            </div>
+                        </div>
+                        <!-- END SEARCH -->
                     </div>
                     <div class="panel-body">
                         <table class="table datatable">

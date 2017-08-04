@@ -1,13 +1,15 @@
 <form method="post" action="{% url 'contas:delete' profile.id %}">
     {% csrf_token %}
     <div class="mb-middle">
-        <div class="mb-title"><span class="fa fa-warning"></span> Cuidado</div>
+        <div class="mb-title"><span class="fa fa-trash-o"></span><strong>Excluindo</strong></div>
         <div class="mb-content">
-            <p>Tem certeza que deseja excluir {{ profile.username }}?</p>
+            <p>Tem certeza que deseja excluir <strong>{{ profile.id }}</strong>?</p>
         </div>
         <div class="mb-footer">
-            <button type="button" class="btn btn-primary btn-lg pull-right" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-default btn-lg pull-right">Prosseguir</button>
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary btn-lg pull-right" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-default btn-lg pull-right">Prosseguir</button>
+            </div>
         </div>
     </div>
 </form>

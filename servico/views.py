@@ -10,7 +10,7 @@ from .models import Servico
 class ServicoList(ListView):
     model = Servico
     ordering = '-cod_servico'
-    queryset = Servico.objects.all().order_by('id')
+    queryset = Servico.objects.all()
     context_object_name = 'servico_list'
 
 

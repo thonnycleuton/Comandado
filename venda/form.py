@@ -12,7 +12,7 @@ class VendaForm(forms.ModelForm):
 
     class Meta:
         model = Venda
-        fields = ['servico', 'cod_cliente', 'tipo', ]
+        fields = ['cod_cliente', 'servico', 'tipo', ]
         widgets = {
             'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
             'tipo': forms.RadioSelect(attrs={'class': 'iradio'}),

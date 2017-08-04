@@ -56,7 +56,7 @@ class Venda(models.Model):
 
 
 class ItensVenda(models.Model):
-    cod_item = models.CharField(max_length=10, blank=True, unique=True)
+    cod_item = models.CharField(max_length=10, blank=True, )
     cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
     cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
@@ -69,6 +69,14 @@ class ItensVenda(models.Model):
         return self.cod_item
 
     def save(self, *args, **kwargs):
+        # 178
+        if self.cod_item is "":
+            ultimo = '0000' if ItensVenda.objects.last() is None else ItensVenda.objects.last().cod_item[-4:]
+
+            ultimo = str(int(ultimo) + 1)
+            while len(str(ultimo)) < 4:
+                ultimo = "0" + ultimo
+            self.cod_item = "IV" + ultimo
 
         self.valor = Servico.objects.get(pk=self.cod_servico.id).valor
         super(ItensVenda, self).save(*args, **kwargs)

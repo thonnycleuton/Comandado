@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
@@ -10,6 +10,7 @@ from .models import Venda, ItensVenda
 
 class VendaList(ListView):
     model = Venda
+    ordering = 'id'
     queryset = Venda.objects.all()
     context_object_name = 'venda_list'
 
@@ -24,7 +25,7 @@ class VendaCreate(FormView):
         f.vendedor = self.request.user
         f.save()
         for item in self.request.POST.getlist('servico'):
-            ItensVenda.objects.create(cod_item='20180001', cod_venda=f, cod_servico=Servico.objects.get(pk=item))
+            ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
         return super(VendaCreate, self).form_valid(form)
 
 
@@ -39,7 +40,7 @@ class VendaUpdate(UpdateView):
         for item in self.request.POST.getlist('servico'):
             item_vendas = ItensVenda(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
             item_vendas.save()
-        form.save_m2m()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class VendaDelete(DeleteView):

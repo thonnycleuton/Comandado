@@ -22,11 +22,11 @@ class Servico(models.Model):
         return self.nome
 
     def get_faturamento(self):
-        from venda.models import Venda
+        from venda.models import ItensVenda
         valor_total = 0
-        vendas = Venda.objects.filter(servico=self.pk)
-        for venda in vendas:
-            valor_total += venda.valor_venda
+        itens = ItensVenda.objects.filter(cod_servico=self.pk)
+        for item in itens:
+            valor_total += item.valor
         return valor_total
 
     def save(self, *args, **kwargs):

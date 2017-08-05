@@ -65,7 +65,7 @@ class ItensVenda(models.Model):
         verbose_name = 'item'
         verbose_name_plural = 'itens'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.cod_item
 
     def save(self, *args, **kwargs):

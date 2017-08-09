@@ -19,7 +19,7 @@ class Servico(models.Model):
         verbose_name_plural = 'serviços'
 
     def __str__(self):
-        return self.nome
+        return str(self.nome) + " - (" + str(self.valor) + ")"
 
     def get_faturamento(self):
         from venda.models import ItensVenda

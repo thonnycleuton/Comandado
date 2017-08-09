@@ -1,19 +1,42 @@
 from django import forms
-from .models import Cliente
+from django.forms import formset_factory, inlineformset_factory
+
+from .models import Cliente, Endereco
 
 
 class ClienteForm(forms.ModelForm):
+    # endereco = forms.ModelMultipleChoiceField(
+    #     queryset=Endereco.objects.all(),
+    #     widget=forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'})
+    # )
 
     class Meta:
         model = Cliente
-        fields = ['nome', 'email', 'telefone', 'estado_civil', 'sexo', 'nascimento', 'status_ativo', 'foto']
+        exclude = ('cod_cliente', 'comanda')
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'apelido': forms.TextInput(attrs={'class': 'form-control'}),
+            'cpf': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control'}),
             'estado_civil': forms.Select(attrs={'class': 'form-control'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
-            'nascimento': forms.DateInput(attrs={'class': 'form-control datepicker',}),
+            'nascimento': forms.DateInput(attrs={'class': 'form-control datepicker', }),
             'status_ativo': forms.CheckboxInput(attrs={'class': 'form-control icheckbox'}),
             'foto': forms.FileInput(attrs={'class': 'form-control'}),
         }
+
+
+class EnderecoForm(forms.ModelForm):
+    class Meta:
+        model = Endereco
+        exclude = ['referencia', 'complemento', 'logradouro']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'cidade': forms.TextInput(attrs={'class': 'form-control'}),
+            'bairro': forms.TextInput(attrs={'class': 'form-control'}),
+            'numero': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+
+EnderecoFormSet = formset_factory(EnderecoForm)

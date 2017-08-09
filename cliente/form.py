@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import formset_factory, inlineformset_factory
+from django.forms.models import modelformset_factory
 
 from .models import Cliente, Endereco
 
@@ -24,19 +24,26 @@ class ClienteForm(forms.ModelForm):
             'nascimento': forms.DateInput(attrs={'class': 'form-control datepicker', }),
             'status_ativo': forms.CheckboxInput(attrs={'class': 'form-control icheckbox'}),
             'foto': forms.FileInput(attrs={'class': 'form-control'}),
+            'instagram': forms.TextInput(attrs={'class': 'form-control'}),
+            'facebook': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
 class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
-        exclude = ['referencia', 'complemento', 'logradouro']
+        exclude = ['cliente', ]
         widgets = {
-            'nome': forms.TextInput(attrs={'class': 'form-control'}),
-            'cidade': forms.TextInput(attrs={'class': 'form-control'}),
-            'bairro': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo': forms.Select(attrs={'class': 'form-control'}),
+            'logradouro': forms.TextInput(attrs={'class': 'form-control'}),
             'numero': forms.NumberInput(attrs={'class': 'form-control'}),
+            'bairro': forms.TextInput(attrs={'class': 'form-control'}),
+            'complemento': forms.TextInput(attrs={'class': 'form-control'}),
+            'referencia': forms.TextInput(attrs={'class': 'form-control'}),
+            'cidade': forms.Select(attrs={'class': 'form-control'}),
+            'estado': forms.Select(attrs={'class': 'form-control'}),
+
         }
 
 
-EnderecoFormSet = formset_factory(EnderecoForm)
+EnderecoFormSet = modelformset_factory(Endereco, EnderecoForm)

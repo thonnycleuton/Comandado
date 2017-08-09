@@ -1,12 +1,12 @@
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from cliente.form import ClienteForm, EnderecoFormSet
-from .models import Cliente
+from .models import Cliente, Endereco
 
 
 class ServerList(ListView):
@@ -21,24 +21,40 @@ class ServerCreate(CreateView):
     template_name = 'cliente/cliente_form.html'
     success_url = reverse_lazy('clientes:list')
 
-    def get_context_data(self, **kwargs):
-        data = super(ServerCreate, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['enderecos'] = EnderecoFormSet(self.request.POST)
-        else:
-            data['enderecos'] = EnderecoFormSet()
-        return data
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.object = None
 
     def form_valid(self, form):
-        context = self.get_context_data()
-        enderecos = context['enderecos']
-        with transaction.atomic():
+        # override the ModelFormMixin definition so you don't save twice
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, formset):
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def get(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset = EnderecoFormSet(queryset=Endereco.objects.none())
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset = EnderecoFormSet(request.POST)
+        form_valid = form.is_valid()
+        formset_valid = formset.is_valid()
+        if form_valid and formset_valid:
             self.object = form.save()
-            if enderecos.is_valid():
-                enderecos.instance = self.object
-                enderecos.save()
-        form.save()
-        return super(ServerCreate, self).form_valid(form)
+            enderecos = formset.save(commit=False)
+            for endereco in enderecos:
+                endereco.cliente = self.object
+                endereco.save()
+            formset.save_m2m()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form, formset)
 
 
 class ServerUpdate(UpdateView):

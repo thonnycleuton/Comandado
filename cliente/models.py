@@ -1,17 +1,22 @@
 # encoding=utf-8
 from __future__ import unicode_literals
-
 from django.db import models
+from cliente.choices import *
 
 
 class Endereco(models.Model):
-    nome = models.CharField(max_length=100)
+    """
+        Esta classe é responsável por modelar todos os tipos de endereços usados pelo sistema,
+        donde a mesma possui um campo ForeingKey para um Cliente.
+
+    """
+    tipo = models.IntegerField(choices=TIPO)
     logradouro = models.CharField(max_length=100)
     numero = models.CharField(max_length=5)
     complemento = models.CharField(max_length=100)
     bairro = models.CharField(max_length=100)
-    cidade = models.CharField(max_length=100)
-    estado = models.CharField(max_length=100)
+    cidade = models.IntegerField(choices=CIDADES)
+    estado = models.IntegerField(choices=ESTADOS)
     referencia = models.CharField(max_length=100)
     cliente = models.ForeignKey('Cliente')
 
@@ -20,7 +25,7 @@ class Endereco(models.Model):
         verbose_name_plural = 'enderecos'
 
     def __str__(self):
-        return self.nome
+        return self.cliente.nome + " - " + str(self.tipo)
 
 
 # Create your models here.
@@ -29,15 +34,17 @@ class Cliente(models.Model):
     nome = models.CharField(max_length=100)
     apelido = models.CharField(max_length=100)
     cpf = models.CharField(max_length=11)
-    # cnpj = models.CharField(max_length=20)
-    email = models.EmailField()
-    telefone = models.CharField(max_length=12)
     sexo = models.IntegerField(choices=((1, 'Feminino'), (2, 'Masculino'), (3, 'Outros')))
     nascimento = models.DateField()
-    foto = models.ImageField(upload_to='cliente', default='no-image-box.png')
     estado_civil = models.IntegerField(choices=((1, 'Solteiro'), (2, 'Casado'), (3, 'Outros')), default=1)
     comanda = models.BooleanField(default=False)
     status_ativo = models.BooleanField(default=True)
+    # contatos
+    email = models.EmailField()
+    telefone = models.CharField(max_length=12)
+    instagram = models.CharField(max_length=100)
+    facebook = models.CharField(max_length=100)
+    foto = models.ImageField(upload_to='cliente', default='no-image-box.png')
 
     class Meta:
         verbose_name = 'cliente'

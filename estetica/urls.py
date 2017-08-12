@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', home, name='home'),
+    url(r'^admin/', admin.site.urls),
     url(r'^search/', include('haystack.urls')),
     url(r'^autocomplete/', autocomplete, name='autocomplete'),
     url(r'^clientes/', include('cliente.url', namespace='clientes')),
@@ -33,7 +34,6 @@ urlpatterns = [
     url(r'^contas/', include('accounts.url', namespace='contas')),
     url(r'^fornecedores/', fornecedores, name='fornecedores'),
     url(r'^produtos/', produtos, name='produtos'),
-    url(r'^admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:

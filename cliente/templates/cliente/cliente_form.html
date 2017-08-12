@@ -7,8 +7,22 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form class="form-horizontal" enctype="multipart/form-data" method="post" action="">
+                <form id="jvalidate" class="form-horizontal" enctype="multipart/form-data" method="post" action="">
                     {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <div class="panel panel-default tabs">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Dados Pessoais</a></li>
@@ -176,4 +190,67 @@
 
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
+{% endblock %}
+{% block javascript %}
+    <script type='text/javascript' src='{% static 'js/plugins/maskedinput/jquery.maskedinput.min.js' %}'></script>
+    <script type='text/javascript' src='{% static 'js/plugins/jquery-validation/jquery.validate.js' %}'></script>
+    <script>
+        $(function() {
+            $.mask.definitions['~'] = "[+-]";
+            $("#id_nascimento").mask("99/99/9999");
+            $(".phone").mask("(99) 99999-9999");
+            $(".cpf").mask("999.999.999-99");
+
+            $("input").blur(function() {
+                $("#info").html("Unmasked value: " + $(this).mask());
+            }).dblclick(function() {
+                $(this).unmask();
+            });
+        });
+    </script>
+    <script type="text/javascript">
+            var jvalidate = $("#jvalidate").validate({
+                ignore: [],
+                rules: {
+                        login: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 8
+                        },
+                        password: {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 10
+                        },
+                        're-password': {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 10,
+                                equalTo: "#password2"
+                        },
+                        age: {
+                                required: true,
+                                min: 18,
+                                max: 100
+                        },
+                        email: {
+                                required: true,
+                                email: true
+                        },
+                        date: {
+                                required: true,
+                                date: true
+                        },
+                        credit: {
+                                required: true,
+                                creditcard: true
+                        },
+                        site: {
+                                required: true,
+                                url: true
+                        }
+                    }
+                });
+
+        </script>
 {% endblock %}

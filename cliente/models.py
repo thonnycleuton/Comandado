@@ -1,5 +1,8 @@
 # encoding=utf-8
 from __future__ import unicode_literals
+
+import re
+
 from django.db import models
 from cliente.choices import *
 
@@ -33,7 +36,7 @@ class Cliente(models.Model):
     cod_cliente = models.CharField(max_length=10, null=True)
     nome = models.CharField(max_length=100)
     apelido = models.CharField(max_length=100)
-    cpf = models.CharField(max_length=11)
+    cpf = models.CharField(max_length=14)
     sexo = models.IntegerField(choices=((1, 'Feminino'), (2, 'Masculino'), (3, 'Outros')))
     nascimento = models.DateField()
     estado_civil = models.IntegerField(choices=((1, 'Solteiro'), (2, 'Casado'), (3, 'Outros')), default=1)
@@ -41,10 +44,10 @@ class Cliente(models.Model):
     status_ativo = models.BooleanField(default=True)
     # contatos
     email = models.EmailField()
-    telefone = models.CharField(max_length=12)
+    telefone = models.CharField(max_length=15)
     instagram = models.CharField(max_length=100)
     facebook = models.CharField(max_length=100)
-    foto = models.ImageField(upload_to='cliente', default='no-image-box.png')
+    foto = models.ImageField(upload_to='cliente', default='no-image-box.png', null=True)
 
     class Meta:
         verbose_name = 'cliente'
@@ -69,5 +72,8 @@ class Cliente(models.Model):
             while len(ultimo) < 3:
                 ultimo = "0" + ultimo
             self.cod_cliente = "C" + ultimo
+
+        self.cpf = re.sub(r'[^\d]+', '', self.cpf)
+        self.telefone = re.sub(r'[^\d]+', '', self.telefone)
 
         return super(Cliente, self).save(*args, **kwargs)

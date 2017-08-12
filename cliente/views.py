@@ -62,6 +62,41 @@ class ServerUpdate(UpdateView):
     form_class = ClienteForm
     success_url = reverse_lazy('clientes:list')
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.object = None
+
+    def form_valid(self, form):
+        # override the ModelFormMixin definition so you don't save twice
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, formset):
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def get(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset = EnderecoFormSet(queryset=Endereco.objects.none())
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset = EnderecoFormSet(request.POST)
+        form_valid = form.is_valid()
+        formset_valid = formset.is_valid()
+        if form_valid and formset_valid:
+            self.object = form.save()
+            enderecos = formset.save(commit=False)
+            for endereco in enderecos:
+                endereco.cliente = self.object
+                endereco.save()
+            formset.save_m2m()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form, formset)
+
 
 class ServerDelete(DeleteView):
     model = Cliente

@@ -207,6 +207,7 @@
 
         <script type="text/javascript" src="{% static 'js/plugins/moment.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/plugins/daterangepicker/daterangepicker.js' %}"></script>
+        {% block javascript %}{% endblock %}
         <!-- END THIS PAGE PLUGINS-->
 
         <!-- START TEMPLATE -->
@@ -215,8 +216,7 @@
         <script type="text/javascript" src="{% static 'js/actions.js' %}"></script>
 
         <script type="text/javascript" src="{% static 'js/demo_dashboard.js' %}"></script>
-        {% block javascript %}
-        {% endblock %}
+
         <!-- END TEMPLATE -->
     <!-- END SCRIPTS -->         
     </body>

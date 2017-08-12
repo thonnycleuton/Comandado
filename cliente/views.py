@@ -74,9 +74,10 @@ class ServerUpdate(UpdateView):
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        formset = EnderecoFormSet(queryset=Endereco.objects.none())
+        formset = EnderecoFormSet(queryset=Endereco.objects.filter(cliente=self.object))
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def post(self, request, *args, **kwargs):

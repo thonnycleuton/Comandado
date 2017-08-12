@@ -16,11 +16,11 @@ class Endereco(models.Model):
     tipo = models.IntegerField(choices=TIPO)
     logradouro = models.CharField(max_length=100)
     numero = models.CharField(max_length=5)
-    complemento = models.CharField(max_length=100)
+    complemento = models.CharField(max_length=100, blank=True)
     bairro = models.CharField(max_length=100)
-    cidade = models.IntegerField(choices=CIDADES)
-    estado = models.IntegerField(choices=ESTADOS)
-    referencia = models.CharField(max_length=100)
+    cidade = models.IntegerField(choices=CIDADES, default=20)
+    estado = models.IntegerField(choices=ESTADOS, blank=True, default=10)
+    referencia = models.CharField(max_length=100, blank=True)
     cliente = models.ForeignKey('Cliente')
 
     class Meta:
@@ -35,19 +35,19 @@ class Endereco(models.Model):
 class Cliente(models.Model):
     cod_cliente = models.CharField(max_length=10, null=True)
     nome = models.CharField(max_length=100)
-    apelido = models.CharField(max_length=100)
+    apelido = models.CharField(max_length=100, blank=True)
     cpf = models.CharField(max_length=14)
     sexo = models.IntegerField(choices=((1, 'Feminino'), (2, 'Masculino'), (3, 'Outros')))
     nascimento = models.DateField()
     estado_civil = models.IntegerField(choices=((1, 'Solteiro'), (2, 'Casado'), (3, 'Outros')), default=1)
-    comanda = models.BooleanField(default=False)
+    comanda = models.BooleanField(default=False, blank=True)
     status_ativo = models.BooleanField(default=True)
     # contatos
     email = models.EmailField()
     telefone = models.CharField(max_length=15)
-    instagram = models.CharField(max_length=100)
-    facebook = models.CharField(max_length=100)
-    foto = models.ImageField(upload_to='cliente', default='no-image-box.png', null=True)
+    instagram = models.CharField(max_length=100, blank=True)
+    facebook = models.CharField(max_length=100, blank=True)
+    foto = models.ImageField(upload_to='cliente', default='no-image-box.png', blank=True)
 
     class Meta:
         verbose_name = 'cliente'

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import re
 
+from datetime import date
 from django.db import models
 from cliente.choices import *
 
@@ -63,6 +64,11 @@ class Cliente(models.Model):
         for item in Venda.objects.filter(cod_cliente=self.pk):
             valor += item.valor_venda
         return valor
+
+    def get_idade(self):
+        idade = date.today().year - self.nascimento.year
+        print(idade)
+        return idade
 
     def save(self, *args, **kwargs):
         if self.cod_cliente is "":

@@ -87,10 +87,7 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db1.sqlite3'),
-    # }
+
 }
 
 # Password validation
@@ -114,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Fortaleza'
 

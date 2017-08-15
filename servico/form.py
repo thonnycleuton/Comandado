@@ -6,11 +6,12 @@ class ServicoForm(forms.ModelForm):
 
     class Meta:
         model = Servico
-        fields = ['nome', 'descricao', 'valor', 'status_ativo', 'foto', ]
+        fields = '__all__'
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'descricao': forms.TextInput(attrs={'class': 'form-control'}),
             'valor': forms.NumberInput(attrs={'class': 'form-control'}),
             'status_ativo': forms.CheckboxInput(attrs={'class': 'icheckbox'}),
             'foto': forms.FileInput(attrs={'class': 'form-control'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
         }

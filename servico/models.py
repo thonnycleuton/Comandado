@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 import datetime
 from django.db import models
 
+from servico.choices import CATEGORIA_SERVICOS
+
 
 class Servico(models.Model):
     cod_servico = models.CharField(max_length=10, unique=True)
@@ -13,6 +15,7 @@ class Servico(models.Model):
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     foto = models.ImageField(upload_to='servico', blank=True, default='no-image-box.png')
     status_ativo = models.BooleanField()
+    categoria = models.IntegerField(choices=CATEGORIA_SERVICOS)
 
     class Meta:
         verbose_name = 'servico'

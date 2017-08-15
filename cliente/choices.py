@@ -251,6 +251,7 @@ TIPO = (
     (2, "Trabalho"),
     (3, "Outros"),
 )
+
 # importar lista de cidades para LISTA CIDADES
 '''
 import urllib.request, json

@@ -6,7 +6,7 @@ class ServicoForm(forms.ModelForm):
 
     class Meta:
         model = Servico
-        fields = '__all__'
+        exclude = ('cod_servico',)
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'descricao': forms.TextInput(attrs={'class': 'form-control'}),

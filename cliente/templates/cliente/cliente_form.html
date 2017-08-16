@@ -74,7 +74,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-child"></span></span>
                                             {{ form.nascimento }}
-                                            <span class="input-group-addon">{{ cliente.get_idade}} anos</span>
+                                            <span class="input-group-addon" id="result"></span>
                                         </div>
                                         <span class="help-block">Clique no campo acima pra escolher uma data</span>
                                     </div>
@@ -254,4 +254,37 @@
                 });
 
         </script>
+    <script>
+        function FormatarData(dataFormatar){
+
+            var dia = "";
+            var mes = "";
+            var ano = "";
+
+            dia += dataFormatar[0];
+            dia += dataFormatar[1];
+            mes += dataFormatar[3];
+            mes += dataFormatar[4];
+            ano += dataFormatar[6];
+            ano += dataFormatar[7];
+            ano += dataFormatar[8];
+            ano += dataFormatar[9];
+
+            return mes+"/"+dia+"/"+ano;
+        }
+
+        function GetAge(nascimento){
+            formatada = FormatarData(nascimento);
+            dob = new Date(formatada);
+            var today = new Date();
+            var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+            return age
+        }
+
+        $(document).ready(function(){
+            $("#id_nascimento").focusout(function(){
+                $("#result").text(GetAge($("#id_nascimento").val()));
+            });
+        });
+    </script>
 {% endblock %}

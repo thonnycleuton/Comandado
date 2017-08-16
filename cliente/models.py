@@ -34,17 +34,17 @@ class Endereco(models.Model):
 
 # Create your models here.
 class Cliente(models.Model):
-    cod_cliente = models.CharField(max_length=10, null=True)
+    cod_cliente = models.CharField(max_length=10)
     nome = models.CharField(max_length=100)
     apelido = models.CharField(max_length=100, blank=True)
-    cpf = models.CharField(max_length=14)
+    cpf = models.CharField(max_length=14, blank=True)
     sexo = models.IntegerField(choices=((1, 'Feminino'), (2, 'Masculino'), (3, 'Outros')))
     nascimento = models.DateField()
     estado_civil = models.IntegerField(choices=((1, 'Solteiro'), (2, 'Casado'), (3, 'Outros')), default=1)
     comanda = models.BooleanField(default=False, blank=True)
     status_ativo = models.BooleanField(default=True)
     # contatos
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     telefone = models.CharField(max_length=15)
     instagram = models.CharField(max_length=100, blank=True)
     facebook = models.CharField(max_length=100, blank=True)

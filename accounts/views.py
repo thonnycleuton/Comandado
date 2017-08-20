@@ -31,7 +31,7 @@ def alterar_status(request, pk):
 
 
 def autocomplete(request):
-    sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q', ''))[:5]
+    sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q', ''))[:3]
     suggestions = [result.username for result in sqs]
     # Make sure you return a JSON object, not a bare list.
     # Otherwise, you could be vulnerable to an XSS attack.
@@ -44,10 +44,11 @@ def autocomplete(request):
 class ListPerfil(ListView):
     model = Profile
     context_object_name = 'perfil_list'
+    template_name = 'accounts/profile_list.html'
 
     def get_queryset(self):
         queryset = super(ListPerfil, self).get_queryset()
-        queryset = queryset.filter(pk=self.request.user.id)
+        queryset = queryset.get(pk=self.request.user.id)
         return queryset
 
 
@@ -67,6 +68,18 @@ class CreatePerfil(CreateView):
         # It should return an HttpResponse.
         form.save()
         return super(CreatePerfil, self).form_valid(form)
+
+
+class UpdatePerfil(UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    success_url = reverse_lazy('contas:list')
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.save()
+        return super(UpdatePerfil, self).form_valid(form)
 
 
 class PerfilDelete(DeleteView):

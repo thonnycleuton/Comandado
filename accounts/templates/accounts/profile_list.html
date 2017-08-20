@@ -10,21 +10,26 @@
                 <div class="panel panel-default">
                     <div class="panel-body profile">
                         <div class="profile-image">
-                            <img src="/media/users/{{ user }}.jpg" alt="{{ user }}"/>
+                            <img src="/media/{{ perfil_list.foto }}" alt="{{ user }}"/>
                         </div>
                         <div class="profile-data">
-                            <div class="profile-data-name">{{ user }}</div>
-                            <div class="profile-data-title">{{ user.email }}</div>
+                            <div class="profile-data-name">{{ perfil_list }}</div>
+                            <div class="profile-data-title">{{ perfil_list.email }}</div>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="contact-info">
-                            <p><small>E-mail</small><br/>{{ user.email }}</p>
-                            <p><small>Endereço</small><br/>{{ user.endereco }}</p>
-                            <p><small>Ultimo Login</small><br/>{{ user.last_login }}</p>
-                            <p><small>Membro desde</small><br/>{{ user.date_joined }}</p>
+                            <p><small>E-mail</small><br/>{{ perfil_list.email }}</p>
+                            <p><small>Endereço</small><br/>{{ perfil_list.endereco }}</p>
+                            <p><small>Ultimo Login</small><br/>{{ perfil_list.last_login }}</p>
+                            <p><small>Membro desde</small><br/>{{ perfil_list.date_joined }}</p>
                         </div>
                     </div>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-primary pull-right" href="{% url 'contas:alterar' perfil_list.id %}">Informações</a>
+                    <a class="btn btn-primary pull-right" href="{% url 'contas:password_change'%}">Senha</a>
+
                 </div>
                 <!-- END CONTACT ITEM -->
             </div>

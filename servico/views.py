@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.utils.encoding import smart_str
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
@@ -11,7 +12,6 @@ class ServicoList(ListView):
     model = Servico
     ordering = '-cod_servico'
     queryset = Servico.objects.all()
-    context_object_name = 'servico_list'
 
 
 class ServicoCreate(CreateView):

@@ -113,9 +113,8 @@ def cliente_delete(request, pk):
         cliente.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
         clientes = Cliente.objects.all()
-        data['html_profile_list'] = render_to_string('cliente/includes/partial_cliente_list.html', {
-            'clientes': clientes
-        })
+        data['html_profile_list'] = render_to_string('cliente/includes/partial_cliente_list.html',
+                                                     {'clientes': clientes})
     else:
         context = {'cliente': cliente}
         data['html_form'] = render_to_string('cliente/includes/partial_cliente_delete.html',

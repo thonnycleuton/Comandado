@@ -7,17 +7,16 @@
             <div class="row">
             <div class="col-md-12">
 
-                <!-- START DEFAULT DATATABLE -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Servicos</h3>
-                        <ul class="panel-controls">
-                            <li><a href="{% url 'servicos:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
-                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
-                        </ul>
-                    </div>
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Default</h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
                     <div class="panel-body">
                         <table class="table datatable">
                             <thead>
@@ -25,6 +24,7 @@
                                     <th></th>
                                     <th>Codigo</th>
                                     <th>Nome</th>
+                                    <th>Categoria</th>
                                     <th>descricao</th>
                                     <th>status_ativo</th>
                                     <th>valor</th>
@@ -38,6 +38,7 @@
                                         </td>
                                         <td><a href="{% url 'servicos:edite' servico.id %}" >{{ servico.cod_servico }}</a></td>
                                         <td>{{ servico.nome }}</td>
+                                        <td>{{ servico.get_categoria_display }}</td>
                                         <td>{{ servico.descricao }}</td>
                                         <td><span {% if servico.status_ativo == True %}class="fa fa-check" aria-hidden="true"
                                             {% else %} class="fa fa-times" aria-hidden="true"
@@ -48,12 +49,14 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <!-- END DEFAULT DATATABLE -->
-
+            </div>
+            <!-- END DEFAULT DATATABLE -->
             </div>
         </div>
 
     </div>
     <!-- PAGE CONTENT WRAPPER -->
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
 {% endblock %}

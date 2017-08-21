@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'^admin/', admin.site.urls),
-    url(r'^search/', include('haystack.urls')),
+    url(r'^search/', include('haystack.urls', namespace='search')),
     url(r'^autocomplete/', autocomplete, name='autocomplete'),
     url(r'^clientes/', include('cliente.url', namespace='clientes')),
     url(r'^servicos/', include('servico.url', namespace='servicos')),

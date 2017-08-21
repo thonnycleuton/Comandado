@@ -78,7 +78,10 @@ class UpdatePerfil(UpdateView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        form.save()
+        f = form.save(commit=False)
+        password = form.cleaned_data['password']
+        f.set_password(password)
+        f.save()
         return super(UpdatePerfil, self).form_valid(form)
 
 

@@ -13,11 +13,10 @@
                     <div class="panel-heading">
                         <ul class="panel-controls">
                             <li><a href="{% url 'contas:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
-                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            <li><a href="{% url 'search:haystack_search' %}" class="panel-collapse"><span class="fa fa-search"></span></a></li>
+
                         </ul>
-                        <!-- SEARCH -->
+                        <!-- SEARCH --
                         <div class="input-group push-down-10 col-md-6">
                               <span class="input-group-addon"><span class="fa fa-search"></span></span>
                           <form method="post" action="/search/" class="autocomplete-me">
@@ -28,7 +27,7 @@
                                 <button class="btn btn-primary">Buscar</button>
                             </div>
                         </div>
-                        <!-- END SEARCH -->
+                        END SEARCH -->
                     </div>
                     <div class="panel-body">
                         <table class="table datatable">

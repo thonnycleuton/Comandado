@@ -1,5 +1,7 @@
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -102,3 +104,22 @@ class ServerUpdate(UpdateView):
 class ServerDelete(DeleteView):
     model = Cliente
     success_url = reverse_lazy('server_list')
+
+
+def cliente_delete(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    data = dict()
+    if request.method == 'POST':
+        cliente.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        clientes = Cliente.objects.all()
+        data['html_profile_list'] = render_to_string('cliente/includes/partial_cliente_list.html', {
+            'clientes': clientes
+        })
+    else:
+        context = {'cliente': cliente}
+        data['html_form'] = render_to_string('cliente/includes/partial_cliente_delete.html',
+                                             context,
+                                             request=request,
+                                             )
+    return JsonResponse(data)

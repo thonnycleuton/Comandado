@@ -87,8 +87,8 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
-    # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
+    # 'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
+    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
 }
 
 # Password validation
@@ -162,5 +162,5 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_AGE = 10*60
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_COOKIE_AGE = 10*60

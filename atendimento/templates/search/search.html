@@ -20,9 +20,11 @@
                     <th width="40"></th>
                     <th>Nome</th>
                     <th>email</th>
-                    <th>Super User</th>
-                    <th>Ativo</th>
-                    <th>Apagar</th>
+                    {% if user.is_superuser %}
+                        <th>Super User</th>
+                        <th>Ativo</th>
+                        <th>Apagar</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -34,21 +36,24 @@
 
                         <td><a href="{% url 'contas:alterar' result.object.id %}">{{ result.object.username }}</a></td>
                         <td>{{ result.object.email }}</td>
-                        <td><a onclick="return confirm('Deseja realmente alterar esse privilegio?')" href="{% url 'contas:alterar_privilegio' result.object.id %}"><span {% if result.object.is_superuser %}class="fa fa-check" aria-hidden="true"
-                            {% else %} class="fa fa-times" aria-hidden="true"{% endif %}></span></a></td>
-                        <td>
-                            <a onclick="return confirm('Deseja realmente alterar esse status?')" href="{% url 'contas:alterar_status' result.object.id %}">
-                            <span {% if result.object.is_active %}class="fa fa-check" aria-hidden="true"
-                                  {% else %} class="fa fa-times" aria-hidden="true"
-                                  {% endif %}>
-                            </span></a>
-                        </td>
-                        <!--<td><a data-url="{% url 'contas:delete' result.object.id %}" href="#"><span class="fa fa-trash-o"></span></a></td>
-                        -->
-                        <td style="width: 150px">
-                          <button type="button" class="btn btn-danger btn-sm js-delete-book" data-url="{% url 'contas:delete' result.object.id %}">
-                            <span class="glyphicon glyphicon-trash"></span> Delete</button>
-                        </td>
+                        {% if user.is_superuser %}
+
+                            <td><a onclick="return confirm('Deseja realmente alterar esse privilegio?')" href="{% url 'contas:alterar_privilegio' result.object.id %}"><span {% if result.object.is_superuser %}class="fa fa-check" aria-hidden="true"
+                                {% else %} class="fa fa-times" aria-hidden="true"{% endif %}></span></a></td>
+                            <td>
+                                <a onclick="return confirm('Deseja realmente alterar esse status?')" href="{% url 'contas:alterar_status' result.object.id %}">
+                                <span {% if result.object.is_active %}class="fa fa-check" aria-hidden="true"
+                                      {% else %} class="fa fa-times" aria-hidden="true"
+                                      {% endif %}>
+                                </span></a>
+                            </td>
+                            <td style="width: 150px">
+                              <button type="button" class="btn btn-danger btn-sm js-delete-book" data-url="{% url 'contas:delete' result.object.id %}">
+                                <span class="glyphicon glyphicon-trash"></span> Delete</button>
+                            </td>
+
+                        {% endif %}
+
                     </tr>
                 {% empty %}
                   <tr>

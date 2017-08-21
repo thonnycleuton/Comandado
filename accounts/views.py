@@ -108,9 +108,10 @@ def save_book_form(request, form, template_name):
 
 
 def profile_delete(request, pk):
+
     profile = get_object_or_404(Profile, pk=pk)
     data = dict()
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_superuser:
         profile.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
         profiles = Profile.objects.all()

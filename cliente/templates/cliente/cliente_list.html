@@ -14,9 +14,10 @@
                         <h3 class="panel-title">Clientes</h3>
                         <ul class="panel-controls">
                             <li><a href="{% url 'clientes:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
-                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                             <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            -->
                         </ul>
                     </div>
                     <div class="panel-body">
@@ -28,6 +29,7 @@
                                     <th>email</th>
                                     <th>Consumo R$</th>
                                     <th>Ativo</th>
+                                    <th>Apagar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +45,10 @@
                                         <td><span {% if cliente.status_ativo == True %}class="fa fa-check" aria-hidden="true"
                                             {% else %} class="fa fa-times" aria-hidden="true"
                                         {% endif %}></span></td>
+                                        <td style="width: 150px">
+                                          <button type="button" class="btn btn-danger btn-sm js-delete-book" data-url="{% url 'contas:delete' cliente.id %}">
+                                            <span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -56,4 +62,42 @@
 
     </div>
     <!-- PAGE CONTENT WRAPPER -->
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/jquery/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/bootstrap/bootstrap.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".js-delete-book").click(function () {
+              var btn = $(this);
+              $.ajax({
+                  url: btn.attr("data-url"),
+                  type: 'get',
+                  dataType: 'json',
+                  beforeSend: function () {
+                      $("#message-box-warning").modal("show");
+                  },
+                  success: function (data) {
+                      $("#message-box-warning .mb-container").html(data.html_form);
+                  }
+              });
+
+              $.ajax({
+                  url: form.attr("action"),
+                  data: form.serialize(),
+                  type: form.attr("method"),
+                  dataType: 'json',
+                  success: function (data) {
+                    if (data.form_is_valid) {
+                      $("#message-box-warning tbody").html(data.html_book_list);
+                      $("#message-box-warning").modal("hide");
+                    }
+                    else {
+                      $("#modal-book .mb-container").html(data.html_form);
+                    }
+                  }
+                });
+            });
+        });
+    </script>
 {% endblock %}

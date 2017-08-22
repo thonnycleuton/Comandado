@@ -26,7 +26,7 @@ $(function () {
 			dataType: 'json',
 			success: function (data) {
 				if (data.form_is_valid) {
-					$("#tabela tbody").html(data.html_book_list);
+					$("#tabela tbody").html(data.html_list);
 					$("#message-box-warning").modal("hide");
 				} else {
 					$("#message-box-warning .mb-container").html(data.html_form);

@@ -115,8 +115,8 @@ def profile_delete(request, pk):
         profile.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
         profiles = Profile.objects.all()
-        data['html_profile_list'] = render_to_string('accounts/includes/partial_profile_list.html', {
-            'profiles': profiles
+        data['html_list'] = render_to_string('accounts/includes/partial_profile_list.html', {
+            'perfil_list': profiles
         })
     else:
         context = {'profile': profile}

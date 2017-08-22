@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+{% endblock %}
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
@@ -30,7 +34,7 @@
                         END SEARCH -->
                     </div>
                     <div class="panel-body">
-                        <table class="table datatable">
+                        <table class="table datatable" id="tabela">
                             <thead>
                                 <tr>
                                     <th width="40"></th>
@@ -60,40 +64,4 @@
         </div>
     </div>
     <!-- PAGE CONTENT WRAPPER -->
-{% endblock %}
-{% block javascript %}
-    <script>
-        $(document).ready(function(){
-            $(".js-delete-book").click(function () {
-              var btn = $(this);
-              $.ajax({
-                  url: btn.attr("data-url"),
-                  type: 'get',
-                  dataType: 'json',
-                  beforeSend: function () {
-                      $("#message-box-warning").modal("show");
-                  },
-                  success: function (data) {
-                      $("#message-box-warning .mb-container").html(data.html_form);
-                  }
-              });
-
-              $.ajax({
-                  url: form.attr("action"),
-                  data: form.serialize(),
-                  type: form.attr("method"),
-                  dataType: 'json',
-                  success: function (data) {
-                    if (data.form_is_valid) {
-                      $("#message-box-warning tbody").html(data.html_book_list);
-                      $("#message-box-warning").modal("hide");
-                    }
-                    else {
-                      $("#modal-book .mb-container").html(data.html_form);
-                    }
-                  }
-                });
-            });
-        });
-    </script>
 {% endblock %}

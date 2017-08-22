@@ -1,4 +1,4 @@
-<form method="post" action="{% url 'clientes:delete' cliente.id %}">
+<form method="post" action="{% url 'clientes:delete' cliente.id %}" class="js-book-delete-form">
     {% csrf_token %}
     <div class="mb-middle">
         <div class="mb-title"><span class="fa fa-trash-o"></span><strong>Excluindo</strong></div>

@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block javascript %}
-  <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -25,7 +26,7 @@
                         </ul>
                     </div>
                     <div class="panel-body">
-                        <table class="table datatable">
+                        <table class="table datatable" id="tabela">
                             <thead>
                                 <tr>
                                     <th width="40"></th>
@@ -48,7 +49,6 @@
                     </div>
                 </div>
                 <!-- END DEFAULT DATATABLE -->
-
             </div>
         </div>
 

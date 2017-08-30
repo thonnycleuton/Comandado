@@ -7,7 +7,7 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from cliente.form import ClienteForm, EnderecoFormSet
+from cliente.form import ClienteForm, EnderecoFormSet, EnderecoFormSetUpdate
 from .models import Cliente, Endereco
 
 
@@ -79,14 +79,14 @@ class ServerUpdate(UpdateView):
         self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        formset = EnderecoFormSet(queryset=Endereco.objects.filter(cliente=self.object))
+        formset = EnderecoFormSetUpdate(queryset=Endereco.objects.filter(cliente=self.object))
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def post(self, request, *args, **kwargs):
-        self.object = None
+        self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        formset = EnderecoFormSet(request.POST)
+        formset = EnderecoFormSetUpdate(request.POST)
         form_valid = form.is_valid()
         formset_valid = formset.is_valid()
         if form_valid and formset_valid:
@@ -114,7 +114,7 @@ def cliente_delete(request, pk):
         data['form_is_valid'] = True  # This is just to play along with the existing code
         clientes = Cliente.objects.all()
         data['html_list'] = render_to_string('cliente/includes/partial_cliente_list.html',
-                                                     {'cliente_list': clientes})
+                                             {'cliente_list': clientes})
     else:
         context = {'cliente': cliente}
         data['html_form'] = render_to_string('cliente/includes/partial_cliente_delete.html',

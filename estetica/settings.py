@@ -87,8 +87,8 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
-    # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
+    # 'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
+    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
 }
 
 # Password validation
@@ -137,7 +137,7 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'thonnycleuton@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'Gh4r4p0v4'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CONTACT_EMAIL = 'thonnycleuton@gmail.com'

@@ -25,7 +25,6 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     url(r'^reset/done/$', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-
     url(r'^entrar/$', LoginView.as_view(), name='login'),
     url(r'^sair/$', LogoutView.as_view(), name='logout'),
 ]

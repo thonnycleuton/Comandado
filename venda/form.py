@@ -4,9 +4,21 @@ from servico.models import Servico
 from venda.models import Venda, ItensVenda
 
 
-class VendaForm(forms.ModelForm):
+class VendaAtendimentoForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(VendaAtendimentoForm, self).__init__(*args, **kwargs)
+        self.fields['servico'].queryset.filter(categoria=1)
+
+    class Meta:
+        model = Venda
+        fields = ['servico', ]
+
+
+class VendaForm2(forms.ModelForm):
+
     servico = forms.ModelMultipleChoiceField(
-        queryset=Servico.objects.all(),
+        queryset=Servico.objects.filter(categoria=1),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'})
     )
 

@@ -49,10 +49,12 @@ class Cliente(models.Model):
     instagram = models.CharField(max_length=100, blank=True)
     facebook = models.CharField(max_length=100, blank=True)
     foto = models.ImageField(upload_to='cliente', default='no-image-box.png', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
+        ordering = ('nome',)
 
     def __str__(self):
         return self.nome

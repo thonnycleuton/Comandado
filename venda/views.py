@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 from django.core.urlresolvers import reverse_lazy
 
 from servico.models import Servico
-from venda.form import VendaForm
+from venda.form import VendaAtendimentoForm, VendaForm2
 from .models import Venda, ItensVenda
 
 
@@ -16,9 +16,17 @@ class VendaList(ListView):
 
 
 class VendaCreate(FormView):
-    form_class = VendaForm
+
     template_name = 'venda/venda_form.html'
     success_url = reverse_lazy('vendas:list')
+
+    def get_form(self, form_class=None):
+        if self.request.user.groups.filter(name__in=['Atendimento']).exists():
+            form_class = VendaAtendimentoForm
+        else:
+            form_class = VendaForm2
+
+        return form_class(**self.get_form_kwargs())
 
     def form_valid(self, form):
         f = form.save(commit=False)

@@ -14,7 +14,7 @@ class Venda(models.Model):
     cod_venda = models.CharField(max_length=10, blank=True, unique=True)
     cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
-    servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), )
+    servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), blank=True)
     data_venda = models.DateTimeField(auto_now=True)
     tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo')), default=1)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)

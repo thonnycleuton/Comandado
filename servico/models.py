@@ -20,6 +20,7 @@ class Servico(models.Model):
     class Meta:
         verbose_name = 'servico'
         verbose_name_plural = 'serviços'
+        ordering = ('categoria',)
 
     def __str__(self):
         return str(self.nome) + " - (" + str(self.valor) + ")"

@@ -19,7 +19,10 @@ def home(request):
     id_usuario = request.user.id
     perfil = User.objects.get(pk=id_usuario) if id_usuario == 1 else Profile.objects.get(pk=id_usuario)
     # pegando quanitdade de todos os clientes, nao filtrados por data
-    quant_clientes = Cliente.objects.all().count()
+
+    clientes = Cliente.objects.all()
+    quant_clientes = clientes.count()
+    quant_clientes_novos = clientes.filter()
     for s in servico:
         faturamento += s.get_faturamento()
     context = {

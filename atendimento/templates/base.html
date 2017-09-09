@@ -37,14 +37,14 @@
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name">{{ perfil.user }}</div>
-                                <div class="profile-data-title">{{ perfil.funcao }}</div>
+                                <div class="profile-data-title">{{ perfil.get_funcao_display }}</div>
                             </div>
                             <div class="profile-controls">
                                 <a href="{% url 'contas:perfil' %}" class="profile-control-left"><span class="fa fa-info"></span></a>
                             </div>
                         </div>                                                                        
                     </li>
-                    <li class="xn-title">Administração</li>
+                    <li class="xn-title">{{ perfil.get_funcao_display }}</li>
                     <li class="active">
                         <a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a>
                         <a href="{% url 'servicos:list' %}"><span class="fa fa-female"></span> <span class="xn-text">Servicos</span></a>

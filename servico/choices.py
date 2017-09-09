@@ -5,4 +5,4 @@ CATEGORIA_SERVICOS = (
     (3, "Estética Corporal"),
     (4, "Manicure"),
     (5, "Salão"),
-)
+) 

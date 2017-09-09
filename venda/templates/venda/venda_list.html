@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
@@ -12,7 +18,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Vendas</h3>
                         <ul class="panel-controls">
-                            <li><a href="{% url 'vendas:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
+                            <li><a href="{% url 'vendas:novo' %}"><span class="fa fa-plus"></span></a></li>
                             <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                             <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
@@ -22,12 +28,13 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>cod_venda</th>
-                                    <th>cod_cliente</th>
-                                    <th>data_venda</th>
-                                    <th>tipo</th>
-                                    <th>valor_venda</th>
-                                    <th>vendedor</th>
+                                    <th>Código</th>
+                                    <th>Cliente</th>
+                                    <th>Data</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                    <th>Vendedor</th>
+                                    <th>Comanda</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +46,7 @@
                                         <td>{% if venda.tipo == 1 %}À vista{% else %}Prazo{% endif %}
                                         <td>R$ {{ venda.valor_venda }}</td>
                                         <td>{{ venda.vendedor }}</td>
+                                        <td>{% if venda.comanda == True %}Aberta{% else %}Fechada{% endif %}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -46,7 +54,6 @@
                     </div>
                 </div>
                 <!-- END DEFAULT DATATABLE -->
-
             </div>
         </div>
 

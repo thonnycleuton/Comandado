@@ -17,23 +17,119 @@
                             </ul>
                         </div>
                         <div class="panel-body">
-
+                            <!--
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Serviço</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in object.servico.all %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ item }}</td>
+                                            <td>{{ item.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td><b>Total</b></td>
+                                        <td></td>
+                                        <td>{{ object.valor_venda }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            -->
                             <div class="row">
-
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        {{ form.as_p }}
+                                {% if campo_cliente %}
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {{ form.cod_cliente }}
+                                        </div>
                                     </div>
+                                {% endif %}
 
+                                {% if campo_servicos %}
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="panel panel-default tabs">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Depilação</a></li>
+                                                <li><a href="#tab-second" role="tab" data-toggle="tab">Estética Facial</a></li>
+                                                <li><a href="#tab-third" role="tab" data-toggle="tab">Estética Corporal</a></li>
+                                                <li><a href="#tab-fourth" role="tab" data-toggle="tab">Manicure</a></li>
+                                                <li><a href="#tab-fifth" role="tab" data-toggle="tab">Salão</a></li>
+                                            </ul>
+                                            <div class="panel-body tab-content">
+                                                <div class="tab-pane active" id="tab-first">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                {{ form.servico }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab-second">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                {{ form.servico2 }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab-third">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                {{ form.servico3 }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab-fourth">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                {{ form.servico4 }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab-fifth">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                {{ form.servico5 }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+
+                                    </div>
+                                        </div>
                                 </div>
+                                {% endif %}
 
+                                {% if campo_pagamento %}
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {{ form.tipo }}
+                                            <label class="col-md-3 control-label">Pagamento</label>
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div class="panel-footer">
+                                    <button class="btn btn-default">Limpar Campos</button>
+                                    <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                                </div>
                             </div>
-
-                        </div>
-                        <div class="panel-footer">
-                            <button class="btn btn-default">Limpar Campos</button>
-                            <button class="btn btn-primary pull-right" type="submit">Salvar</button>
                         </div>
                     </div>
                 </form>

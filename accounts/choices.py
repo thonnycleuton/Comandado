@@ -9,4 +9,5 @@ FUNCAO = (
     (7, "Nutrionista"),
     (8, "Persona Trainer"),
     (9, "Recepcionista"),
+    (10, "Desenvolvimento"),
 )

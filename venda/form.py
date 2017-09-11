@@ -13,7 +13,12 @@ class VendaGerenciaForm(forms.ModelForm):
 
     class Meta:
         model = Venda
-        fields = ['servico', ]
+        fields = ['cod_cliente', 'servico', 'tipo', 'comanda']
+        widgets = {
+            'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
+            'tipo': forms.Select(attrs={'class': 'form-control select'}),
+            'comanda': forms.CheckboxInput(attrs={'class': 'icheckbox'}),
+        }
 
 
 class VendaDepilacaoForm(forms.ModelForm):

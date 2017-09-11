@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse_lazy
 from accounts.models import Profile
 from servico.models import Servico
 from venda.form import VendaGerenciaForm, VendaSalaoForm, VendaDepilacaoForm, VendaFacialForm, \
-    VendaCorporalForm, VendaManicureForm, VendaCaixaForm
+    VendaCorporalForm, VendaManicureForm, VendaCaixaForm, VendaRecepcaoForm
 from .models import Venda, ItensVenda
 
 
@@ -43,10 +43,12 @@ class VendaCreate(FormView):
 
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Salão'):
             context['campo_servicos'] = True
-        if colaborador.groups.filter(name__contains='Recepção'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Recepção'):
             context['campo_cliente'] = True
-        if colaborador.groups.filter(name__contains='Caixa'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Caixa'):
             context['campo_pagamento'] = True
+        if colaborador.groups.filter(name__contains='Gerência'):
+            context['campo_comanda'] = True
 
         return context
 
@@ -54,7 +56,9 @@ class VendaCreate(FormView):
 
         colaborador = Profile.objects.get(pk=self.request.user.pk)
 
-        if colaborador.groups.filter(name__contains='Salão'):
+        if colaborador.groups.filter(name__contains='Recepção'):
+            form_class = VendaRecepcaoForm
+        elif colaborador.groups.filter(name__contains='Salão'):
             form_class = VendaSalaoForm
         elif colaborador.groups.filter(name__contains='Estética Facial'):
             form_class = VendaFacialForm
@@ -75,9 +79,8 @@ class VendaCreate(FormView):
         f = form.save(commit=False)
         f.vendedor = self.request.user
         f.save()
-        for field in self.request.POST.getlist('servico'):
-            for item in self.request.POST.getlist(field):
-                ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
+        for item in self.request.POST.getlist('servico'):
+            ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
         return super(VendaCreate, self).form_valid(form)
 
 
@@ -97,6 +100,8 @@ class VendaUpdate(UpdateView):
             context['campo_cliente'] = True
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Caixa'):
             context['campo_pagamento'] = True
+        if colaborador.groups.filter(name__contains='Gerência'):
+            context['campo_comanda'] = True
 
         return context
 
@@ -125,17 +130,23 @@ class VendaUpdate(UpdateView):
 
     def form_valid(self, form):
 
+        colaborador = Profile.objects.get(pk=self.request.user.pk)
+
         f = form.save(commit=False)
+        if 'servico' in form.changed_data:
+            print(form.changed_data)
+
         f.vendedor = self.request.user
 
-        if self.request.POST.getlist('tipo'):
+        if not 'comanda' in form.changed_data and colaborador.groups.filter(name__contains='Gerência'):
             f.comanda = False
 
         f.save()
 
         for field in self.request.POST.getlist('servico'):
-            item_vendas = ItensVenda(cod_venda=f, cod_servico=Servico.objects.get(pk=field))
-            item_vendas.save()
+            if not ItensVenda.objects.filter(cod_venda=f, cod_servico=Servico.objects.get(pk=field)).exists():
+                item_vendas = ItensVenda(cod_venda=f, cod_servico=Servico.objects.get(pk=field))
+                item_vendas.save()
 
         return HttpResponseRedirect(self.get_success_url())
 

@@ -16,7 +16,7 @@ class ProfileForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
 
-            'telefone': forms.TextInput(attrs={'class': 'form-control icheckbox'}),
+            'telefone': forms.TextInput(attrs={'class': 'phone form-control'}),
             'funcao': forms.Select(attrs={'class': 'form-control'}),
             'groups': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'is_superuser': forms.CheckboxInput(attrs={'class': 'form-control icheckbox'}),

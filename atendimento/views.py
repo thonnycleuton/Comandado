@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 
 from accounts.models import Profile
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 
 from estetica import settings

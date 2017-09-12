@@ -54,6 +54,7 @@
                                 {% if campo_cliente %}
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                        <label class="control-label">Cliente</label>
                                             {{ form.cod_cliente }}
                                         </div>
                                     </div>
@@ -63,6 +64,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="col-md-4">
+                                                <label class="col-md-3 control-label">Serviços</label>
                                                 <label class="check">{{ form.servico }}</label>
                                             </div>
                                         </div>
@@ -73,7 +75,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="col-md-4">
-                                            <label class="col-md-3 control-label">Pagamento</label>
+                                            <label class="control-label">Pagamento</label>
                                                 {{ form.tipo }}
                                             </div>
                                         </div>

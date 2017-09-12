@@ -2,7 +2,7 @@
 {% for perfil in perfil_list %}
     <tr>
         <td>
-            <img src="{% thumbnail perfil.foto 50x50 crop %}" alt="" />
+            <img src="/media/{{ perfil.foto }}" height="50" width="50" alt="" />
         </td>
 
         <td><a href="{% url 'contas:alterar' perfil.id %}">{{ perfil.username }}</a></td>

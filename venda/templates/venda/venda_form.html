@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data Tables</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+
+    <!-- PAGE TITLE -->
+    <div class="page-title">
+        <h2><span class="fa fa-user"></span> {{ venda.cod_cliente }}</h2>
+    </div>
+    <!-- END PAGE TITLE -->
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
 
@@ -46,9 +58,6 @@
                 <form class="form-horizontal" method="post" action="">
                     {% csrf_token %}
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><strong>Vendas</strong></h3>
-                        </div>
                         <div class="panel-body">
                             <div class="row">
                                 {% if campo_cliente %}
@@ -72,10 +81,11 @@
                                 {% endif %}
 
                                 {% if campo_pagamento %}
-                                    <div class="col-md-12">
+                                    <div class="block">
+                                        <h4>Pagamento</h4>
                                         <div class="form-group">
-                                            <div class="col-md-4">
-                                            <label class="control-label">Pagamento</label>
+                                            <label class="col-sm-2 control-label">Tipo</label>
+                                            <div class="col-md-10">
                                                 {{ form.tipo }}
                                             </div>
                                         </div>

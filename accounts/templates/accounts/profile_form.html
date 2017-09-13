@@ -25,6 +25,7 @@
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                     {{ form.first_name }}
                                 </div>
+                                <label id="age-error" class="error" for="age">{{ form.first_name.errors }}</label>
                                 <span class="help-block">{{ form.first_name.help_text }}</span>
                             </div>
                         </div>
@@ -36,6 +37,7 @@
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                     {{ form.last_name }}
                                 </div>
+                                <label id="age-error" class="error" for="age">{{ form.last_name.errors }}</label>
                                 <span class="help-block">{{ form.last_name.help_text }}</span>
                             </div>
                         </div>
@@ -47,6 +49,7 @@
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                     {{ form.username }}
                                 </div>
+                                <label id="age-error" class="error" for="age">{{ form.username.errors }}</label>
                                 <span class="help-block">{{ form.username.help_text }}</span>
                             </div>
                         </div>
@@ -58,6 +61,7 @@
                                     <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
                                     {{ form.password }}
                                 </div>
+                                <label id="age-error" class="error" for="age">{{ form.password.errors }}</label>
                                 <span class="help-block">{{ form.password.help_text }}</span>
                             </div>
                         </div>
@@ -69,6 +73,7 @@
                                     <span class="input-group-addon"><span class="fa fa-mail-reply"></span></span>
                                     {{ form.email }}
                                 </div>
+                                <label id="age-error" class="error" for="age">{{ form.email.errors }}</label>
                                 <span class="help-block">{{ form.email.help_text }}</span>
                             </div>
                         </div>
@@ -80,6 +85,7 @@
                                     <span class="input-group-addon"><span class="fa fa-phone"></span></span>
                                     {{ form.telefone }}
                                 </div>
+                                <label id="age-error" class="error" for="age">{{ form.telefone.errors }}</label>
                                 <span class="help-block">{{ form.telefone.help_text }}</span>
                             </div>
                         </div>
@@ -92,6 +98,7 @@
                                     {{ form.funcao }}
                                 </div>
                                 <span class="help-block">{{ form.funcao.help_text }}</span>
+                                <label id="age-error" class="error" for="age">{{ form.funcao.errors }}</label>
                             </div>
                         </div>
 
@@ -99,6 +106,7 @@
                             <label class="col-md-3 col-xs-12 control-label">{{ form.groups.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
                                 {{ form.groups }}
+                                <label id="age-error" class="error" for="age">{{ form.groups.errors }}</label>
                                 <span class="help-block">{{ form.groups.help_text }}</span>
                             </div>
                         </div>
@@ -107,6 +115,7 @@
                             <label class="col-md-3 col-xs-12 control-label">{{ form.is_superuser.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
                                 {{ form.is_superuser }}
+                                <label id="age-error" class="error" for="age">{{ form.is_superuser.errors }}</label>
                                 <span class="help-block">Checkbox sample, easy to use</span>
                             </div>
                         </div>
@@ -114,6 +123,7 @@
                             <label class="col-md-3 col-xs-12 control-label">{{ form.is_active.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
                                 {{ form.is_active }}
+                                <label id="age-error" class="error" for="age">{{ form.is_active.errors }}</label>
                                 <span class="help-block">Checkbox sample, easy to use</span>
                             </div>
                         </div>
@@ -122,6 +132,7 @@
                             <label class="col-md-3 col-xs-12 control-label">{{ form.foto.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
                                 {{ form.foto }}
+                                <label id="age-error" class="error" for="age">{{ form.foto.errors }}</label>
                                 <span class="help-block">{{ form.foto.help_text }}</span>
                             </div>
                         </div>

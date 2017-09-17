@@ -96,6 +96,14 @@ class VendaUpdate(UpdateView):
 
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Salão'):
             context['campo_servicos'] = True
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Estética Facial'):
+            context['campo_servicos'] = True
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Estética Corporal'):
+            context['campo_servicos'] = True
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Manicure'):
+            context['campo_servicos'] = True
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Depilação'):
+            context['campo_servicos'] = True
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Recepção'):
             context['campo_cliente'] = True
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Caixa'):

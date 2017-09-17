@@ -44,15 +44,16 @@
                             </div>
                         </div>                                                                        
                     </li>
-                    <li class="xn-title">{{ perfil.get_funcao_display }}</li>
+                    <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
                     <li class="active">
 
-                        <a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a>
-                        <a href="{% url 'servicos:list' %}"><span class="fa fa-female"></span> <span class="xn-text">Servicos</span></a>
-                        <a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a>
+                        {% if gerencia %}
+                            <a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a>
+                            <a href="{% url 'servicos:list' %}"><span class="fa fa-female"></span> <span class="xn-text">Servicos</span></a>
+                            <a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a>
+                        {% endif %}
                         <a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a>
                     </li>
-
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>

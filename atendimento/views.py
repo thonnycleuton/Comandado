@@ -23,9 +23,11 @@ def home(request):
     clientes = Cliente.objects.all()
     quant_clientes = clientes.count()
     quant_clientes_novos = clientes.filter()
+    gerencia = True if request.user.profile.groups.filter(name='Gerência').exists() else False
     for s in servico:
         faturamento += s.get_faturamento()
     context = {
+        'gerencia': gerencia,
         'servicos': servico,
         'faturamento': faturamento,
         'data_atual': datetime.now(),

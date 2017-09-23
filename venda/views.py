@@ -7,8 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from accounts.models import Profile
 from servico.models import Servico
-from venda.form import VendaGerenciaForm, VendaSalaoForm, VendaDepilacaoForm, VendaFacialForm, \
-    VendaCorporalForm, VendaManicureForm, VendaCaixaForm, VendaRecepcaoForm
+from venda.form import VendaGerenciaForm
 from .models import Venda, ItensVenda
 
 
@@ -36,6 +35,11 @@ class VendaCreate(FormView):
     template_name = 'venda/venda_form.html'
     success_url = reverse_lazy('vendas:list')
 
+    def get_form_kwargs(self):
+        kwargs = super(VendaCreate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def get_context_data(self, **kwargs):
 
         context = super(VendaCreate, self).get_context_data(**kwargs)
@@ -54,24 +58,7 @@ class VendaCreate(FormView):
 
     def get_form(self, form_class=None):
 
-        colaborador = Profile.objects.get(pk=self.request.user.pk)
-
-        if colaborador.groups.filter(name__contains='Recepção'):
-            form_class = VendaRecepcaoForm
-        elif colaborador.groups.filter(name__contains='Salão'):
-            form_class = VendaSalaoForm
-        elif colaborador.groups.filter(name__contains='Estética Facial'):
-            form_class = VendaFacialForm
-        elif colaborador.groups.filter(name__contains='Estética Corporal'):
-            form_class = VendaCorporalForm
-        elif colaborador.groups.filter(name__contains='Manicure'):
-            form_class = VendaManicureForm
-        elif colaborador.groups.filter(name__contains='Depilação'):
-            form_class = VendaDepilacaoForm
-        elif colaborador.groups.filter(name__contains='Gerência'):
-            form_class = VendaGerenciaForm
-        else:
-            form_class = VendaCaixaForm
+        form_class = VendaGerenciaForm
 
         return form_class(**self.get_form_kwargs())
 
@@ -88,6 +75,11 @@ class VendaUpdate(UpdateView):
 
     model = Venda
     success_url = reverse_lazy('vendas:list')
+
+    def get_form_kwargs(self):
+        kwargs = super(VendaUpdate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def get_context_data(self, **kwargs):
 
@@ -115,24 +107,7 @@ class VendaUpdate(UpdateView):
 
     def get_form(self, form_class=None):
 
-        colaborador = Profile.objects.get(pk=self.request.user.pk)
-
-        if colaborador.groups.filter(name__contains='Salão'):
-            form_class = VendaSalaoForm
-        elif colaborador.groups.filter(name__contains='Estética Facial'):
-            form_class = VendaFacialForm
-        elif colaborador.groups.filter(name__contains='Estética Corporal'):
-            form_class = VendaCorporalForm
-        elif colaborador.groups.filter(name__contains='Manicure'):
-            form_class = VendaManicureForm
-        elif colaborador.groups.filter(name__contains='Depilação'):
-            form_class = VendaDepilacaoForm
-        elif colaborador.groups.filter(name__contains='Gerência'):
-            form_class = VendaGerenciaForm
-        elif colaborador.groups.filter(name__contains='Caixa'):
-            form_class = VendaCaixaForm
-        elif colaborador.groups.filter(name__contains='Recepção'):
-            form_class = VendaCaixaForm
+        form_class = VendaGerenciaForm
 
         return form_class(**self.get_form_kwargs())
 

@@ -6,6 +6,8 @@ from django.conf.urls import url
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView, \
     PasswordResetCompleteView, PasswordResetDoneView
 
+from estetica import settings
+
 urlpatterns = [
     url(r'^$', ListPerfil.as_view(), name='perfil'),
     url(r'^usuarios/$', ListPerfis.as_view(), name='list'),
@@ -26,5 +28,5 @@ urlpatterns = [
     url(r'^reset/done/$', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     url(r'^entrar/$', LoginView.as_view(), name='login'),
-    url(r'^sair/$', LogoutView.as_view(), name='logout'),
+    url(r'^sair/$', LogoutView.as_view(next_page=settings.LOGIN_REDIRECT_URL), name='logout'),
 ]

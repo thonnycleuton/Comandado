@@ -18,10 +18,18 @@ class VendaList(ListView):
 
     def get_queryset(self):
 
+        data_inicial = self.request.GET.get('data_inicial')
+        data_final = self.request.GET.get('data_final')
+
         colaborador = Profile.objects.get(pk=self.request.user.pk)
+        print(datetime.today().date())
 
         if colaborador.groups.filter(name__contains='Gerência'):
-            vendas = Venda.objects.all()
+            if data_final or data_inicial:
+                vendas = Venda.objects.filter(data_venda__range=(data_inicial, data_final))
+            else:
+                vendas = Venda.objects.all()
+
         elif colaborador.groups.filter(name__contains='Caixa'):
             vendas = Venda.objects.filter(data_venda__day=datetime.today().day)
         else:
@@ -31,7 +39,6 @@ class VendaList(ListView):
 
 
 class VendaCreate(FormView):
-
     template_name = 'venda/venda_form.html'
     success_url = reverse_lazy('vendas:list')
 
@@ -72,7 +79,6 @@ class VendaCreate(FormView):
 
 
 class VendaUpdate(UpdateView):
-
     model = Venda
     success_url = reverse_lazy('vendas:list')
 
@@ -88,13 +94,16 @@ class VendaUpdate(UpdateView):
 
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Salão'):
             context['campo_servicos'] = True
-        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Estética Facial'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(
+                name__contains='Estética Facial'):
             context['campo_servicos'] = True
-        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Estética Corporal'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(
+                name__contains='Estética Corporal'):
             context['campo_servicos'] = True
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Manicure'):
             context['campo_servicos'] = True
-        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Depilação'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(
+                name__contains='Depilação'):
             context['campo_servicos'] = True
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Recepção'):
             context['campo_cliente'] = True

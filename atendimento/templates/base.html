@@ -47,7 +47,7 @@
                     <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
                     <li class="active">
 
-                        {% if gerencia %}
+                        {% if user.profile.is_gerente %}
                             <a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a>
                             <a href="{% url 'servicos:list' %}"><span class="fa fa-female"></span> <span class="xn-text">Servicos</span></a>
                             <a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a>

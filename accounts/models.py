@@ -19,3 +19,9 @@ class Profile(User):
 
         self.telefone = re.sub(r'[^\d]+', '', self.telefone)
         return super(Profile, self).save(*args, **kwargs)
+
+    def is_gerente(self):
+
+        gerencia = Profile.objects.get(pk=self.pk).groups.filter(name='Gerência').exists()
+
+        return gerencia

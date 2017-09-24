@@ -5,17 +5,21 @@ from venda.models import Venda, ItensVenda
 
 
 class VendaGerenciaForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
 
         self.user = kwargs.pop('user')
         super(VendaGerenciaForm, self).__init__(*args, **kwargs)
-        print(self.user.groups.all())
 
         if self.user.groups.filter(name="Gerência"):
             servicos = Servico.objects.all()
         else:
             servicos = Servico.objects.filter(categoria__in=self.user.groups.all())
+            del self.fields['comanda']
+
+            if not self.user.groups.filter(name="Recepção"):
+                del self.fields['cod_cliente']
+            if not self.user.groups.filter(name="Caixa"):
+                del self.fields['tipo']
 
         self.fields['servico'].queryset = servicos
 

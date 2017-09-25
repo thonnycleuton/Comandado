@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
@@ -27,6 +27,8 @@ class VendaList(ListView):
 
         if self.request.user.groups.filter(name__contains='Gerência'):
             if data_final or data_inicial:
+                date = datetime.strptime(data_final, '%Y-%m-%d')
+                date += timedelta(days=1)
                 vendas = Venda.objects.filter(data_venda__range=(data_inicial, data_final))
             else:
                 vendas = Venda.objects.all()

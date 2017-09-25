@@ -9,8 +9,12 @@ from accounts.models import Profile
 from servico.models import Servico
 from venda.form import VendaGerenciaForm
 from .models import Venda, ItensVenda
+from estetica import settings
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
+@method_decorator(login_required, name='dispatch')
 class VendaList(ListView):
     model = Venda
     ordering = 'id'
@@ -21,16 +25,13 @@ class VendaList(ListView):
         data_inicial = self.request.GET.get('data_inicial')
         data_final = self.request.GET.get('data_final')
 
-        colaborador = Profile.objects.get(pk=self.request.user.pk)
-        print(datetime.today().date())
-
-        if colaborador.groups.filter(name__contains='Gerência'):
+        if self.request.user.groups.filter(name__contains='Gerência'):
             if data_final or data_inicial:
                 vendas = Venda.objects.filter(data_venda__range=(data_inicial, data_final))
             else:
                 vendas = Venda.objects.all()
 
-        elif colaborador.groups.filter(name__contains='Caixa'):
+        elif self.request.user.groups.filter(name__contains='Caixa'):
             vendas = Venda.objects.filter(data_venda__day=datetime.today().day)
         else:
             vendas = Venda.objects.filter(data_venda__day=datetime.today().day, comanda=True)
@@ -38,6 +39,7 @@ class VendaList(ListView):
         return vendas
 
 
+@method_decorator(login_required, name='dispatch')
 class VendaCreate(FormView):
     template_name = 'venda/venda_form.html'
     success_url = reverse_lazy('vendas:list')
@@ -78,6 +80,7 @@ class VendaCreate(FormView):
         return super(VendaCreate, self).form_valid(form)
 
 
+@method_decorator(login_required, name='dispatch')
 class VendaUpdate(UpdateView):
     model = Venda
     success_url = reverse_lazy('vendas:list')
@@ -95,16 +98,19 @@ class VendaUpdate(UpdateView):
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Salão'):
             context['campo_servicos'] = True
 
-        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Estética Facial'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(
+                name__contains='Estética Facial'):
             context['campo_servicos'] = True
 
-        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Estética Corporal'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(
+                name__contains='Estética Corporal'):
             context['campo_servicos'] = True
 
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Manicure'):
             context['campo_servicos'] = True
 
-        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Depilação'):
+        if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(
+                name__contains='Depilação'):
             context['campo_servicos'] = True
 
         if colaborador.groups.filter(name__contains='Gerência') or colaborador.groups.filter(name__contains='Recepção'):
@@ -125,21 +131,26 @@ class VendaUpdate(UpdateView):
         return form_class(**self.get_form_kwargs())
 
     def form_valid(self, form):
-
-        colaborador = Profile.objects.get(pk=self.request.user.pk)
+        # intancia um objeto do tipo profile que eh uma heranca de USER
+        colaborador = self.request.user
 
         f = form.save(commit=False)
-        if 'servico' in form.changed_data:
-            print(form.changed_data)
-
         f.vendedor = self.request.user
-
-        if not 'comanda' in form.changed_data and colaborador.groups.filter(name__contains='Gerência'):
+        # checa se o campo comanda nao foi alterado por um colaborador da Gerencia ou do Caixa para fechar a Comanda
+        if not 'comanda' in form.changed_data and colaborador.profile.groups.filter(
+                name__contains='Gerência') or colaborador.profile.groups.filter(name__contains='Caixa'):
             f.comanda = False
 
         f.save()
 
+        remover = set(form.initial['servico']).difference(form.cleaned_data['servico'])
+
+        if remover and colaborador.profile.groups.filter(name__contains='Gerência'):
+            for item in remover:
+                ItensVenda.objects.get(cod_servico=item.pk, cod_venda=f).delete()
+
         for field in self.request.POST.getlist('servico'):
+            # checa se o item de servico ja existe para inserir um novo item de servico à venda
             if not ItensVenda.objects.filter(cod_venda=f, cod_servico=Servico.objects.get(pk=field)).exists():
                 item_vendas = ItensVenda(cod_venda=f, cod_servico=Servico.objects.get(pk=field))
                 item_vendas.save()
@@ -147,6 +158,7 @@ class VendaUpdate(UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+@method_decorator(login_required, name='dispatch')
 class VendaDelete(DeleteView):
     model = Venda
     success_url = reverse_lazy('vendas:list')

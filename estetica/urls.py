@@ -17,23 +17,23 @@ from accounts.views import autocomplete
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from atendimento.views import home, clientes, fornecedores, produtos, servicos
+from atendimento.views import home
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$', home, name='home'),
+    url(r'^', include('venda.url', namespace='vendas')),
+    url(r'^painel/', home, name='painel'),
     url(r'^admin/', admin.site.urls),
     url(r'^search/', include('haystack.urls', namespace='search')),
     url(r'^autocomplete/', autocomplete, name='autocomplete'),
     url(r'^clientes/', include('cliente.url', namespace='clientes')),
     url(r'^servicos/', include('servico.url', namespace='servicos')),
-    url(r'^vendas/', include('venda.url', namespace='vendas')),
     # item de vendas
     url(r'^detalhes/', include('venda.url', namespace='detalhes')),
     url(r'^contas/', include('accounts.url', namespace='contas')),
-    url(r'^fornecedores/', fornecedores, name='fornecedores'),
-    url(r'^produtos/', produtos, name='produtos'),
+    # url(r'^fornecedores/', fornecedores, name='fornecedores'),
+    # url(r'^produtos/', produtos, name='produtos'),
 ]
 
 if settings.DEBUG:

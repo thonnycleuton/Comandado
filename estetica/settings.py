@@ -144,7 +144,7 @@ CONTACT_EMAIL = 'thonnycleuton@gmail.com'
 
 # Auth
 LOGIN_URL = 'contas:login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'vendas:list'
 LOGOUT_URL = 'contas:logout'
 
 THUMBNAIL_ALIASES = {

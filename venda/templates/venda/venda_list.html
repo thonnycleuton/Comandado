@@ -84,8 +84,8 @@
                             </thead>
                             <tbody>
                                 {% for venda in venda_list %}
-                                    <tr>
-                                        <td><a href="{% url 'vendas:edite' venda.id %}" >{{ venda.cod_venda }}</a></td>
+                                    <tr onclick="window.document.location= '{% url 'vendas:edite' venda.id %}';">
+                                        <td>{{ venda.cod_venda }}</td>
                                         <td>{{ venda.cod_cliente }}</td>
                                         <td>{{ venda.data_venda }}</td>
                                         <td>{% if venda.tipo == 1 %}À vista{% else %}Prazo{% endif %}

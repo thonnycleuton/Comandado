@@ -29,7 +29,7 @@ class VendaList(ListView):
             if data_final or data_inicial:
                 date = datetime.strptime(data_final, '%Y-%m-%d')
                 date += timedelta(days=1)
-                vendas = Venda.objects.filter(data_venda__range=(data_inicial, data_final))
+                vendas = Venda.objects.filter(data_venda__range=(data_inicial, date))
             else:
                 vendas = Venda.objects.all()
 

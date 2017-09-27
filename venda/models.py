@@ -19,7 +19,7 @@ class Venda(models.Model):
     tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Cartão')), default=1, blank=True)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     comanda = models.BooleanField(default=True, verbose_name="Comanda")
-    desconto = models.DecimalField(max_digits=3, decimal_places=2, default=0, blank=True)
+    desconto = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
 
     class Meta:
         ordering = ('-valor_venda', )

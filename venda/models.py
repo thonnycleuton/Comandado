@@ -48,7 +48,7 @@ class Venda(models.Model):
         # 20177V0001
         if self.cod_venda is "":
             mes_em_curso = str(datetime.now().year) + str(datetime.now().month)
-            ultimo = '0000' if Venda.objects.last() is None else Venda.objects.last().cod_venda[-4:]
+            ultimo = '0000' if Venda.objects.last() is None else Venda.objects.order_by('cod_venda').last().cod_venda[-4:]
 
             ultimo = str(int(ultimo) + 1)
             while len(str(ultimo)) < 4:

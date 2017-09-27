@@ -36,7 +36,8 @@ class Servico(models.Model):
     def save(self, *args, **kwargs):
 
         if self.cod_servico is "":
-            ultimo = '000' if Servico.objects.last() is None else Servico.objects.last().cod_servico[-3:]
+            ultimo = '000' if Servico.objects.last() is None else Servico.objects.order_by('cod_servico').last().cod_servico[-3:]
+
             ultimo = str(int(ultimo) + 1)
 
             while len(ultimo) < 3:

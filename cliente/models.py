@@ -74,7 +74,8 @@ class Cliente(models.Model):
 
     def save(self, *args, **kwargs):
         if self.cod_cliente is "":
-            ultimo = '000' if Cliente.objects.last() is None else Cliente.objects.last().cod_cliente[-3:]
+
+            ultimo = '000' if Cliente.objects.last() is None else Cliente.objects.order_by('cod_cliente').last().cod_cliente[-3:]
             ultimo = str(int(ultimo) + 1)
 
             while len(ultimo) < 3:

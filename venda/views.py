@@ -17,8 +17,8 @@ from django.contrib.auth.decorators import login_required
 @method_decorator(login_required, name='dispatch')
 class VendaList(ListView):
     model = Venda
-    ordering = 'id'
     context_object_name = 'venda_list'
+    ordering = '-valor_venda'
 
     def get_queryset(self):
 

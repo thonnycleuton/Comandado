@@ -26,10 +26,10 @@ class VendaGerenciaForm(forms.ModelForm):
     class Meta:
 
         model = Venda
-        fields = ['cod_cliente', 'servico', 'tipo', 'comanda']
+        fields = ['cod_cliente', 'servico', 'tipo', 'comanda', 'desconto']
         widgets = {
             'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
-            'tipo': forms.Select(attrs={'class': 'form-control select'}),
-            'comanda': forms.CheckboxInput(attrs={'class': 'icheckbox'}),
+            'tipo': forms.Select(attrs={'class': 'form-control'}),
+            'comanda': forms.CheckboxInput(attrs={'class': 'switch-radio1'}),
             'servico': forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'})
         }

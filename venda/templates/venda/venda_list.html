@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block javascript %}
     <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
 {% endblock %}
-
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
-
         <div class="row">
             <div class="col-md-12">
                 {% if user.profile.is_gerente %}
@@ -57,19 +54,18 @@
                         </div>
                     </div>
                 {% endif %}
-
-
                 <!-- START DEFAULT DATATABLE -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Vendas</h3>
-                        <ul class="panel-controls">
-                            {% if 'venda.add_venda' in user.get_group_permissions %}
-                                <li><a href="{% url 'vendas:novo' %}"><span class="fa fa-plus"></span></a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    <div class="panel-body">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Vendas</h3>
+                            <ul class="panel-controls">
+                                {% if 'venda.add_venda' in user.get_group_permissions %}
+                                    <li><a href="{% url 'vendas:novo' %}"><span class="fa fa-plus"></span></a></li>
+                                {% endif %}
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
                         <table class="table datatable">
                             <thead>
                                 <tr>

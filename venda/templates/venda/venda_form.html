@@ -68,16 +68,12 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="form-group">
-                                    {% for servico in form.servico %}
-                                        <div class="col-md-6">
-                                            <label class="check">{{ servico }}</label>
-                                        </div>
-                                    {% endfor %}
+                                    {{ form }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- START SWITCH BUTTONS -->
+                    <!-- START SWITCH BUTTONS
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Pagamento</h3>
@@ -109,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END SWITCH BUTTONS -->
+                        END SWITCH BUTTONS -->
                     <div class="panel-footer">
                         <button class="btn btn-default">Limpar Campos</button>
                         <button class="btn btn-primary pull-right" type="submit">Salvar</button>

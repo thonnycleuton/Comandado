@@ -16,11 +16,13 @@ class Venda(models.Model):
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), blank=True)
     data_venda = models.DateTimeField(auto_now=True)
-    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo')), default=1, blank=True)
+    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Cartão')), default=1, blank=True)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
-    comanda = models.BooleanField(default=True)
+    comanda = models.BooleanField(default=True, verbose_name="Comanda")
+    desconto = models.DecimalField(max_digits=3, decimal_places=2, default=0, blank=True)
 
     class Meta:
+        ordering = ('-valor_venda', )
         verbose_name = 'venda'
         verbose_name_plural = 'vendas'
 
@@ -52,6 +54,7 @@ class Venda(models.Model):
             while len(str(ultimo)) < 4:
                 ultimo = "0" + ultimo
             self.cod_venda = mes_em_curso + "V" + str(ultimo)
+        self.valor_venda -= self.desconto
 
         return super(Venda, self).save(*args, **kwargs)
 

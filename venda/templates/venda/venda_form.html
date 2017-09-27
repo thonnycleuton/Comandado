@@ -11,6 +11,9 @@
     <!-- PAGE TITLE -->
     <div class="page-title">
         <h2><span class="fa fa-user"></span> {{ venda.cod_cliente }}</h2>
+        <div class="pull-right">
+            <h2><small> Comanda - <b>{{ venda.cod_venda }} </b></small></h2>
+        </div>
     </div>
     <!-- END PAGE TITLE -->
     <!-- PAGE CONTENT WRAPPER -->
@@ -19,57 +22,99 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- START DEFAULT DATATABLE -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Resumo da Venda</h3>
-                        <ul class="panel-controls">
-                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
-                        </ul>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Serviço</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in object.servico.all %}
-                                    <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ item }}</td>
-                                        <td>{{ item.valor }}</td>
-                                    </tr>
-                                {% endfor %}
-                                <tr>
-                                    <td><b>Total</b></td>
-                                    <td></td>
-                                    <td>{{ object.valor_venda }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
                 <form class="form-horizontal" method="post" action="">
                     {% csrf_token %}
+                    <div class="panel panel-default panel-toggled">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Resumo da Venda</h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Serviço</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in object.servico.all %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ item }}</td>
+                                            <td>{{ item.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td><b>Total</b></td>
+                                        <td></td>
+                                        <td>{{ object.valor_venda }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Serviços</h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
                         <div class="panel-body">
                             <div class="row">
-                                {{ form }}
-                                <div class="panel-footer">
-                                    <button class="btn btn-default">Limpar Campos</button>
-                                    <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                                <div class="form-group">
+                                    {% for servico in form.servico %}
+                                        <div class="col-md-6">
+                                            <label class="check">{{ servico }}</label>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- START SWITCH BUTTONS -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Pagamento</h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">{{ form.comanda.label_tag }}</label>
+                                <div class="col-md-4">
+                                    <label class="switch">
+                                        {{ form.comanda }}
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">{{ form.desconto.label_tag }}</label>
+                                <div class="col-md-4">
+                                    {{ form.desconto }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">{{ form.tipo.label_tag }}</label>
+                                <div class="col-md-4">
+                                    {{ form.tipo }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SWITCH BUTTONS -->
+                    <div class="panel-footer">
+                        <button class="btn btn-default">Limpar Campos</button>
+                        <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                    </div>
                 </form>
-
             </div>
         </div>
     <!-- END PAGE CONTENT WRAPPER -->

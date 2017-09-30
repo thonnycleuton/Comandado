@@ -50,9 +50,19 @@
                                         </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td><b>Total</b></td>
+                                        <td><b>Subtotal</b></td>
                                         <td></td>
                                         <td>{{ object.valor_venda }}</td>
+                                    </tr>
+                                    <tr class="bg-danger">
+                                        <td><b>Desconto</b></td>
+                                        <td></td>
+                                        <td>{{ object.desconto }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total</b></td>
+                                        <td></td>
+                                        <td>{{ object.valor_final }}</td>
                                     </tr>
                                 </tbody>
                             </table>

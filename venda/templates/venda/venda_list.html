@@ -74,6 +74,7 @@
                                     <th>Data</th>
                                     <th>Tipo</th>
                                     <th>Valor</th>
+                                    <th>Desconto</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -85,6 +86,7 @@
                                         <td>{{ venda.data_venda }}</td>
                                         <td>{% if venda.tipo == 1 %}À vista{% else %}Prazo{% endif %}
                                         <td>R$ {{ venda.valor_venda }}</td>
+                                        <td>R$ {{ venda.desconto }}</td>
                                         <td>{% if venda.comanda == True %}Aberta{% else %}Fechada{% endif %}</td>
                                     </tr>
                                 {% endfor %}

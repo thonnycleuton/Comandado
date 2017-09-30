@@ -20,6 +20,7 @@ class Venda(models.Model):
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     comanda = models.BooleanField(default=True, verbose_name="Comanda")
     desconto = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
+    valor_final = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
         ordering = ('-valor_venda', )
@@ -54,7 +55,8 @@ class Venda(models.Model):
             while len(str(ultimo)) < 4:
                 ultimo = "0" + ultimo
             self.cod_venda = mes_em_curso + "V" + str(ultimo)
-        self.valor_venda -= self.desconto
+
+        self.valor_final = self.valor_venda - self.desconto
 
         return super(Venda, self).save(*args, **kwargs)
 

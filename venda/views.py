@@ -40,6 +40,35 @@ class VendaList(ListView):
 
         return vendas
 
+    def get_context_data(self, **kwargs):
+
+        context = super(VendaList, self).get_context_data()
+        total_vendas = 0
+
+        data_inicial = self.request.GET.get('data_inicial')
+        data_final = self.request.GET.get('data_final')
+
+        if self.request.user.groups.filter(name__contains='Gerência'):
+            if data_final or data_inicial:
+                date = datetime.strptime(data_final, '%Y-%m-%d')
+                date += timedelta(days=1)
+                vendas = Venda.objects.filter(data_venda__range=(data_inicial, date))
+            else:
+                vendas = Venda.objects.all()
+
+        elif self.request.user.groups.filter(name__contains='Caixa'):
+            vendas = Venda.objects.filter(data_venda__day=datetime.today().day)
+        else:
+            vendas = Venda.objects.filter(data_venda__day=datetime.today().day, comanda=True)
+
+        for venda in vendas:
+            total_vendas += venda.valor_final
+
+        context['vendas_filtro'] = vendas
+        context['total_vendas'] = total_vendas
+
+        return context
+
 
 @method_decorator(login_required, name='dispatch')
 class VendaCreate(FormView):

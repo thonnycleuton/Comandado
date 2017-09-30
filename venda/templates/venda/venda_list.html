@@ -59,6 +59,7 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Vendas</h3>
                             <ul class="panel-controls">
+                            <H2 class="pull-left"> R$ {{ total_vendas }} </H2>
                                 {% if 'venda.add_venda' in user.get_group_permissions %}
                                     <li><a href="{% url 'vendas:novo' %}"><span class="fa fa-plus"></span></a></li>
                                 {% endif %}
@@ -79,7 +80,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for venda in venda_list %}
+                                {% for venda in vendas_filtro %}
                                     <tr onclick="window.document.location= '{% url 'vendas:edite' venda.id %}';">
                                         <td>{{ venda.cod_venda }}</td>
                                         <td>{{ venda.cod_cliente }}</td>

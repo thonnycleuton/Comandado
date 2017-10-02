@@ -14,7 +14,8 @@ class Venda(models.Model):
     cod_venda = models.CharField(max_length=11, blank=True, unique=True)
     cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
-    servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), blank=True)
+    servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'),
+                                     blank=True)
     data_venda = models.DateTimeField(auto_now=True)
     tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Cartão')), default=1, blank=True)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
@@ -23,7 +24,7 @@ class Venda(models.Model):
     valor_final = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
-        ordering = ('-valor_venda', )
+        ordering = ('-valor_venda',)
         verbose_name = 'venda'
         verbose_name_plural = 'vendas'
 
@@ -48,8 +49,8 @@ class Venda(models.Model):
     def save(self, *args, **kwargs):
         # 20177V0001
         if self.cod_venda is "":
-            mes_em_curso = str(datetime.now().year) + str(datetime.now().month)
-            ultimo = '0000' if Venda.objects.last() is None else Venda.objects.order_by('cod_venda').last().cod_venda[-4:]
+            mes_em_curso = str(datetime.now().year) + str('%02d' % datetime.now().month)
+            ultimo = '0000' if Venda.objects.last() is None else Venda.objects.order_by('pk').last().cod_venda[-4:]
 
             ultimo = str(int(ultimo) + 1)
             while len(str(ultimo)) < 4:

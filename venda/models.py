@@ -11,7 +11,7 @@ from servico.models import Servico
 
 
 class Venda(models.Model):
-    cod_venda = models.CharField(max_length=10, blank=True, unique=True)
+    cod_venda = models.CharField(max_length=11, blank=True, unique=True)
     cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'), blank=True)

@@ -72,50 +72,48 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Serviços</h3>
                             <ul class="panel-controls">
+                                <div class="pull-left">
+                                    <label class="col-md-3 control-label">{{ form.cod_cliente.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        {{ form.cod_cliente }}
+                                    </div>
+                                </div>
+                                <div class="pull-left">
+                                    <label class="col-md-6 control-label">{{ form.desconto.label_tag }}</label>
+                                    <div class="col-md-6">
+                                        {{ form.desconto }}
+                                    </div>
+                                </div>
+                                <div class="pull-left">
+                                    <label class="col-md-3 control-label">{{ form.tipo.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        {{ form.tipo }}
+                                    </div>
+                                </div>
+                                <div class="pull-left">
+                                    <label class="col-md-6 control-label">{{ form.comanda.label_tag }}</label>
+                                    <div class="col-md-6">
+                                        <label class="switch">
+                                            {{ form.comanda }}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
                                 <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             </ul>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="form-group">
-                                    {{ form }}
+                                    {% for servico in form.servico %}
+                                    <div class="col-md-4">
+                                        {{ servico }}
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- START SWITCH BUTTONS
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Pagamento</h3>
-                            <ul class="panel-controls">
-                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">{{ form.comanda.label_tag }}</label>
-                                <div class="col-md-4">
-                                    <label class="switch">
-                                        {{ form.comanda }}
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">{{ form.desconto.label_tag }}</label>
-                                <div class="col-md-4">
-                                    {{ form.desconto }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">{{ form.tipo.label_tag }}</label>
-                                <div class="col-md-4">
-                                    {{ form.tipo }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        END SWITCH BUTTONS -->
                     <div class="panel-footer">
                         <button class="btn btn-default">Limpar Campos</button>
                         <button class="btn btn-primary pull-right" type="submit">Salvar</button>

@@ -31,5 +31,6 @@ class VendaGerenciaForm(forms.ModelForm):
             'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
             'tipo': forms.Select(attrs={'class': 'form-control'}),
             'comanda': forms.CheckboxInput(attrs={'class': 'switch-radio1'}),
-            'servico': forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'})
+            'servico': forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'}),
+            'desconto': forms.NumberInput(attrs={'class': 'form-control'}),
         }

@@ -5,6 +5,7 @@ from venda.models import Venda, ItensVenda
 
 
 class VendaGerenciaForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
 
         self.user = kwargs.pop('user')
@@ -20,17 +21,19 @@ class VendaGerenciaForm(forms.ModelForm):
                 del self.fields['cod_cliente']
             if not self.user.groups.filter(name="Caixa"):
                 del self.fields['tipo']
+        print(servicos.first().valor)
 
         self.fields['servico'].queryset = servicos
 
     class Meta:
 
         model = Venda
-        fields = ['cod_cliente', 'servico', 'tipo', 'comanda', 'desconto']
+        fields = ['cod_cliente', 'servico', 'tipo', 'comanda', 'desconto',  'data_pagamento']
         widgets = {
             'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
             'tipo': forms.Select(attrs={'class': 'form-control'}),
             'comanda': forms.CheckboxInput(attrs={'class': 'switch-radio1'}),
             'servico': forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'}),
             'desconto': forms.NumberInput(attrs={'class': 'form-control'}),
+            'data_pagamento': forms.DateInput(attrs={'data-date-format': 'dd-mm-yyyy', 'class': 'form-control'}),
         }

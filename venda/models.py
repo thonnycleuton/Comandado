@@ -1,7 +1,7 @@
 # encoding=utf-8
 from __future__ import unicode_literals
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -16,7 +16,8 @@ class Venda(models.Model):
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'),
                                      blank=True)
-    data_venda = models.DateTimeField(auto_now=True)
+    data_venda = models.DateTimeField(auto_now_add=True)
+    data_pagamento = models.DateTimeField(auto_now=False, default=datetime.today(), blank=True)
     tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Cartão')), default=1, blank=True)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     comanda = models.BooleanField(default=True, verbose_name="Comanda")
@@ -58,11 +59,14 @@ class Venda(models.Model):
             self.cod_venda = mes_em_curso + "V" + str(ultimo)
 
         self.valor_final = self.valor_venda - self.desconto
+        if self.tipo == 3:
+            self.data_pagamento = self.data_venda + timedelta(days=1)
 
         return super(Venda, self).save(*args, **kwargs)
 
 
 class ItensVenda(models.Model):
+
     cod_item = models.CharField(max_length=10, blank=True, )
     cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
     cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)

@@ -87,9 +87,9 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
 
-    # 'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
+    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
     # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
-    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/d5kooh20l13beb')
+    # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/d5kooh20l13beb')
 }
 
 # Password validation
@@ -119,7 +119,7 @@ TIME_ZONE = 'America/Fortaleza'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 

@@ -13,12 +13,11 @@ from servico.models import Servico
 class Venda(models.Model):
     cod_venda = models.CharField(max_length=11, blank=True, unique=True)
     cod_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     servico = models.ManyToManyField(Servico, through='ItensVenda', through_fields=('cod_venda', 'cod_servico'),
                                      blank=True)
     data_venda = models.DateTimeField(auto_now_add=True)
     data_pagamento = models.DateTimeField(auto_now=False, default=datetime.today(), blank=True)
-    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Cartão')), default=1, blank=True)
+    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Debito'), (4, 'Credito')), blank=True)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     comanda = models.BooleanField(default=True, verbose_name="Comanda")
     desconto = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
@@ -59,8 +58,13 @@ class Venda(models.Model):
             self.cod_venda = mes_em_curso + "V" + str(ultimo)
 
         self.valor_final = self.valor_venda - self.desconto
+
+        # se Pagamento for em Debito (3)
         if self.tipo == 3:
-            self.data_pagamento = self.data_venda + timedelta(days=1)
+            self.data_pagamento = datetime.today()
+        # se Pagamento for em Credito (4)
+        elif self.tipo == 4:
+            self.data_pagamento = datetime.today() + timedelta(days=30)
 
         return super(Venda, self).save(*args, **kwargs)
 
@@ -71,6 +75,7 @@ class ItensVenda(models.Model):
     cod_venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
     cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'item'

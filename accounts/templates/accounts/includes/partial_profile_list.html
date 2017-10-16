@@ -8,11 +8,8 @@
         <td><a href="{% url 'contas:alterar' perfil.id %}">{{ perfil.username }}</a></td>
         <td>{{ perfil.email }}</td>
         <td>{{ perfil.get_funcao_display }}</td>
+        <td>R$ {{ perfil.get_rendimento }}<td>
         {% if user.is_superuser %}
-            <td><a onclick="return confirm('Deseja realmente alterar esse privilegio?')" href="{% url 'contas:alterar_privilegio' perfil.id %}"><span {% if perfil.is_superuser %}class="fa fa-check" aria-hidden="true"
-                {% else %} class="fa fa-times" aria-hidden="true"
-                                  {% endif %}></span></a></td>
-            <td>
                 <a onclick="return confirm('Deseja realmente alterar esse status?')" href="{% url 'contas:alterar_status' perfil.id %}">
                 <span {% if perfil.is_active %}class="fa fa-check" aria-hidden="true"
                       {% else %} class="fa fa-times" aria-hidden="true"

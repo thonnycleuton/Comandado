@@ -21,6 +21,7 @@ def home(request):
     # pegando quanitdade de todos os clientes, nao filtrados por data
 
     clientes = Cliente.objects.all()
+    colaboradores = Profile.objects.all()
     quant_clientes = clientes.count()
     quant_clientes_novos = clientes.filter()
     gerencia = True if request.user.profile.groups.filter(name='Gerência').exists() else False
@@ -29,6 +30,7 @@ def home(request):
     context = {
         'gerencia': gerencia,
         'servicos': servico,
+        'colaboradores': colaboradores,
         'faturamento': faturamento,
         'data_atual': datetime.now(),
         'quant_clientes': quant_clientes,

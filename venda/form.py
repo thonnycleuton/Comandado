@@ -31,9 +31,9 @@ class VendaGerenciaForm(forms.ModelForm):
         fields = ['cod_cliente', 'servico', 'tipo', 'comanda', 'desconto',  'data_pagamento']
         widgets = {
             'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
-            'tipo': forms.Select(attrs={'class': 'form-control'}),
+            'tipo': forms.RadioSelect(),
             'comanda': forms.CheckboxInput(attrs={'class': 'switch-radio1'}),
             'servico': forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'}),
             'desconto': forms.NumberInput(attrs={'class': 'form-control'}),
-            'data_pagamento': forms.DateInput(attrs={'data-date-format': 'dd-mm-yyyy', 'class': 'form-control'}),
+            'data_pagamento': forms.DateInput(attrs={'data-date-format': 'dd-mm-yyyy', 'class': 'form-control datepicker'}),
         }

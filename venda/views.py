@@ -104,10 +104,11 @@ class VendaCreate(FormView):
 
     def form_valid(self, form):
         f = form.save(commit=False)
-        f.vendedor = self.request.user
         f.save()
         for item in self.request.POST.getlist('servico'):
-            ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
+            item_venda = ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
+            item_venda.vendedor = self.request.user
+            item_venda.save()
         return super(VendaCreate, self).form_valid(form)
 
 
@@ -166,13 +167,12 @@ class VendaUpdate(UpdateView):
         colaborador = self.request.user
 
         f = form.save(commit=False)
-        f.vendedor = self.request.user
         # checa se o campo comanda nao foi alterado por um colaborador da Gerencia ou do Caixa para fechar a Comanda
         if not 'comanda' in form.changed_data and colaborador.profile.groups.filter(
                 name__contains='Gerência') or colaborador.profile.groups.filter(name__contains='Caixa'):
             f.comanda = False
 
-        f.save()
+            f.save()
 
         remover = set(form.initial['servico']).difference(form.cleaned_data['servico'])
 
@@ -184,6 +184,7 @@ class VendaUpdate(UpdateView):
             # checa se o item de servico ja existe para inserir um novo item de servico à venda
             if not ItensVenda.objects.filter(cod_venda=f, cod_servico=Servico.objects.get(pk=field)).exists():
                 item_vendas = ItensVenda(cod_venda=f, cod_servico=Servico.objects.get(pk=field))
+                item_vendas.vendedor = self.request.user
                 item_vendas.save()
 
         return HttpResponseRedirect(self.get_success_url())

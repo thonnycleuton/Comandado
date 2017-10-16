@@ -47,4 +47,4 @@ class Profile(User):
         except:
             pass
 
-        return porcentagem
+        return int(porcentagem)

@@ -35,5 +35,5 @@ class VendaGerenciaForm(forms.ModelForm):
             'comanda': forms.CheckboxInput(attrs={'class': 'switch-radio1'}),
             'servico': forms.CheckboxSelectMultiple(attrs={'class': 'icheckbox'}),
             'desconto': forms.NumberInput(attrs={'class': 'form-control'}),
-            'data_pagamento': forms.DateInput(attrs={'data-date-format': 'dd-mm-yyyy', 'class': 'form-control datepicker'}),
+            'data_pagamento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
         }

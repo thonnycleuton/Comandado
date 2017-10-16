@@ -127,7 +127,7 @@
                                                 Todo - melhor maneira de nao mostrar a primeira opcao '---' -->
 
                                                 {% if not forloop.first %}
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <label class="check">{{ tipo }}</label>
                                                     </div>
                                                 {% endif %}
@@ -139,7 +139,7 @@
                                         <div class="block" >
                                             <div class="form-group" id="tipo-2" style="display: none;">
                                                 <label class="col-md-3 control-label">Dia do Pagamento</label>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="input-group" >
                                                         {{ form.data_pagamento }}
                                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>

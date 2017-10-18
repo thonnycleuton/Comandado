@@ -5,8 +5,8 @@
    Morris.Donut({
      element: 'chartContainer',
      data: [
-         {% for item in servicos %}
-             {label: "{{ item.nome }}", value: {{ item.get_faturamento }}},
+         {% for item in colaboradores %}
+             {label: "{{ item.first_name }}", value: {{ item.get_rendimento }}},
          {% endfor %}
      ],
        formatter: function (x, data) { return 'R$ ' + x },
@@ -18,12 +18,12 @@
    Morris.Bar({
        element: 'dashboard-bar-1',
        data: [
-           { y: 'Jan/17', a: 2000, b: 3500 },
-           { y: 'Fev/17', a: 1800, b: 1750 },
-           { y: 'Mar/17', a: 3500, b: 3050 },
-           { y: 'Mai/17', a: 5500, b: 5000 },
-           { y: 'Jun/17', a: 1980, b: 1580 },
-           { y: 'Jul/17', a: 4200, b: 3250 },
+           { y: 'Mai/17', a: 2000, b: 3500 },
+           { y: 'Jun/17', a: 1800, b: 1750 },
+           { y: 'Jul/17', a: 3500, b: 3050 },
+           { y: 'Ago/17', a: 5500, b: 5000 },
+           { y: 'Set/17', a: 10800, b: 123500 },
+           { y: 'Out/17', a: {{ meta_geral }}, b: {{ faturamento }} },
        ],
        xkey: 'y',
        ykeys: ['a', 'b'],
@@ -124,7 +124,7 @@
                   <i class="icon fa fa-shopping-cart"></i>
                </p>
                <h4 class="value">
-                  <span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">189</span><span>$</span>
+                  <span>R$ </span><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">189</span>
                </h4>
                <p class="description">
                   Entradas
@@ -144,7 +144,7 @@
                   <i class="icon fa fa-money"></i>
                </p>
                <h4 class="value">
-                  <span>812</span><span>$</span>
+                  <span>R$ </span><span>812</span>
                </h4>
                <p class="description">
                   Saidas
@@ -164,6 +164,7 @@
                   <i class="icon fa fa-signal"></i>
                </p>
                <h4 class="value">
+                  <span>R$ </span>
                   <span>155</span>
                </h4>
                <p class="description">
@@ -199,7 +200,7 @@
       </div>
    </div>
    <div class="row">
-      <div class="col-md-4">
+       <div class="col-md-4">
          <!-- START USERS ACTIVITY BLOCK -->
          <div class="panel panel-default">
             <div class="panel-heading">
@@ -225,7 +226,7 @@
          </div>
          <!-- END USERS ACTIVITY BLOCK -->
       </div>
-      <div class="col-md-4">
+       <div class="col-md-4">
          <!-- START VISITORS BLOCK -->
          <div class="panel panel-default">
             <div class="panel-heading">
@@ -252,7 +253,7 @@
          </div>
          <!-- END VISITORS BLOCK -->
       </div>
-      <div class="col-md-4">
+       <div class="col-md-4">
          <!-- START PROJECTS BLOCK -->
          <div class="panel panel-default">
             <div class="panel-heading">

@@ -13,7 +13,9 @@ from cliente.models import Cliente
 
 @login_required(login_url=settings.LOGIN_URL)
 def home(request):
+
     faturamento = 0
+    meta_geral = 0
 
     servico = Servico.objects.all()
     id_usuario = request.user.id
@@ -25,8 +27,13 @@ def home(request):
     quant_clientes = clientes.count()
     quant_clientes_novos = clientes.filter()
     gerencia = True if request.user.profile.groups.filter(name='Gerência').exists() else False
+
     for s in servico:
         faturamento += s.get_faturamento()
+
+    for colaborador in colaboradores:
+        meta_geral += colaborador.meta
+
     context = {
         'gerencia': gerencia,
         'servicos': servico,
@@ -35,5 +42,6 @@ def home(request):
         'data_atual': datetime.now(),
         'quant_clientes': quant_clientes,
         'perfil': perfil,
+        'meta_geral': meta_geral,
     }
     return render(request, 'index.html', context)

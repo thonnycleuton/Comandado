@@ -17,7 +17,7 @@ class Venda(models.Model):
                                      blank=True)
     data_venda = models.DateTimeField(auto_now_add=True)
     data_pagamento = models.DateTimeField(auto_now=False, default=datetime.today(), blank=True)
-    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Debito'), (4, 'Credito')), blank=True)
+    tipo = models.IntegerField(choices=((1, 'A vista'), (2, 'Prazo'), (3, 'Debito'), (4, 'Credito')), blank=True, null=True)
     valor_venda = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     comanda = models.BooleanField(default=True, verbose_name="Comanda")
     desconto = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
@@ -65,6 +65,8 @@ class Venda(models.Model):
         # se Pagamento for em Credito (4)
         elif self.tipo == 4:
             self.data_pagamento = datetime.today() + timedelta(days=30)
+        if self.tipo == '':
+            self.tipo = None
 
         return super(Venda, self).save(*args, **kwargs)
 
@@ -76,6 +78,7 @@ class ItensVenda(models.Model):
     cod_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
+    desconto = models.DecimalField(max_digits=4, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = 'item'
@@ -95,6 +98,8 @@ class ItensVenda(models.Model):
             self.cod_item = "IV" + ultimo
 
         self.valor = Servico.objects.get(pk=self.cod_servico.id).valor
+        self.valor -= self.desconto
+
         super(ItensVenda, self).save(*args, **kwargs)
         Venda.update_valores(Venda.objects.get(pk=self.cod_venda.pk))
 

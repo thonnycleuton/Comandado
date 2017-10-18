@@ -1,13 +1,14 @@
 from datetime import datetime, timedelta
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template.loader import render_to_string
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
 
 from accounts.models import Profile
 from servico.models import Servico
-from venda.form import VendaGerenciaForm
+from venda.form import VendaGerenciaForm, ItensFormView
 from .models import Venda, ItensVenda
 from estetica import settings
 from django.utils.decorators import method_decorator
@@ -105,9 +106,10 @@ class VendaCreate(FormView):
     def form_valid(self, form):
         f = form.save(commit=False)
         f.save()
+
         for item in self.request.POST.getlist('servico'):
-            item_venda = ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item))
-            item_venda.vendedor = self.request.user
+            item_venda = ItensVenda.objects.create(cod_venda=f, cod_servico=Servico.objects.get(pk=item),
+                                                   vendedor=self.request.user)
             item_venda.save()
         return super(VendaCreate, self).form_valid(form)
 
@@ -172,7 +174,7 @@ class VendaUpdate(UpdateView):
                 name__contains='Gerência') or colaborador.profile.groups.filter(name__contains='Caixa'):
             f.comanda = False
 
-            f.save()
+        f.save()
 
         remover = set(form.initial['servico']).difference(form.cleaned_data['servico'])
 
@@ -194,3 +196,19 @@ class VendaUpdate(UpdateView):
 class VendaDelete(DeleteView):
     model = Venda
     success_url = reverse_lazy('vendas:list')
+
+
+@method_decorator(login_required, name='dispatch')
+class ItemVendaUpdate(UpdateView):
+    model = ItensVenda
+    template_name = 'venda/itensvenda_form.html'
+    form_class = ItensFormView
+
+    def dispatch(self, *args, **kwargs):
+        self.item_id = kwargs['pk']
+        return super(ItemVendaUpdate, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        form.save()
+        item = ItensVenda.objects.get(id=self.item_id)
+        return HttpResponseRedirect(self.get_success_url())

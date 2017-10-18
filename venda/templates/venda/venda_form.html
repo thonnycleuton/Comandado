@@ -40,34 +40,37 @@
                             </ul>
                         </div>
                         <div class="panel-body">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered text-center">
                                 <thead>
                                     <tr>
-                                        <th>Item</th>
+                                        <th width="20">Item</th>
                                         <th>Serviço</th>
-                                        <th>Valor</th>
+                                        <th width="20">Desconto</th>
+                                        <th width="20">Valor</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for item in object.servico.all %}
+                                    {% for item in venda.itensvenda_set.all %}
                                         <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ item }}</td>
+                                            <td><a href="{% url 'vendas:item_editar' item.pk %}">{{ forloop.counter }}</a></td>
+                                            <td>{{ item.cod_servico }}</td>
+                                            {% if item.desconto %}
+                                                <td>{{ item.desconto }}</td>
+                                            {% else %}
+                                                <td>—</td>
+                                            {% endif %}
                                             <td>{{ item.valor }}</td>
                                         </tr>
                                     {% endfor %}
                                     <tr>
                                         <td><b>Subtotal</b></td>
                                         <td></td>
-                                        <td>{{ object.valor_venda }}</td>
-                                    </tr>
-                                    <tr class="bg-danger">
-                                        <td><b>Desconto</b></td>
                                         <td></td>
-                                        <td>{{ object.desconto }}</td>
+                                        <td>{{ object.valor_venda }}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Total</b></td>
+                                        <td></td>
                                         <td></td>
                                         <td>{{ object.valor_final }}</td>
                                     </tr>
@@ -176,6 +179,21 @@
         </div>
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
+
+    <!-- warning -->
+    <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+        <div class="mb-container">
+            <div class="mb-middle">
+                <div class="mb-title"><span class="fa fa-warning"></span> Warning</div>
+                <div class="mb-content">
+                    <p>O Formulario contem erros. Por favor, verifique-os totalmente. Obrigado.</p>
+                </div>
+                <div class="mb-footer">
+                    <button class="btn btn-default btn-lg pull-right mb-control-close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascript %}
     <script>

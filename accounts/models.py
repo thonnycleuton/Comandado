@@ -11,7 +11,7 @@ class Profile(User):
     foto = models.ImageField(upload_to='users', default='no-image-box.png', blank=True)
     funcao = models.IntegerField(choices=FUNCAO, default=None)
     telefone = models.CharField(max_length=15)
-    meta = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    meta = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # data_nascimento = models.DateField()
 
     def __str__(self):

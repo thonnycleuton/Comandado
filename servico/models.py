@@ -23,7 +23,7 @@ class Servico(models.Model):
         ordering = ('categoria',)
 
     def __str__(self):
-        return self.nome
+        return str(self.nome) + " - (" + str(self.valor) + ")"
 
     def get_faturamento(self):
         from venda.models import ItensVenda

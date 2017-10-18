@@ -5,7 +5,6 @@ from venda.models import Venda, ItensVenda
 
 
 class VendaGerenciaForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
 
         self.user = kwargs.pop('user')
@@ -28,7 +27,7 @@ class VendaGerenciaForm(forms.ModelForm):
     class Meta:
 
         model = Venda
-        fields = ['cod_cliente', 'servico', 'tipo', 'comanda', 'desconto',  'data_pagamento']
+        fields = ['cod_cliente', 'servico', 'tipo', 'comanda', 'desconto', 'data_pagamento']
         widgets = {
             'cod_cliente': forms.Select(attrs={'class': 'form-control'}),
             'tipo': forms.RadioSelect(),
@@ -37,3 +36,12 @@ class VendaGerenciaForm(forms.ModelForm):
             'desconto': forms.NumberInput(attrs={'class': 'form-control'}),
             'data_pagamento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
         }
+
+
+class ItensFormView(forms.ModelForm):
+
+    desconto = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = ItensVenda
+        fields = ['desconto']

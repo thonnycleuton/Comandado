@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, FormView
@@ -211,4 +212,4 @@ class ItemVendaUpdate(UpdateView):
     def form_valid(self, form):
         form.save()
         item = ItensVenda.objects.get(id=self.item_id)
-        return HttpResponseRedirect(self.get_success_url())
+        return redirect('vendas:edite', item.cod_venda_id)

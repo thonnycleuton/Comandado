@@ -25,6 +25,20 @@
 
                 <form class="form-horizontal" method="post" action="">
                     {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <div class="panel panel-default panel-toggled">
                         <div class="panel-heading">
                             <h3 class="panel-title">Resumo da Venda</h3>
@@ -149,22 +163,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- END DATE AND TIME PICKER -->
-                                            <!--
-                                            <div class="form-group" id="tipo-3" style="display: none;">
-                                                <div class="col-md-4">
-                                                    <div class="input-group" >
-                                                        <label class="check"><input type="radio" class="iradio" name="iradio" value="1"/> Debito</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group" >
-                                                        <label class="check"><input type="radio" class="iradio" name="iradio" value="2"/> Credito</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            -->
                                         </div>
+                                        <!-- END DATE AND TIME PICKER -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">As component</label>
+                                        <div class="col-md-5">
+                                            <div class="input-group date" id="dp-2" data-date="05-07-2014" data-date-format="dd-mm-yyyy">
+                                                <input type="text" class="form-control" value="05-07-2014" disabled="disabled"/>
+                                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

@@ -92,10 +92,3 @@ class Produto(models.Model):
 
     def __unicode__(self):
         return self.nome
-
-
-class Fluxo(models.Model):
-
-    valor = models.DecimalField(max_digits=11, decimal_places=2, default=0)
-    data = models.DateTimeField()
-    codigo_evento = models.CharField(max_length=20)

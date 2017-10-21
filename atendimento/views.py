@@ -24,6 +24,7 @@ def home(request):
 
     clientes = Cliente.objects.all()
     colaboradores = Profile.objects.all()
+    # colaboradores = Profile.objects.exclude(groups__name__contains='Gerência')
     quant_clientes = clientes.count()
     quant_clientes_novos = clientes.filter()
     gerencia = True if request.user.profile.groups.filter(name='Gerência').exists() else False

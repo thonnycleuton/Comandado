@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cliente',
     'servico',
     'venda',
+    'fluxo',
     'search',
 ]
 
@@ -87,9 +88,9 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
+    # 'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
     # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
-    # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/d5kooh20l13beb')
+    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/d5kooh20l13beb')
 }
 
 # Password validation
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/Fortaleza'
+TIME_ZONE = 'America/Recife'
 
 USE_I18N = True
 

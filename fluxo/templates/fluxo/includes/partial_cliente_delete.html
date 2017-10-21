@@ -1,0 +1,15 @@
+<form method="post" action="{% url 'clientes:delete' cliente.id %}" class="js-book-delete-form">
+    {% csrf_token %}
+    <div class="mb-middle">
+        <div class="mb-title"><span class="fa fa-trash-o"></span><strong>Excluindo</strong></div>
+        <div class="mb-content">
+            <p>Tem certeza que deseja excluir <strong>{{ cliente.username }}</strong>?</p>
+        </div>
+        <div class="mb-footer">
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary btn-lg pull-right" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-default btn-lg pull-right">Prosseguir</button>
+            </div>
+        </div>
+    </div>
+</form>

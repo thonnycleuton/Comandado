@@ -16,7 +16,7 @@
                 <!-- START DEFAULT DATATABLE -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Clientes</h3>
+                        <h3 class="panel-title">Movimentacao</h3>
                         <ul class="panel-controls">
                             <li><a href="{% url 'movimentacao:novo' %}"><span class="fa fa-plus"></span></a></li>
                             <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
@@ -29,16 +29,16 @@
                         <table class="table datatable" id="tabela">
                             <thead>
                                 <tr>
-                                    <th width="40"></th>
-                                    <th>Nome</th>
-                                    <th>email</th>
-                                    <th>Consumo R$</th>
-                                    <th>Ativo</th>
-                                    <th>Apagar</th>
+                                    <th>Codigo</th>
+                                    <th>data</th>
+                                    <th>tipo</th>
+                                    <th>Fonte/Destino</th>
+                                    <th>Observacao</th>
+                                    <th>valor</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% include 'cliente/includes/partial_cliente_list.html' %}
+                            {% include 'fluxo/includes/movimentacao/partial_list.html' %}
                             </tbody>
                         </table>
                         <!-- warning -->

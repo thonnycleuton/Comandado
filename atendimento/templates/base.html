@@ -45,16 +45,21 @@
                         </div>                                                                        
                     </li>
                     <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
-                    <li class="active">
+                    {% if user.profile.is_gerente %}
+                        <li><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
+                        <li class="xn-openable">
+                            <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
+                            <ul>
+                                <li><a href="{% url 'movimentacao:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Movimentação</span></a></li>
+                                <li><a href="{% url 'movimentacao:tipo_list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Evento</span></a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a></li>
+                        <li><a href="{% url 'servicos:list' %}"><span class="fa fa-server"></span> <span class="xn-text">Servicos</span></a></li>
+                        <li><a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a></li>
+                    {% endif %}
+                    <li class="active"><a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a></li>
 
-                        {% if user.profile.is_gerente %}
-                            <a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a>
-                            <a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a>
-                            <a href="{% url 'servicos:list' %}"><span class="fa fa-server"></span> <span class="xn-text">Servicos</span></a>
-                            <a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a>
-                        {% endif %}
-                        <a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a>
-                    </li>
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>

@@ -7,6 +7,7 @@ from django.db import models
 
 # Create your models here.
 from cliente.models import Cliente
+from fluxo.models import Movimentacao
 from servico.models import Servico
 
 
@@ -59,13 +60,17 @@ class Venda(models.Model):
 
         self.valor_final = self.valor_venda - self.desconto
 
-        # se Pagamento for em Debito (3)
-        if self.tipo == 3:
-            self.data_pagamento = datetime.today()
-        # se Pagamento for em Credito (4)
-        elif self.tipo == 4:
-            self.data_pagamento = datetime.today() + timedelta(days=30)
-        if self.tipo == '':
+        # se venda for a vista, lanca-se uma entrada com os dados da venda
+        if self.tipo == 1:
+            movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda, tipo_id=11, user_id=1)[0]
+            movimentacao.valor = self.valor_final
+            movimentacao.save()
+
+        # se Pagamento for em Debito (3) ou Credito (4)
+        if self.tipo == 3 or self.tipo == 4:
+            self.data_pagamento = datetime.today() + timedelta(days=1)
+        # se Pagamento nao for setado
+        elif self.tipo == '':
             self.tipo = None
 
         return super(Venda, self).save(*args, **kwargs)

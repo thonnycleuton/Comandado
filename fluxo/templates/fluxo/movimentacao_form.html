@@ -25,7 +25,54 @@
                     {% endif %}
                     <div class="panel panel-default tabs">
                         <div class="panel-body tab-content">
-                            {{ form }}
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.tipo.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-bill"></span></span>
+                                                {{ form.tipo }}
+                                            </div>
+                                            <label id="age-error" class="error" for="age">{{ form.tipo.errors }}</label>
+                                            <span class="help-block">{{ form.tipo.help_text }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.valor.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.valor }}
+                                            </div>
+                                            <label id="age-error" class="error" for="age">{{ form.valor.errors }}</label>
+                                            <span class="help-block">{{ form.valor.help_text }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.fonte_destino.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.fonte_destino }}
+                                            </div>
+                                            <label id="age-error" class="error" for="age">{{ form.fonte_destino.errors }}</label>
+                                            <span class="help-block">{{ form.fonte_destino.help_text }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">{{ form.observacao.label_tag }}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                {{ form.observacao }}
+                                            </div>
+                                            <label id="age-error" class="error" for="age">{{ form.observacao.errors }}</label>
+                                            <span class="help-block">{{ form.observacao.help_text }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-primary pull-right">Salvar<span class="fa fa-floppy-o fa-right"></span></button>

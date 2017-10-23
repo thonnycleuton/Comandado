@@ -16,9 +16,9 @@
                 <!-- START DEFAULT DATATABLE -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Clientes</h3>
+                        <h3 class="panel-title">Tipo</h3>
                         <ul class="panel-controls">
-                            <li><a href="{% url 'movimentacao:novo' %}"><span class="fa fa-plus"></span></a></li>
+                            <li><a href="{% url 'movimentacao:tipo_novo' %}"><span class="fa fa-plus"></span></a></li>
                             <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                             <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
@@ -29,16 +29,13 @@
                         <table class="table datatable" id="tabela">
                             <thead>
                                 <tr>
-                                    <th width="40"></th>
                                     <th>Nome</th>
-                                    <th>email</th>
-                                    <th>Consumo R$</th>
-                                    <th>Ativo</th>
-                                    <th>Apagar</th>
+                                    <th>Vencimento</th>
+                                    <th>Tipo</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% include 'cliente/includes/partial_cliente_list.html' %}
+                            {% include 'fluxo/includes/partial_tipo_list.html' %}
                             </tbody>
                         </table>
                         <!-- warning -->

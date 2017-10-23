@@ -62,7 +62,7 @@ class Venda(models.Model):
 
         # se venda for a vista, lanca-se uma entrada com os dados da venda
         if self.tipo == 1:
-            movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda, tipo_id=11, user_id=1)[0]
+            movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda, tipo_id=4, user_id=1)[0]
             movimentacao.valor = self.valor_final
             movimentacao.save()
 

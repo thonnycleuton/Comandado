@@ -85,7 +85,7 @@
                                         <td>{{ venda.cod_venda }}</td>
                                         <td>{{ venda.cod_cliente }}</td>
                                         <td>{{ venda.data_venda }}</td>
-                                        <td>{% if venda.tipo == 1 %}À vista{% else %}Prazo{% endif %}
+                                        <td>{{ venda.get_tipo_display }}</td>
                                         <td>R$ {{ venda.valor_final }}</td>
                                         <td>R$ {{ venda.desconto }}</td>
                                         <td>{% if venda.comanda == True %}Aberta{% else %}Fechada{% endif %}</td>

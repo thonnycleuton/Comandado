@@ -4,7 +4,7 @@ from django.db import models
 
 class Tipo(models.Model):
     nome = models.CharField(max_length=20)
-    vencimento = models.DateField(verbose_name='vencimento',help_text='Dia do mes para um vencimento fixo')
+    # vencimento = models.DateField(verbose_name='vencimento',help_text='Dia do mes para um vencimento fixo')
     tipo = models.IntegerField(choices=((1, 'Entrada'), (2, 'Saida')))
 
     def __str__(self):

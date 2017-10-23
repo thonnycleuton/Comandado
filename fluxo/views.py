@@ -20,6 +20,7 @@ class CreateMovimentacao(CreateView):
 
         f = form.save(commit=False)
         f.user = self.request.user
+        f.valor = f.valor * (-1) if f.tipo.tipo == 2 else f.valor
         f.save()
         return super(CreateMovimentacao, self).form_valid(form)
 

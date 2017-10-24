@@ -30,9 +30,11 @@ class Profile(User):
 
         return gerencia
 
-    def get_rendimento(self, initial):
+    def get_rendimento(self, initial=None):
 
         faturamento = 0
+        if initial is None:
+            initial = datetime.today().replace(day=1)
 
         for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.today())):
             faturamento += vendas.valor

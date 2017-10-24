@@ -20,6 +20,8 @@ $(function(){
             endDate: moment()            
           },function(start, end) {
               $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+              //codigo entra aqui
+              alert("HUgo foi gay nessas datas: " + start + " | " + end);
         });
         
         $("#reportrange span").html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));

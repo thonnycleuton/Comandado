@@ -6,7 +6,7 @@
      element: 'chartContainer',
      data: [
          {% for item in colaboradores %}
-             {label: "{{ item.first_name }}", value: {{ item.get_rendimento }}},
+             {label: "{{ item.first_name }}", value: {{ item.get_rendimento|safe }}},
          {% endfor %}
      ],
        formatter: function (x, data) { return 'R$ ' + x },
@@ -23,7 +23,7 @@
            { y: 'Jul/17', a: 3500, b: 3050 },
            { y: 'Ago/17', a: 5500, b: 5000 },
            { y: 'Set/17', a: 10800, b: 123500 },
-           { y: 'Out/17', a: {{ meta_geral }}, b: {{ faturamento }} },
+           { y: 'Out/17', a: {{ meta_geral|safe }}, b: {{ faturamento|safe }} },
        ],
        xkey: 'y',
        ykeys: ['a', 'b'],
@@ -270,7 +270,6 @@
                        </div>
                    </li>
                    <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                   <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                    <li class="dropdown">
                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
                        <ul class="dropdown-menu">

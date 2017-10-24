@@ -1,4 +1,6 @@
 import re
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -28,11 +30,11 @@ class Profile(User):
 
         return gerencia
 
-    def get_rendimento(self):
+    def get_rendimento(self, initial):
 
         faturamento = 0
 
-        for vendas in ItensVenda.objects.filter(vendedor=self.id):
+        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.today())):
             faturamento += vendas.valor
 
         return faturamento

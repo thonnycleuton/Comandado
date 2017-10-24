@@ -17,6 +17,31 @@
                         </ul>
                     </div>
                     <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="#" class="tile tile-default">
+                                {{ vendas_hoje }}
+                                <p>Hoje</p>
+                                <div class="informer informer-primary">{{ today }}</div>
+                                <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="tile tile-primary">
+                                {{ vendas_semana }}
+                                <p>Semanal</p>
+                                <div class="informer informer-default"><span class="fa fa-shopping-cart"></span></div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="tile tile-default">
+                                {{ vendas_mes }}
+                                <p>Mensal</p>
+                                <div class="informer informer-primary">08.09.14</div>
+                                <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+                            </a>
+                        </div>
+                    </div>
 
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">{{ form.first_name.label_tag }}</label>

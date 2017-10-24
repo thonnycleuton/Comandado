@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -74,6 +75,21 @@ class UpdatePerfil(UpdateView):
     model = Profile
     form_class = ProfileForm
     success_url = reverse_lazy('contas:list')
+
+    def get_context_data(self, **kwargs):
+
+        context = super(UpdatePerfil, self).get_context_data(**kwargs)
+        colaborador = context['object']
+        today = datetime.date.today()
+        segunda = today - datetime.timedelta(today.weekday())
+        primeiro_do_mes = today.replace(day=1)
+
+        context['today'] = today
+        context['vendas_hoje'] = colaborador.get_rendimento(today)
+        context['vendas_semana'] = colaborador.get_rendimento(segunda)
+        context['vendas_mes'] = colaborador.get_rendimento(primeiro_do_mes)
+
+        return context
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.

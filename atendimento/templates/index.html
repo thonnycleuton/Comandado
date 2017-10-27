@@ -223,7 +223,7 @@
                </ul>
             </div>
             <div class="panel-body padding-0">
-               <div class="chart-holder" id="dashboard-bar-1" style="height: 200px;"></div>
+               <div class="chart-holder" id="dashboard-bar-1" style="height: 373px;"></div>
             </div>
          </div>
          <!-- END USERS ACTIVITY BLOCK -->
@@ -250,7 +250,7 @@
             </div>
             <div class="panel-body padding-0">
                {{ total_vendas }}
-               <div class="chart-holder" id="chartContainer" style="height: 200px;"></div>
+               <div class="chart-holder" id="chartContainer" style="height: 373px;"></div>
             </div>
          </div>
          <!-- END VISITORS BLOCK -->
@@ -261,14 +261,8 @@
             <div class="panel-heading">
                <div class="panel-title-box">
                   <h3>Desempenho</h3>
-                  <span>Alcance mensal de metas por colaborador</span>
                </div>
                <ul class="panel-controls" style="margin-top: 2px;">
-                   <li>
-                       <div id="reportrange" class="dtrange">
-                           <span></span><b class="caret"></b>
-                       </div>
-                   </li>
                    <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
                    <li class="dropdown">
                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
@@ -284,21 +278,36 @@
                   <table class="table table-bordered table-striped">
                      <thead>
                         <tr>
-                           <th width="50%">Colaborador</th>
-                           <th width="20%">Status</th>
-                           <th width="30%">Atividade</th>
+                           <th width="20%">Colaborador</th>
+                           <th width="40%">Semanal</th>
+                           <th width="40%">Mensal</th>
                         </tr>
                      </thead>
                      <tbody>
                         {% for colaborador in colaboradores %}
                         <tr>
-                           <td><strong>{{ colaborador.first_name }}</strong></td>
-                           <!--<td><span class="label label-danger">{{ colaborador.get_rendimento }}</span></td>-->
-                           <td><span class="label label-default">R$ {{ colaborador.get_rendimento }}</span></td>
                            <td>
-                              <div class="progress progress-small progress-striped active">
-                                 <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ colaborador.get_rendimento_porcentagem }}%;">{{ colaborador.get_rendimento_porcentagem }}%</div>
-                              </div>
+                               <div class="pull-left"><strong>{{ colaborador.first_name }}</strong></div>
+                           </td>
+                           <td style="padding: 0" width="300">
+                               <a href="#" class="tile tile-primary" style="margin-bottom: 0; min-height: 0">
+                                   <div class="pull-right" style="font-size:20px; margin-top:8px; margin-bottom:-10px">{{ colaborador.get_rendimento_semanal }}</div>
+                                   <div class="progress progress-small" style="margin: -10px">
+                                       <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ colaborador.get_rendimento_porcentagem_semanal }}%;">80%</div>
+                                   </div>
+                                   <div class="informer informer-warning">{{ colaborador.get_rendimento_porcentagem_semanal }}%</div>
+                                   <div class="informer informer-default dir-tr">R$ {{ colaborador.get_meta_semanal }}</div>
+                                </a>
+                           </td>
+                           <td style="padding: 0">
+                               <a href="#" class="tile tile-primary" style="margin-bottom: 0; min-height: 0">
+                                   <div class="pull-right" style="font-size:20px; margin-top:8px; margin-bottom:-10px">{{ colaborador.get_rendimento }}</div>
+                                   <div class="progress progress-small" style="margin: -10px">
+                                       <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ colaborador.get_rendimento_porcentagem }}%;">80%</div>
+                                   </div>
+                                   <div class="informer informer-warning">{{ colaborador.get_rendimento_porcentagem }}%</div>
+                                   <div class="informer informer-default dir-tr">R$ {{ colaborador.meta }}</div>
+                                </a>
                            </td>
                         </tr>
                         {% endfor %}

@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -30,16 +30,27 @@ class Profile(User):
 
         return gerencia
 
+    def get_meta_semanal(self):
+
+        return self.meta/4
+
     def get_rendimento(self, initial=None):
 
         faturamento = 0
         if initial is None:
-            initial = datetime.today().replace(day=1)
+            initial = datetime.date.today().replace(day=1)
 
-        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.today())):
+        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.date.today())):
             faturamento += vendas.valor
 
         return faturamento
+
+    def get_rendimento_diario(self):
+        return self.get_rendimento(datetime.date.today())
+
+    def get_rendimento_semanal(self):
+        segunda = datetime.date.today() - datetime.timedelta(datetime.date.today().weekday())
+        return self.get_rendimento(segunda)
 
     def get_rendimento_porcentagem(self):
 
@@ -50,5 +61,14 @@ class Profile(User):
             porcentagem = (rendimento * 100)/self.meta
         except:
             pass
+
+        return int(porcentagem)
+
+    def get_rendimento_porcentagem_semanal(self):
+
+        rendimento = self.get_rendimento_semanal()
+        porcentagem = 0
+
+        porcentagem = (rendimento * 100)/(self.meta/4)
 
         return int(porcentagem)

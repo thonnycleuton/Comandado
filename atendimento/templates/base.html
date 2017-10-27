@@ -44,22 +44,22 @@
                             </div>
                         </div>                                                                        
                     </li>
-                    <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
-                    {% if user.profile.is_gerente %}
-                        <li><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
-                        <li class="xn-openable">
-                            <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
-                            <ul>
-                                <li><a href="{% url 'movimentacao:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Movimentação</span></a></li>
-                                <li><a href="{% url 'movimentacao:tipo_list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Evento</span></a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a></li>
-                        <li><a href="{% url 'servicos:list' %}"><span class="fa fa-server"></span> <span class="xn-text">Servicos</span></a></li>
-                        <li><a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a></li>
-                    {% endif %}
-                    <li class="active"><a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a></li>
 
+                    <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
+                        {% if user.profile.is_gerente %}
+                            <li><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
+                            <li class="xn-openable">
+                                <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
+                                <ul>
+                                    <li><a href="{% url 'movimentacao:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Movimentação</span></a></li>
+                                    <li><a href="{% url 'movimentacao:tipo_list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Evento</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a></li>
+                            <li><a href="{% url 'servicos:list' %}"><span class="fa fa-server"></span> <span class="xn-text">Servicos</span></a></li>
+                            <li><a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a></li>
+                        {% endif %}
+                    <li class="active"><a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a></li>
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -203,7 +203,7 @@
         <script type="text/javascript" src="{% static 'js/plugins/rickshaw/rickshaw.min.js' %}"></script>
         <script type='text/javascript' src='{% static 'js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js' %}'></script>
         <script type='text/javascript' src='{% static 'js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}'></script>
-        <script type='text/javascript' src='{% static 'js/plugins/bootstrap/bootstrap-datepicker.js' %}'></script>
+        <script type='text/javascript' src='{% static 'js/plugins/bootstrap/bootstrap-datepicker.js' %}'></script   >
         <script type="text/javascript" src="{% static 'js/plugins/owl/owl.carousel.min.js' %}"></script>
 
         <script type="text/javascript" src="{% static 'js/plugins/moment.min.js' %}"></script>
@@ -215,7 +215,6 @@
 
         <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/actions.js' %}"></script>
-
         <script type="text/javascript" src="{% static 'js/demo_dashboard.js' %}"></script>
 
         <!-- END TEMPLATE -->

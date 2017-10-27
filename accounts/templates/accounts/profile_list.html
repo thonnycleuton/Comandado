@@ -12,6 +12,35 @@
                         <div class="profile-image">
                             <img src="/media/{{ perfil_list.foto }}" alt="{{ user }}"/>
                         </div>
+                        <div class="col-md-4">
+                            <a href="#" class="tile tile-success tile-valign">{{ vendas_hoje }}
+                                <div class="informer informer-default dir-tr">{{ perfil_list.meta }}</div>
+                                <div class="informer informer-default dir-bl">Diário</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" class="tile tile-success tile-valign">{{ vendas_semana }}
+                                <div class="informer informer-default dir-tr">{{ perfil_list.meta }}</div>
+                                <div class="informer informer-default dir-bl">Semanal</div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+
+                            <div class="widget widget-info widget-padding-sm">
+                                <div class="widget-item-left">
+                                    <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="80%" data-readOnly="true" data-thickness=".2"/>
+                                </div>
+                                <div class="widget-data">
+                                    <div class="widget-big-int"><span class="num-count">80</span>%</div>
+                                    <div class="widget-title">Disk Space</div>
+                                    <div class="widget-subtitle">Total free space</div>
+                                </div>
+                                <div class="widget-controls">
+                                    <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="profile-data">
                             <div class="profile-data-name">{{ perfil_list }}</div>
                             <div class="profile-data-title">{{ perfil_list.email }}</div>

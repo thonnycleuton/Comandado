@@ -52,6 +52,23 @@ class ListPerfil(ListView):
         queryset = queryset.get(pk=self.request.user.id)
         return queryset
 
+    def get_context_data(self, **kwargs):
+
+        context = super(ListPerfil, self).get_context_data(**kwargs)
+        colaborador = context['object_list']
+        today = datetime.date.today()
+        segunda = today - datetime.timedelta(today.weekday())
+        primeiro_do_mes = today.replace(day=1)
+
+        context['today'] = today
+        context['vendas_hoje'] = colaborador.get_rendimento(today)
+        context['vendas_semana'] = colaborador.get_rendimento(segunda)
+        context['meta_semana'] = colaborador.meta
+        context['vendas_mes'] = colaborador.get_rendimento(primeiro_do_mes)
+        context['meta_mes'] = colaborador.meta
+
+        return context
+
 
 class ListPerfis(ListView):
     model = Profile

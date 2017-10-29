@@ -40,13 +40,14 @@ class Profile(User):
         if initial is None:
             initial = datetime.date.today().replace(day=1)
 
-        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.date.today())):
+        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.date.today() + datetime.timedelta(days=1))):
             faturamento += vendas.valor
 
         return faturamento
 
     def get_rendimento_diario(self):
-        return self.get_rendimento(datetime.date.today())
+        amount = self.get_rendimento(datetime.date.today())
+        return amount
 
     def get_rendimento_semanal(self):
         segunda = datetime.date.today() - datetime.timedelta(datetime.date.today().weekday())

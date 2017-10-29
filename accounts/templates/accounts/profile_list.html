@@ -13,10 +13,14 @@
                             <img src="/media/{{ perfil_list.foto }}" alt="{{ user }}"/>
                         </div>
                         <div class="col-md-4">
-                            <a href="#" class="tile tile-success tile-valign">{{ vendas_hoje }}
-                                <div class="informer informer-default dir-tr">{{ perfil_list.meta }}</div>
-                                <div class="informer informer-default dir-bl">Diário</div>
-                            </a>
+                            <a href="#" class="tile tile-primary" style="margin-bottom: 0; min-height: 0">
+                                   <div class="pull-right" style="margin-top:8px; margin-bottom:-10px">{{ perfil_list.get_rendimento_diario }}</div>
+                                   <div class="progress progress-small" style="margin: -10px">
+                                       <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ perfil_list.get_rendimento_porcentagem_semanal }}%;">80%</div>
+                                   </div>
+                                   <div class="informer informer-warning">{{ perfil_list.get_rendimento_porcentagem_semanal }}%</div>
+                                   <div class="informer informer-default dir-tr">R$ {{ perfil_list.get_meta_semanal }}</div>
+                                </a>
                         </div>
                         <div class="col-md-4">
                             <a href="#" class="tile tile-success tile-valign">{{ vendas_semana }}

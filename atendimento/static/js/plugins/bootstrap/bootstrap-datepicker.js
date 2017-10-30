@@ -1431,12 +1431,12 @@
 	var DPGlobal = {
 		modes: [
 			{
-				clsName: 'dias',
-				navFnc: 'Mes',
+				clsName: 'days',
+				navFnc: 'Month',
 				navStep: 1
 			},
 			{
-				clsName: 'meses',
+				clsName: 'months',
 				navFnc: 'FullYear',
 				navStep: 1
 			},

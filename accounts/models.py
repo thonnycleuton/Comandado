@@ -41,7 +41,9 @@ class Profile(User):
             initial = datetime.date.today().replace(day=1)
 
         for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.date.today() + datetime.timedelta(days=1))):
-            faturamento += vendas.valor
+
+            if not vendas.cod_venda.comanda:
+                faturamento += vendas.valor
 
         return faturamento
 

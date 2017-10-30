@@ -67,32 +67,16 @@
                             </ul>
                         </div>
                         <div class="panel-body">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>Comanda</th>
-                                    <th>Cliente</th>
-                                    <th>Data</th>
-                                    <th>Tipo</th>
-                                    <th>Valor</th>
-                                    <th>Desconto</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for venda in vendas_filtro %}
-                                    <tr onclick="window.document.location= '{% url 'vendas:edite' venda.id %}';">
-                                        <td>{{ venda.cod_venda }}</td>
-                                        <td>{{ venda.cod_cliente }}</td>
-                                        <td>{{ venda.data_venda }}</td>
-                                        <td>{{ venda.get_tipo_display }}</td>
-                                        <td>R$ {{ venda.valor_final }}</td>
-                                        <td>R$ {{ venda.desconto }}</td>
-                                        <td>{% if venda.comanda == True %}Aberta{% else %}Fechada{% endif %}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                            {% if user.profile.is_gerente %}
+                                {% include 'venda/includes/partial_list_gerente.html' %}
+                            {% else %}
+                                {% include 'venda/includes/partial_list.html' %}
+                            {% endif %}
+                        <!-- warning -->
+                        <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+                            <div class="mb-container">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- END DEFAULT DATATABLE -->

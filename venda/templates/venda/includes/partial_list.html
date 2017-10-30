@@ -1,0 +1,24 @@
+
+<table class="table datatable">
+    <thead>
+        <tr>
+            <th>Comanda</th>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for venda in vendas_filtro %}
+            <tr>
+                <td>{{ venda.cod_venda }}</td>
+                <td>{{ venda.cod_cliente }}</td>
+                <td>R$ {{ venda.valor_final }}</td>
+                <td style="width: 50px">
+                    <a href="{% url 'vendas:edite' venda.id %}" class="btn btn-warning" role="button">
+                    <span class="glyphicon glyphicon-edit"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -105,7 +105,12 @@ class VendaCreate(FormView):
         return form_class(**self.get_form_kwargs())
 
     def form_valid(self, form):
+
         f = form.save(commit=False)
+        # checa se o campo comanda nao foi alterado por um colaborador da Gerencia ou do Caixa para fechar a Comanda
+        if not 'comanda' in form.changed_data and self.request.user.profile.is_gerente():
+            f.comanda = False
+
         f.save()
 
         for item in self.request.POST.getlist('servico'):
@@ -171,15 +176,14 @@ class VendaUpdate(UpdateView):
 
         f = form.save(commit=False)
         # checa se o campo comanda nao foi alterado por um colaborador da Gerencia ou do Caixa para fechar a Comanda
-        if not 'comanda' in form.changed_data and colaborador.profile.groups.filter(
-                name__contains='Gerência') or colaborador.profile.groups.filter(name__contains='Caixa'):
+        if not 'comanda' in form.changed_data and colaborador.profile.is_gerente():
             f.comanda = False
 
         f.save()
 
         remover = set(form.initial['servico']).difference(form.cleaned_data['servico'])
 
-        if remover and colaborador.profile.groups.filter(name__contains='Gerência'):
+        if remover and self.request.user.profile.is_gerente():
             for item in remover:
                 ItensVenda.objects.get(cod_servico=item.pk, cod_venda=f).delete()
 

@@ -61,14 +61,25 @@ class Venda(models.Model):
         self.valor_final = self.valor_venda - self.desconto
 
         # se venda for a vista, lanca-se uma entrada com os dados da venda
-        if self.tipo == 1:
-            movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda, tipo_id=4, user_id=1)[0]
-            movimentacao.valor = self.valor_final
-            movimentacao.save()
+        if not self.comanda:
+            if self.tipo == 1:
+                movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda)[0]
+                movimentacao.valor = self.valor_final
+                movimentacao.tipo_id = 4
+                movimentacao.user_id = 1
+                movimentacao.save()
 
-        # se Pagamento for em Debito (3) ou Credito (4)
-        if self.tipo == 3 or self.tipo == 4:
-            self.data_pagamento = datetime.today() + timedelta(days=1)
+            # se Pagamento for em Debito (3) ou Credito (4)
+            if self.tipo == 3 or self.tipo == 4:
+
+                movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda)[0]
+                movimentacao.valor = self.valor_final
+                movimentacao.tipo_id = 3
+                movimentacao.user_id = 1
+                movimentacao.save()
+
+        # self.data_pagamento = datetime.today() + timedelta(days=1)
+
         # se Pagamento nao for setado
         elif self.tipo == '':
             self.tipo = None

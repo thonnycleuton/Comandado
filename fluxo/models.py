@@ -19,9 +19,9 @@ class Movimentacao(models.Model):
     cod_movimentacao = models.CharField(max_length=10, verbose_name='Código de Movimentação')
     data = models.DateTimeField(auto_now_add=True, verbose_name='Data de Lançamento')
     valor = models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Valor', null=True, blank=True)
-    user = models.ForeignKey(User, verbose_name='Usuario responsável')
+    user = models.ForeignKey(User, verbose_name='Usuario responsável', null=True, blank=True)
     tipo = models.ForeignKey(Tipo, verbose_name='Evento', help_text='Evento refere-se a quaisquer tipo de transação '
-                                                                      'de entrada e saida de capital.')
+                                                                      'de entrada e saida de capital.', null=True, blank=True)
     fonte_destino = models.CharField(max_length=20, verbose_name='Fonte/Destino', help_text='De onde veio ou para '
                                                                                             'onde foi o dinheiro '
                                                                                             'referente à transação.')

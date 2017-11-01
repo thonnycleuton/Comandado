@@ -26,7 +26,7 @@ class Movimentacao(models.Model):
                                                                                             'onde foi o dinheiro '
                                                                                             'referente à transação.')
     observacao = models.TextField(max_length=400, blank=True)
-    # link = models.URLField(max_length=200, null=True, blank=True)
+    link = models.URLField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.cod_movimentacao

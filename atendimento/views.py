@@ -10,6 +10,7 @@ from estetica import settings
 from fluxo.models import Movimentacao
 from servico.models import Servico
 from cliente.models import Cliente
+from venda.models import Venda
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -21,6 +22,9 @@ def home(request):
     total_entradas_cartao = 0
     total_entradas_fiado = 0
     total_saidas = 0
+    faturamento_outubro = 0
+    faturamento_novembro = 0
+
 
     hoje = datetime.date.today()
     dia_primeiro = hoje.replace(day=1)
@@ -36,7 +40,8 @@ def home(request):
     quant_clientes = clientes.count()
     quant_clientes_novos = clientes.filter(created_at__range=(dia_primeiro, hoje)).count()
     gerencia = True if request.user.profile.groups.filter(name='Gerência').exists() else False
-    entradas = Movimentacao.objects.filter(tipo__tipo=1)
+
+    entradas = Movimentacao.objects.filter(tipo__tipo=1).filter(data__year=hoje.year, data__month=hoje.month)
 
     for entrada in entradas:
 
@@ -49,9 +54,19 @@ def home(request):
         elif entrada.tipo.id == 25:
             total_entradas_fiado += entrada.valor
 
-    saidas = Movimentacao.objects.filter(tipo__tipo=2)
+    saidas = Movimentacao.objects.filter(tipo__tipo=2).filter(data__year=hoje.year, data__month=hoje.month)
     for saida in saidas:
         total_saidas += saida.valor
+    vendas = Venda.objects.all()
+
+    vendas_outubro = vendas.filter(data_venda__year='2017', data_venda__month='10')
+    for venda in vendas_outubro:
+        faturamento_outubro += venda.valor_final
+
+    vendas_novembro = vendas.filter(data_venda__year='2017', data_venda__month='11')
+    for venda in vendas_novembro:
+        faturamento_novembro += venda.valor_final
+
 
     for s in servico:
         faturamento += s.get_faturamento()
@@ -68,6 +83,12 @@ def home(request):
         'quant_clientes': quant_clientes,
         'quant_clientes_novos': quant_clientes_novos,
         'perfil': perfil,
+        'metas_realizacoes': {
+            'meta_outubro': meta_geral,
+            'faturamento_outubro': faturamento_outubro,
+            'meta_novembro': meta_geral,
+            'faturamento_novembro': faturamento_novembro,
+        },
         'meta_geral': meta_geral,
         'entradas': {
             'total_dinheiro': total_entradas_dinheiro,

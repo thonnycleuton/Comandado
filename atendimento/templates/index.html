@@ -18,12 +18,8 @@
     Morris.Bar({
         element: 'dashboard-bar-1',
         data: [
-            { y: 'Mai/17', a: 2000, b: 3500 },
-            { y: 'Jun/17', a: 1800, b: 1750 },
-            { y: 'Jul/17', a: 3500, b: 3050 },
-            { y: 'Ago/17', a: 5500, b: 5000 },
-            { y: 'Set/17', a: 10800, b: 123500 },
-            { y: 'Out/17', a: {{ meta_geral|safe }}, b: {{ faturamento|safe }} },
+            { y: 'Out/17', a: {{ meta_geral|safe }}, b: {{ metas_realizacoes.faturamento_outubro|safe }} } ,
+            { y: 'Nov/17', a: {{ meta_geral|safe }}, b: {{ metas_realizacoes.faturamento_novembro|safe }} }
         ],
         xkey: 'y',
         ykeys: ['a', 'b'],
@@ -46,7 +42,7 @@
             <div class="widget widget-primary">
                 <div class="widget-title">TOTAL</div>
                 <div class="widget-subtitle">{{ data_atual }}</div>
-                <div class="widget-int">R$ <span data-toggle="counter" data-to="1564">{{ faturamento }}</span></div>
+                <div class="widget-int">R$ <span data-toggle="counter" data-to="1564">{{ metas_realizacoes.faturamento_novembro|safe }}</span></div>
                 <div class="widget-controls">
                     <a href="#" class="widget-control-left"><span class="fa fa-upload"></span></a>
                     <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>

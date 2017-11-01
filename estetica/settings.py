@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cliente',
     'servico',
     'venda',
+    'fluxo',
     'search',
 ]
 
@@ -87,8 +88,9 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
+    # 'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db'),
     # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
+    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/d5kooh20l13beb')
 }
 
 # Password validation
@@ -114,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/Fortaleza'
+TIME_ZONE = 'America/Recife'
 
 USE_I18N = True
 
@@ -137,14 +139,14 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'thonnycleuton@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'Gh4r4p0v4'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CONTACT_EMAIL = 'thonnycleuton@gmail.com'
 
 # Auth
 LOGIN_URL = 'contas:login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'vendas:list'
 LOGOUT_URL = 'contas:logout'
 
 THUMBNAIL_ALIASES = {

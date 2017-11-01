@@ -1,0 +1,7 @@
+{% load thumbnail %}
+{% for tipo in tipo_list %}
+    <tr>
+        <td>{{ tipo }}</td>
+        <td>{{ tipo.get_tipo_display }}</td>
+    </tr>
+{% endfor %}

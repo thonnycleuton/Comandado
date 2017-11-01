@@ -1,46 +1,211 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data Tables</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+
+    <!-- PAGE TITLE -->
+    <div class="page-title">
+        <h2><span class="fa fa-user"></span> {{ venda.cod_cliente }}</h2>
+        <div class="pull-right">
+            <h2><small> Comanda - <b>{{ venda.cod_venda }} </b></small></h2>
+        </div>
+    </div>
+    <!-- END PAGE TITLE -->
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
 
         <div class="row">
             <div class="col-md-12">
+                <!-- START DEFAULT DATATABLE -->
 
                 <form class="form-horizontal" method="post" action="">
                     {% csrf_token %}
-                    <div class="panel panel-default">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="panel panel-default panel-toggled">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><strong>Vendas</strong></h3>
+                            <h3 class="panel-title">Resumo da Venda</h3>
                             <ul class="panel-controls">
-                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                                <div class="pull-left">
+                                    <label class="col-md-3 control-label">{{ object.valor_final.label_tag }}</label>
+                                    <div class="col-md-12">
+                                        <H2>R$ {{ object.valor_final }}</H2>
+                                        <small>R$ {{ object.data_pagamento }}</small>
+                                    </div>
+                                </div>
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             </ul>
                         </div>
                         <div class="panel-body">
-
-                            <div class="row">
-
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        {{ form.as_p }}
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="panel-footer">
-                            <button class="btn btn-default">Limpar Campos</button>
-                            <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th width="20">Item</th>
+                                        <th>Serviço</th>
+                                        <th width="20">Desconto</th>
+                                        <th width="20">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in venda.itensvenda_set.all %}
+                                        <tr>
+                                            <td><a href="{% url 'vendas:item_editar' item.pk %}">{{ forloop.counter }}</a></td>
+                                            <td>{{ item.cod_servico }}</td>
+                                            {% if item.desconto %}
+                                                <td>{{ item.desconto }}</td>
+                                            {% else %}
+                                                <td>—</td>
+                                            {% endif %}
+                                            <td>{{ item.valor }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td><b>Subtotal</b></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ object.valor_venda }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total</b></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ object.valor_final }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </form>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Serviços</h3>
+                            <ul class="panel-controls">
+                                <div class="pull-left">
+                                    <label class="col-md-3 control-label">{{ form.cod_cliente.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        {{ form.cod_cliente }}
+                                    </div>
+                                </div>
+                                <div class="pull-left">
+                                    <label class="col-md-6 control-label">{{ form.comanda.label_tag }}</label>
+                                    <div class="col-md-6">
+                                        <label class="switch">
+                                            {{ form.comanda }}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group">
+                                    {% for servico in form.servico %}
+                                    <div class="col-md-6">
+                                        {{ servico }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Pagamentos</h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="block">
+                                <h4>Forma de Pagamento</h4>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            {% for tipo in form.tipo %}
+                                                <!-- workarround
+                                                Todo - melhor maneira de nao mostrar a primeira opcao '---' -->
 
+                                                {% if not forloop.first %}
+                                                    <div class="col-md-3">
+                                                        <label class="check">{{ tipo }}</label>
+                                                    </div>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        </div>
+
+                                        <!-- START DATE AND TIME PICKER -->
+                                        <div class="block" >
+                                            <div class="form-group" id="tipo-2" style="display: none;">
+                                                <label class="col-md-3 control-label">Dia do Pagamento</label>
+                                                <div class="col-md-2">
+                                                    <div class="input-group" >
+                                                        {{ form.data_pagamento }}
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END DATE AND TIME PICKER -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-default">Limpar Campos</button>
+                        <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                    </div>
+                </form>
             </div>
         </div>
-
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
+
+    <!-- warning -->
+    <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+        <div class="mb-container">
+            <div class="mb-middle">
+                <div class="mb-title"><span class="fa fa-warning"></span> Warning</div>
+                <div class="mb-content">
+                    <p>O Formulario contem erros. Por favor, verifique-os totalmente. Obrigado.</p>
+                </div>
+                <div class="mb-footer">
+                    <button class="btn btn-default btn-lg pull-right mb-control-close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(document).ready(function() {
+            $("input[name$='tipo']").click(function() {
+
+                var valor = $(this).val();
+
+                $("#tipo-2").hide();
+                $("#tipo-3").hide();
+                $("#tipo-" + valor).show();
+            });
+        });;
+    </script>
 {% endblock %}

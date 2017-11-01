@@ -17,6 +17,55 @@
                         </ul>
                     </div>
                     <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="#" class="tile tile-default">
+                                {{ profile.get_rendimento_diario }}
+                                <p>Hoje</p>
+                                <div class="informer informer-primary">{{ today }}</div>
+                                <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="tile tile-primary">
+                                {{ vendas_semana }}
+                                <p>Semanal</p>
+                                <div class="informer informer-default"><span class="fa fa-shopping-cart"></span></div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="tile tile-default">
+                                {{ vendas_mes }}
+                                <p>Mensal</p>
+                                <div class="informer informer-primary">08.09.14</div>
+                                <div class="informer informer-success dir-tr"><span class="fa fa-caret-up"></span></div>
+                            </a>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{{ form.first_name.label_tag }}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    {{ form.first_name }}
+                                </div>
+                                <label id="age-error" class="error" for="age">{{ form.first_name.errors }}</label>
+                                <span class="help-block">{{ form.first_name.help_text }}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{{ form.last_name.label_tag }}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    {{ form.last_name }}
+                                </div>
+                                <label id="age-error" class="error" for="age">{{ form.last_name.errors }}</label>
+                                <span class="help-block">{{ form.last_name.help_text }}</span>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">{{ form.username.label_tag }}</label>
@@ -25,35 +74,11 @@
                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                     {{ form.username }}
                                 </div>
-                                <span class="error-container">{{ form.username.errors }}</span>
-                                <span class="help-block">This is sample of text field</span>
+                                <label id="age-error" class="error" for="age">{{ form.username.errors }}</label>
+                                <span class="help-block">{{ form.username.help_text }}</span>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">{{ form.telefone.label_tag }}</label>
-                            <div class="col-md-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    {{ form.telefone }}
-                                </div>
-                                <span class="error-container">{{ form.telefone.errors }}</span>
-                                <span class="help-block">This is sample of text field</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">{{ form.funcao.label_tag }}</label>
-                            <div class="col-md-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                    {{ form.funcao }}
-                                </div>
-                                <span class="error-container">{{ form.funcao.errors }}</span>
-                                <span class="help-block">This is sample of text field</span>
-                            </div>
-                        </div>
-
+                        <!--
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">{{ form.password.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
@@ -61,13 +86,11 @@
                                     <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
                                     {{ form.password }}
                                 </div>
-                                <span class="error-container">{{ form.password.errors }}</span>
-                                <span class="help-block">Password field sample</span>
+                                <label id="age-error" class="error" for="age">{{ form.password.errors }}</label>
+                                <span class="help-block">{{ form.password.help_text }}</span>
                             </div>
                         </div>
-                        <div class="row">
-
-                        </div>
+                        -->
                         <div class="form-group">
                             <label class="col-md-3 col-xs-12 control-label">{{ form.email.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
@@ -75,25 +98,49 @@
                                     <span class="input-group-addon"><span class="fa fa-mail-reply"></span></span>
                                     {{ form.email }}
                                 </div>
-                                <span class="error-container">{{ form.email.errors }}</span>
-                                <span class="help-block">Click on input field to get datepicker</span>
+                                <label id="age-error" class="error" for="age">{{ form.email.errors }}</label>
+                                <span class="help-block">{{ form.email.help_text }}</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">{{ form.foto.label_tag }}</label>
+                            <label class="col-md-3 col-xs-12 control-label">{{ form.telefone.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
-                                {{ form.foto }}
-                                <span class="error-container">{{ form.foto.errors }}</span>
-                                <span class="help-block">Input type file</span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                    {{ form.telefone }}
+                                </div>
+                                <label id="age-error" class="error" for="age">{{ form.telefone.errors }}</label>
+                                <span class="help-block">{{ form.telefone.help_text }}</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-12 control-label">{{ form.is_superuser.label_tag }}</label>
+                            <label class="col-md-3 col-xs-12 control-label">{{ form.funcao.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
-                                {{ form.is_superuser }}
-                                <span class="error-container">{{ form.is_superuser.errors }}</span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-toggle-off"></span></span>
+                                    {{ form.funcao }}
+                                </div>
+                                <span class="help-block">{{ form.funcao.help_text }}</span>
+                                <label id="age-error" class="error" for="age">{{ form.funcao.errors }}</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">Setor</label>
+                            <div class="col-md-6 col-xs-12">
+                                {{ form.groups }}
+                                <label id="age-error" class="error" for="age">{{ form.groups.errors }}</label>
+                                <span class="help-block">{{ form.groups.help_text }}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{{ form.meta.label_tag }}</label>
+                            <div class="col-md-6 col-xs-12">
+                                {{ form.meta }}
+                                <label id="age-error" class="error" for="age">{{ form.meta.errors }}</label>
                                 <span class="help-block">Checkbox sample, easy to use</span>
                             </div>
                         </div>
@@ -101,8 +148,17 @@
                             <label class="col-md-3 col-xs-12 control-label">{{ form.is_active.label_tag }}</label>
                             <div class="col-md-6 col-xs-12">
                                 {{ form.is_active }}
-                                <span class="error-container">{{ form.is_active.errors }}</span>
+                                <label id="age-error" class="error" for="age">{{ form.is_active.errors }}</label>
                                 <span class="help-block">Checkbox sample, easy to use</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{{ form.foto.label_tag }}</label>
+                            <div class="col-md-6 col-xs-12">
+                                {{ form.foto }}
+                                <label id="age-error" class="error" for="age">{{ form.foto.errors }}</label>
+                                <span class="help-block">{{ form.foto.help_text }}</span>
                             </div>
                         </div>
 
@@ -119,4 +175,154 @@
 
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
+{% endblock %}
+{% block javascript %}
+    <script type='text/javascript' src='{% static 'js/plugins/maskedinput/jquery.maskedinput.min.js' %}'></script>
+    <script type='text/javascript' src='{% static 'js/plugins/jquery-validation/jquery.validate.js' %}'></script>
+    <script>
+        $(function() {
+            $.mask.definitions['~'] = "[+-]";
+            $("#id_nascimento").mask("99/99/9999");
+            $(".phone").mask("(99) 99999-9999");
+            $(".cpf").mask("999.999.999-99");
+
+            $("input").blur(function() {
+                $("#info").html("Unmasked value: " + $(this).mask());
+            }).dblclick(function() {
+                $(this).unmask();
+            });
+        });
+    </script>
+    <script type="text/javascript">
+            var jvalidate = $("#jvalidate").validate({
+                ignore: [],
+                rules: {
+                        login: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 8
+                        },
+                        password: {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 10
+                        },
+                        're-password': {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 10,
+                                equalTo: "#password2"
+                        },
+                        age: {
+                                required: true,
+                                min: 18,
+                                max: 100
+                        },
+                        email: {
+                                required: false,
+                                email: true
+                        },
+                        date: {
+                                required: true,
+                                date: true
+                        },
+                        credit: {
+                                required: true,
+                                creditcard: true
+                        },
+                        site: {
+                                required: true,
+                                url: true
+                        }
+                    }
+                });
+
+        </script>
+    <script>
+        function FormatarData(dataFormatar){
+
+            var dia = "";
+            var mes = "";
+            var ano = "";
+
+            dia += dataFormatar[0];
+            dia += dataFormatar[1];
+            mes += dataFormatar[3];
+            mes += dataFormatar[4];
+            ano += dataFormatar[6];
+            ano += dataFormatar[7];
+            ano += dataFormatar[8];
+            ano += dataFormatar[9];
+
+            return mes+"/"+dia+"/"+ano;
+        }
+
+        function GetAge(nascimento){
+            formatada = FormatarData(nascimento);
+            dob = new Date(formatada);
+            var today = new Date();
+            var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+            return age
+        }
+
+        $(document).ready(function(){
+            $("#id_nascimento").focusout(function(){
+                if ($("#id_nascimento").val() != "__/__/____") {
+                    $("#result").text(GetAge($("#id_nascimento").val()));
+                }
+            });
+        });
+    </script>
+    <script>
+        function validaCPF(cpf) {
+            var numeros, digitos, soma, i, resultado, digitos_iguais;
+            cpf = cpf.replace(/\D/g,'');
+            digitos_iguais = 1;
+            if (cpf.length < 11)
+                  return false;
+            for (i = 0; i < cpf.length - 1; i++)
+                  if (cpf.charAt(i) != cpf.charAt(i + 1))
+                        {
+                        digitos_iguais = 0;
+                        break;
+                        }
+            if (!digitos_iguais)
+                  {
+                  numeros = cpf.substring(0,9);
+                  digitos = cpf.substring(9);
+                  soma = 0;
+                  for (i = 10; i > 1; i--)
+                        soma += numeros.charAt(10 - i) * i;
+                  resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                  if (resultado != digitos.charAt(0))
+                        return false;
+                  numeros = cpf.substring(0,10);
+                  soma = 0;
+                  for (i = 11; i > 1; i--)
+                        soma += numeros.charAt(11 - i) * i;
+                  resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                  if (resultado != digitos.charAt(1))
+                        return false;
+                  return true;
+                  }
+            else
+                return "Please enter a valid URL.";
+          }
+
+        $(document).ready(function(){
+            $("#id_cpf").focusout(function(){
+                // tentativa de validacao caso campo CPF nao seja vazio
+                if ($("#id_cpf").val() != "___.___.___-__"){
+                    // mostra erro caso CPF nao seja valido
+                    if (validaCPF($("#id_cpf").val()) == false){
+                        $("#cpf-error").text("CPF inválido");
+                    }else {
+                        $("#cpf-error").text("");
+                    }
+                }else {
+                        $("#cpf-error").text("");
+                    }
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -51,6 +52,23 @@ class ListPerfil(ListView):
         queryset = queryset.get(pk=self.request.user.id)
         return queryset
 
+    def get_context_data(self, **kwargs):
+
+        context = super(ListPerfil, self).get_context_data(**kwargs)
+        colaborador = context['object_list']
+        today = datetime.date.today()
+        segunda = today - datetime.timedelta(today.weekday())
+        primeiro_do_mes = today.replace(day=1)
+
+        context['today'] = today
+        context['vendas_hoje'] = colaborador.get_rendimento(today)
+        context['vendas_semana'] = colaborador.get_rendimento(segunda)
+        context['meta_semana'] = colaborador.meta
+        context['vendas_mes'] = colaborador.get_rendimento(primeiro_do_mes)
+        context['meta_mes'] = colaborador.meta
+
+        return context
+
 
 class ListPerfis(ListView):
     model = Profile
@@ -75,12 +93,27 @@ class UpdatePerfil(UpdateView):
     form_class = ProfileForm
     success_url = reverse_lazy('contas:list')
 
+    def get_context_data(self, **kwargs):
+
+        context = super(UpdatePerfil, self).get_context_data(**kwargs)
+        colaborador = context['object']
+        today = datetime.date.today()
+        segunda = today - datetime.timedelta(today.weekday())
+        primeiro_do_mes = today.replace(day=1)
+
+        context['today'] = today
+        context['vendas_hoje'] = colaborador.get_rendimento(today)
+        context['vendas_semana'] = colaborador.get_rendimento(segunda)
+        context['vendas_mes'] = colaborador.get_rendimento(primeiro_do_mes)
+
+        return context
+
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         f = form.save(commit=False)
-        password = form.cleaned_data['password']
-        f.set_password(password)
+        # password = form.cleaned_data['password']
+        # f.set_password(password)
         f.save()
         return super(UpdatePerfil, self).form_valid(form)
 

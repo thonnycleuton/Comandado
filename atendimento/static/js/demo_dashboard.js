@@ -1,14 +1,14 @@
 $(function(){        
     /* reportrange */
     if($("#reportrange").length > 0){   
-        $("#reportrange").daterangepicker({                    
+        $("#reportrange").daterangepicker({
             ranges: {
-               'Today': [moment(), moment()],
-               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-               'This Month': [moment().startOf('month'), moment().endOf('month')],
-               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+               'Hoje': [moment(), moment()],
+               'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Ultimos 7 dias': [moment().subtract(6, 'days'), moment()],
+               'Ultimos 30 dias': [moment().subtract(29, 'days'), moment()],
+               'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+               'Ultimo Mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
             opens: 'left',
             buttonClasses: ['btn btn-default'],
@@ -20,6 +20,8 @@ $(function(){
             endDate: moment()            
           },function(start, end) {
               $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+              //codigo entra aqui
+              // alert("HUgo foi gay nessas datas: " + start + " | " + end);
         });
         
         $("#reportrange span").html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));

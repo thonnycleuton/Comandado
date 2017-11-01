@@ -1,280 +1,306 @@
 {% extends "base.html" %}
 {% load static %}
 {% block javascript %}
-    <script>
-        Morris.Donut({
-          element: 'chartContainer',
-          data: [
-              {% for item in servicos %}
-                  {label: "{{ item.nome }}", value: {{ item.get_faturamento }}},
-              {% endfor %}
-          ],
-            formatter: function (x, data) { return 'R$ ' + x },
-            colors: ['#33414E', '#1caf9a', '#FEA223'],
-            resize: true
-        });
+<script>
+    Morris.Donut({
+      element: 'chartContainer',
+      data: [
+          {% for item in colaboradores %}
+              {label: "{{ item.groups.first }}", value: {{ item.get_rendimento_semanal|safe }}},
+          {% endfor %}
+      ],
+        formatter: function (x, data) { return 'R$ ' + x },
+        colors: ['#33414E', '#1caf9a', '#FEA223'],
+        resize: true
+    });
 
-        /* Bar dashboard chart */
-        Morris.Bar({
-            element: 'dashboard-bar-1',
-            data: [
-                { y: 'Jan/17', a: 2000, b: 3500 },
-                { y: 'Fev/17', a: 1800, b: 1750 },
-                { y: 'Mar/17', a: 3500, b: 3050 },
-                { y: 'Mai/17', a: 5500, b: 5000 },
-                { y: 'Jun/17', a: 1980, b: 1580 },
-                { y: 'Jul/17', a: 4200, b: 3250 },
-            ],
-            xkey: 'y',
-            ykeys: ['a', 'b'],
-            labels: ['Meta', 'Alcançado'],
-            barColors: ['#33414E', '#1caf9a'],
-            gridTextSize: '10px',
-            hideHover: true,
-            resize: true,
-            gridLineColor: '#E5E5E5'
-        });
-    </script>
+    /* Bar dashboard chart */
+    Morris.Bar({
+        element: 'dashboard-bar-1',
+        data: [
+            { y: 'Mai/17', a: 2000, b: 3500 },
+            { y: 'Jun/17', a: 1800, b: 1750 },
+            { y: 'Jul/17', a: 3500, b: 3050 },
+            { y: 'Ago/17', a: 5500, b: 5000 },
+            { y: 'Set/17', a: 10800, b: 123500 },
+            { y: 'Out/17', a: {{ meta_geral|safe }}, b: {{ faturamento|safe }} },
+        ],
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['Meta', 'Alcançado'],
+        barColors: ['#33414E', '#1caf9a'],
+        gridTextSize: '10px',
+        hideHover: true,
+        resize: true,
+        gridLineColor: '#E5E5E5'
+    });
+</script>
 {% endblock %}
 {% block content %}
-    <!-- PAGE CONTENT WRAPPER -->
-    <div class="page-content-wrap">
-
-        <!-- START WIDGETS -->
-        <div class="row">
-
-            <div class="col-md-3">
-
-                <!-- START WIDGET REGISTRED -->
-                <div class="widget widget-primary">
-                    <div class="widget-title">TOTAL</div>
-                    <div class="widget-subtitle">{{ data_atual }}</div>
-                    <div class="widget-int">R$ <span data-toggle="counter" data-to="1564">{{ faturamento }}</span></div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-left"><span class="fa fa-upload"></span></a>
-                        <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
-                    </div>
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <!-- START WIDGETS -->
+    <div class="row">
+        <div class="col-md-3">
+            <!-- START WIDGET REGISTRED -->
+            <div class="widget widget-primary">
+                <div class="widget-title">TOTAL</div>
+                <div class="widget-subtitle">{{ data_atual }}</div>
+                <div class="widget-int">R$ <span data-toggle="counter" data-to="1564">{{ faturamento }}</span></div>
+                <div class="widget-controls">
+                    <a href="#" class="widget-control-left"><span class="fa fa-upload"></span></a>
+                    <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
                 </div>
-                <!-- END WIDGET REGISTRED -->
-
             </div>
-            <div class="col-md-3">
-
-                <!-- START WIDGET SLIDER -->
-                <div class="widget widget-default widget-carousel">
-                    <div class="owl-carousel" id="owl-example">
-                        <div>
-                            <div class="widget-title">Total de Clientes</div>
-                            <div class="widget-subtitle">{{ data_atual }}</div>
-                            <div class="widget-int">{{ quant_clientes }}</div>
-                        </div>
-                        <div>
-                            <div class="widget-title">Novos</div>
-                            <div class="widget-subtitle">Julho</div>
-                            <div class="widget-int">2</div>
-                        </div>
+            <!-- END WIDGET REGISTRED -->
+        </div>
+        <div class="col-md-3">
+            <!-- START WIDGET SLIDER -->
+            <div class="widget widget-default widget-carousel">
+                <div class="owl-carousel" id="owl-example">
+                    <div>
+                        <div class="widget-title">Total de Clientes</div>
+                        <div class="widget-subtitle">{{ data_atual }}</div>
+                        <div class="widget-int">{{ quant_clientes }}</div>
                     </div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                    <div>
+                        <div class="widget-title">Novos</div>
+                        <div class="widget-subtitle">{{ data_atual|date:"F" }}</div>
+                        <div class="widget-int">{{ quant_clientes_novos }}</div>
                     </div>
                 </div>
-                <!-- END WIDGET SLIDER -->
-
+                <div class="widget-controls">
+                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                </div>
             </div>
-            <div class="col-md-3">
-
-                <!-- START WIDGET MESSAGES -->
-                <div class="widget widget-default widget-item-icon" onclick="location.href='pages-messages.html';">
-                    <div class="widget-item-left">
-                        <span class="fa fa-envelope"></span>
-                    </div>
-                    <div class="widget-data">
-                        <div class="widget-int num-count">4</div>
-                        <div class="widget-title">Mensagems</div>
-                        <div class="widget-subtitle">caixa de entrada</div>
-                    </div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                    </div>
+            <!-- END WIDGET SLIDER -->
+        </div>
+        <div class="col-md-3">
+            <!-- START WIDGET MESSAGES -->
+            <div class="widget widget-default widget-item-icon" onclick="location.href='pages-messages.html';">
+                <div class="widget-item-left">
+                    <span class="fa fa-envelope"></span>
                 </div>
-                <!-- END WIDGET MESSAGES -->
-
+                <div class="widget-data">
+                    <div class="widget-int num-count">4</div>
+                    <div class="widget-title">Mensagems</div>
+                    <div class="widget-subtitle">caixa de entrada</div>
+                </div>
+                <div class="widget-controls">
+                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                </div>
             </div>
-            <div class="col-md-3">
-
-                <!-- START WIDGET CLOCK -->
-                <div class="widget widget-info widget-padding-sm">
-                    <div class="widget-big-int plugin-clock">00:00</div>
-                    <div class="widget-subtitle plugin-date">Loading...</div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
+            <!-- END WIDGET MESSAGES -->
+        </div>
+        <div class="col-md-3">
+            <!-- START WIDGET CLOCK -->
+            <div class="widget widget-info widget-padding-sm">
+                <div class="widget-big-int plugin-clock">00:00</div>
+                <div class="widget-subtitle plugin-date">Loading...</div>
+                <div class="widget-controls">
+                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
+                </div>
+                <div class="widget-buttons widget-c3">
+                    <div class="col">
+                        <a href="#"><span class="fa fa-clock-o"></span></a>
                     </div>
-                    <div class="widget-buttons widget-c3">
-                        <div class="col">
-                            <a href="#"><span class="fa fa-clock-o"></span></a>
-                        </div>
-                        <div class="col">
-                            <a href="#"><span class="fa fa-bell"></span></a>
-                        </div>
-                        <div class="col">
-                            <a href="#"><span class="fa fa-calendar"></span></a>
-                        </div>
+                    <div class="col">
+                        <a href="#"><span class="fa fa-bell"></span></a>
+                    </div>
+                    <div class="col">
+                        <a href="#"><span class="fa fa-calendar"></span></a>
                     </div>
                 </div>
-                <!-- END WIDGET CLOCK -->
-
+            </div>
+            <!-- END WIDGET CLOCK -->
+        </div>
+    </div>
+    <!-- END WIDGETS -->
+    <div id="sum_box" class="row mbl">
+        <div class="col-sm-6 col-md-6">
+            <div class="panel profit db mbm">
+                <div class="panel-body">
+                    <h3>Entradas</h3>
+                    <div class="col-md-4">
+                        <p class="icon">
+                            <i class="icon fa fa-arrow-circle-o-down" style="font-size: 55px"></i>
+                        </p>
+                        <h2 class="value">
+                            <span>R$ </span><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">{{ entradas.total }}</span>
+                        </h2>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="progress-list">
+                            <div class="pull-left"><i class="icon fa fa-money"></i></div>
+                            <div class="pull-right"><strong> R$ {{ entradas.total_dinheiro }}</strong></div>
+                            <div class="progress progress-striped active" style="margin-bottom: 5px">
+                                <div class="progress-bar progress-bar-warning"
+                                    role="progressbar"
+                                    aria-valuenow="50"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100" style="width: {{ entradas.total_dinheiro_porcento }}%;">{{ entradas.total_dinheiro_porcento }}%</div>
+                            </div>
+                        </div>
+                        <div class="progress-list">
+                            <div class="pull-left"><i class="icon fa fa-credit-card"></i></div>
+                            <div class="pull-right"><strong> R$ {{ entradas.total_cartao }}</strong></div>
+                            <div class="progress progress-striped active" style="margin-bottom: 5px">
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ entradas.total_cartao_porcento }}%;">{{ entradas.total_cartao_porcento }}%</div>
+                            </div>
+                        </div>
+                        <div class="progress-list">
+                            <div class="pull-left"><i class="icon fa fa-pencil"></i></div>
+                            <div class="pull-right"><strong> R$ {{ entradas.total_fiado }}</strong></div>
+                            <div class="progress progress-striped active" style="margin-bottom: 5px">
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ entradas.total_fiado_porcento }}%;">{{ entradas.total_fiado_porcento }}%</div>
+                            </div>
+                        </div>
+                        <!--
+                            <p><span class="fa fa-warning"></span> Data update in end of each hour. You can update it manual by pressign update button</p>
+                            -->
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- END WIDGETS -->
-
-                    <div class="row">
-                        <div class="col-md-4">
-
-                            <!-- START USERS ACTIVITY BLOCK -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title-box">
-                                        <h3>Metas</h3>
-                                        <span>Metas e realizações</span>
-                                    </div>
-                                    <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="panel-body padding-0">
-                                    <div class="chart-holder" id="dashboard-bar-1" style="height: 200px;"></div>
-                                </div>
-                            </div>
-                            <!-- END USERS ACTIVITY BLOCK -->
-
-                        </div>
-                        <div class="col-md-4">
-                <!-- START VISITORS BLOCK -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="panel-title-box">
-                            <h3>Faturamento</h3>
-                            <span>Mês corrente</span>
-                        </div>
-                        <ul class="panel-controls" style="margin-top: 2px;">
-                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+        <div class="col-sm-6 col-md-6">
+            <div class="panel income db mbm" style="min-height: 194px;">
+                <div class="panel-body">
+                    <h3>Saídas</h3>
+                    <div class="col-md-4">
+                        <p class="icon">
+                            <i class="icon fa fa-arrow-circle-o-up" style="font-size: 55px"></i>
+                        </p>
+                        <h2 class="value">
+                            <span>R$ </span><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">{{ total_saidas }}</span>
+                        </h2>
                     </div>
-                    <div class="panel-body padding-0">
-                        {{ total_vendas }}
-                        <div class="chart-holder" id="chartContainer" style="height: 200px;"></div>
+                    <div class="progress progress-sm mbn">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            <span class="sr-only">60% Complete (success)</span>
+                        </div>
                     </div>
                 </div>
-                <!-- END VISITORS BLOCK -->
-
-                        </div>
-
-						<div class="col-md-4">
-
-                            <!-- START PROJECTS BLOCK -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title-box">
-                                        <h3>Desempenho</h3>
-                                        <span>Alcance mensal de metas por colaborador</span>
-                                    </div>
-                                    <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="panel-body panel-body-table">
-
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th width="50%">Colaborador</th>
-                                                    <th width="20%">Status</th>
-                                                    <th width="30%">Atividade</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>Karen</strong></td>
-                                                    <td><span class="label label-danger">Ruim</span></td>
-                                                    <td>
-                                                        <div class="progress progress-small progress-striped active">
-                                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">35%</div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Joanne</strong></td>
-                                                    <td><span class="label label-warning">Quase la</span></td>
-                                                    <td>
-                                                        <div class="progress progress-small progress-striped active">
-                                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">90%</div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Julio</strong></td>
-                                                    <td><span class="label label-warning">Quase la</span></td>
-                                                    <td>
-                                                        <div class="progress progress-small progress-striped active">
-                                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 92%;">92%</div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Leo</strong></td>
-                                                    <td><span class="label label-success">Sucesso</span></td>
-                                                    <td>
-                                                        <div class="progress progress-small progress-striped active">
-                                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Amanda</strong></td>
-                                                    <td><span class="label label-success">Sucesso</span></td>
-                                                    <td>
-                                                        <div class="progress progress-small progress-striped active">
-                                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- END PROJECTS BLOCK -->
-
-                        </div>
-                    </div>
-
+            </div>
+        </div>
     </div>
-    <!-- END PAGE CONTENT WRAPPER -->
+    <div class="row">
+        <div class="col-md-4">
+            <!-- START USERS ACTIVITY BLOCK -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box">
+                        <h3>Metas</h3>
+                        <span>Metas e realizações</span>
+                    </div>
+                    <ul class="panel-controls" style="margin-top: 2px;">
+                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body padding-0">
+                    <div class="chart-holder" id="dashboard-bar-1" style="height: 373px;"></div>
+                </div>
+            </div>
+            <!-- END USERS ACTIVITY BLOCK -->
+        </div>
+        <div class="col-md-4">
+            <!-- START VISITORS BLOCK -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box">
+                        <h3>Faturamento</h3>
+                        <span>Mês corrente</span>
+                    </div>
+                    <ul class="panel-controls" style="margin-top: 2px;">
+                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body padding-0">
+                    {{ total_vendas }}
+                    <div class="chart-holder" id="chartContainer" style="height: 373px;"></div>
+                </div>
+            </div>
+            <!-- END VISITORS BLOCK -->
+        </div>
+        <div class="col-md-4">
+            <!-- START PROJECTS BLOCK -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box">
+                        <h3>Desempenho</h3>
+                    </div>
+                    <ul class="panel-controls" style="margin-top: 2px;">
+                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body panel-body-table">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Colaborador</th>
+                                    <th width="40%">Semanal</th>
+                                    <th width="40%">Mensal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for colaborador in colaboradores %}
+                                <tr>
+                                    <td>
+                                        <div class="pull-left"><strong>{{ colaborador.first_name }}</strong></div>
+                                    </td>
+                                    <td style="padding: 0" width="300">
+                                        <a href="#" class="tile tile-primary" style="margin-bottom: 0; min-height: 0">
+                                            <div class="pull-right" style="font-size:20px; margin-top:8px; margin-bottom:-10px">{{ colaborador.get_rendimento_semanal }}</div>
+                                            <div class="progress progress-small" style="margin: -10px">
+                                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ colaborador.get_rendimento_porcentagem_semanal }}%;">80%</div>
+                                            </div>
+                                            <div class="informer informer-warning">{{ colaborador.get_rendimento_porcentagem_semanal }}%</div>
+                                            <div class="informer informer-default dir-tr">R$ {{ colaborador.get_meta_semanal }}</div>
+                                        </a>
+                                    </td>
+                                    <td style="padding: 0">
+                                        <a href="#" class="tile tile-primary" style="margin-bottom: 0; min-height: 0">
+                                            <div class="pull-right" style="font-size:20px; margin-top:8px; margin-bottom:-10px">{{ colaborador.get_rendimento }}</div>
+                                            <div class="progress progress-small" style="margin: -10px">
+                                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ colaborador.get_rendimento_porcentagem }}%;">80%</div>
+                                            </div>
+                                            <div class="informer informer-warning">{{ colaborador.get_rendimento_porcentagem }}%</div>
+                                            <div class="informer informer-default dir-tr">R$ {{ colaborador.meta }}</div>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PROJECTS BLOCK -->
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT WRAPPER -->
 {% endblock %}

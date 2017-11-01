@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- START DEFAULT DATATABLE -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tipo</h3>
+                        <ul class="panel-controls">
+                            <li><a href="{% url 'movimentacao:tipo_novo' %}"><span class="fa fa-plus"></span></a></li>
+                            <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            -->
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table datatable" id="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% include 'fluxo/includes/partial_tipo_list.html' %}
+                            </tbody>
+                        </table>
+                        <!-- warning -->
+                        <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+                            <div class="mb-container">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END DEFAULT DATATABLE -->
+            </div>
+        </div>
+
+    </div>
+    <!-- PAGE CONTENT WRAPPER -->
+{% endblock %}

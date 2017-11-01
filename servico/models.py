@@ -9,7 +9,7 @@ from servico.choices import CATEGORIA_SERVICOS
 
 
 class Servico(models.Model):
-    cod_servico = models.CharField(max_length=10, unique=True)
+    cod_servico = models.CharField(max_length=10, blank=True)
     nome = models.CharField(max_length=100)
     descricao = models.CharField(max_length=250)
     valor = models.DecimalField(max_digits=6, decimal_places=2, default=0)
@@ -20,6 +20,7 @@ class Servico(models.Model):
     class Meta:
         verbose_name = 'servico'
         verbose_name_plural = 'serviços'
+        ordering = ('categoria',)
 
     def __str__(self):
         return str(self.nome) + " - (" + str(self.valor) + ")"
@@ -35,7 +36,8 @@ class Servico(models.Model):
     def save(self, *args, **kwargs):
 
         if self.cod_servico is "":
-            ultimo = '000' if Servico.objects.last() is None else Servico.objects.last().cod_servico[-3:]
+            ultimo = '000' if Servico.objects.last() is None else Servico.objects.order_by('cod_servico').last().cod_servico[-3:]
+
             ultimo = str(int(ultimo) + 1)
 
             while len(ultimo) < 3:

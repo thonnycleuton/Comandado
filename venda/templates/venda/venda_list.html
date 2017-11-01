@@ -1,52 +1,85 @@
 {% extends "base.html" %}
 {% load static %}
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+{% endblock %}
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->
     <div class="page-content-wrap">
-
         <div class="row">
             <div class="col-md-12">
-
+                {% if user.profile.is_gerente %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros</h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                <li><a href="{% url 'vendas:list' %}"><span class="fa fa-times"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="GET" action="">
+                            {% csrf_token %}
+                            <div class="container">
+                                <div class='col-sm-3'>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Data Inicial</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                <input type="text" class="form-control datepicker" name="data_inicial">
+                                            </div>
+                                            <span class="help-block">Data inicial de vendas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Data Final</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                <input type="text" class="form-control datepicker" name="data_final">
+                                            </div>
+                                            <span class="help-block">Data final de vendas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-primary">Filtrar</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                {% endif %}
                 <!-- START DEFAULT DATATABLE -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Vendas</h3>
-                        <ul class="panel-controls">
-                            <li><a href="{% url 'vendas:novo' %}" class="panel-collapse"><span class="fa fa-plus"></span></a></li>
-                            <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
-                        </ul>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>cod_venda</th>
-                                    <th>cod_cliente</th>
-                                    <th>data_venda</th>
-                                    <th>tipo</th>
-                                    <th>valor_venda</th>
-                                    <th>vendedor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for venda in venda_list %}
-                                    <tr>
-                                        <td><a href="{% url 'vendas:edite' venda.id %}" >{{ venda.cod_venda }}</a></td>
-                                        <td>{{ venda.cod_cliente }}</td>
-                                        <td>{{ venda.data_venda }}</td>
-                                        <td>{% if venda.tipo == 1 %}À vista{% else %}Prazo{% endif %}
-                                        <td>R$ {{ venda.valor_venda }}</td>
-                                        <td>{{ venda.vendedor }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Vendas</h3>
+                            <ul class="panel-controls">
+                            <H2 class="pull-left"> R$ {{ total_vendas }} </H2>
+                                {% if 'venda.add_venda' in user.get_group_permissions %}
+                                    <li><a href="{% url 'vendas:novo' %}"><span class="fa fa-plus"></span></a></li>
+                                {% endif %}
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            {% if user.profile.is_gerente %}
+                                {% include 'venda/includes/partial_list_gerente.html' %}
+                            {% else %}
+                                {% include 'venda/includes/partial_list.html' %}
+                            {% endif %}
+                        <!-- warning -->
+                        <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+                            <div class="mb-container">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- END DEFAULT DATATABLE -->
-
             </div>
         </div>
 

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- END BREADCRUMB -->
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- START DEFAULT DATATABLE -->
+
+                <form class="form-horizontal" method="post" action="">
+                    {% csrf_token %}
+
+                    <!-- PAGE TITLE -->
+                    <div class="page-title">
+                        <h2><span class="fa fa-user"></span>{{ form.cod_servico }}</h2>
+                        <div class="pull-right">
+                            <h2><small> Comanda - <b>{{ venda.cod_venda }} </b></small></h2>
+                        </div>
+                    </div>
+                    <!-- END PAGE TITLE -->
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-6 col-xs-12">
+                                {{ form.as_table }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-default">Limpar Campos</button>
+                        <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
+{% endblock %}

@@ -4,7 +4,7 @@
         <td>{{ movimentacao }}</td>
         <td>{{ movimentacao.data }}</td>
         <td>{{ movimentacao.tipo }}</td>
-        <td>{{ movimentacao.fonte_destino }}</td>
+        <td>{% if movimentacao.link %}<a href="{{ movimentacao.link }}">{% endif %}{{ movimentacao.fonte_destino }}</a></td>
         <td>{{ movimentacao.observacao|truncatewords:4 }}</td>
         {% if movimentacao.valor < 0 %}
             <td class="text-danger">{{ movimentacao.valor }}</td>

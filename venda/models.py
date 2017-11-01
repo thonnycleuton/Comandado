@@ -32,6 +32,9 @@ class Venda(models.Model):
     def __str__(self):
         return self.cod_venda
 
+    def get_absolute_url(self):
+        return "/editar/%s/" %self.pk
+
     def update_valores(self):
         valor_total = 0
         itens = ItensVenda.objects.filter(cod_venda=self.pk)
@@ -65,6 +68,7 @@ class Venda(models.Model):
             if self.tipo == 1:
                 movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda)[0]
                 movimentacao.valor = self.valor_final
+                movimentacao.link = self.get_absolute_url()
                 movimentacao.tipo_id = 4
                 movimentacao.user_id = 1
                 movimentacao.save()
@@ -74,6 +78,7 @@ class Venda(models.Model):
 
                 movimentacao = Movimentacao.objects.get_or_create(fonte_destino=self.cod_venda)[0]
                 movimentacao.valor = self.valor_final
+                movimentacao.link = self.get_absolute_url()
                 movimentacao.tipo_id = 3
                 movimentacao.user_id = 1
                 movimentacao.save()

@@ -71,6 +71,7 @@ class Venda(models.Model):
                 movimentacao.link = self.get_absolute_url()
                 movimentacao.tipo_id = 4
                 movimentacao.user_id = 1
+                movimentacao.data = self.data_venda
                 movimentacao.save()
 
             # se Pagamento for em Debito (3) ou Credito (4)
@@ -81,6 +82,7 @@ class Venda(models.Model):
                 movimentacao.link = self.get_absolute_url()
                 movimentacao.tipo_id = 3
                 movimentacao.user_id = 1
+                movimentacao.data = self.data_venda
                 movimentacao.save()
 
         # self.data_pagamento = datetime.today() + timedelta(days=1)

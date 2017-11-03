@@ -91,8 +91,8 @@ class VendaCreate(FormView):
 
         f = form.save(commit=False)
         # checa se o campo comanda nao foi alterado por um colaborador da Gerencia ou do Caixa para fechar a Comanda
-        if not 'comanda' in form.changed_data and self.request.user.profile.is_gerente():
-            f.comanda = False
+        # if not 'comanda' in form.changed_data and self.request.user.profile.is_gerente():
+        #    f.comanda = False
 
         f.save()
 
@@ -159,8 +159,8 @@ class VendaUpdate(UpdateView):
 
         f = form.save(commit=False)
         # checa se o campo comanda nao foi alterado por um colaborador da Gerencia ou do Caixa para fechar a Comanda
-        if not 'comanda' in form.changed_data and colaborador.profile.is_gerente():
-            f.comanda = False
+        # if not 'comanda' in form.changed_data and self.request.user.profile.is_gerente():
+        #    f.comanda = False
 
         f.save()
 

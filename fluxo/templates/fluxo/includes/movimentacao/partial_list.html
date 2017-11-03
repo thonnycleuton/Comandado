@@ -3,6 +3,7 @@
     <tr >
         <td>{{ movimentacao }}</td>
         <td>{{ movimentacao.data }}</td>
+        <td>{{ movimentacao.tipo.get_tipo_display }}</td>
         <td>{{ movimentacao.tipo }}</td>
         <td>{% if movimentacao.link %}<a href="{{ movimentacao.link }}">{% endif %}{{ movimentacao.fonte_destino }}</a></td>
         <td>{{ movimentacao.observacao|truncatewords:4 }}</td>

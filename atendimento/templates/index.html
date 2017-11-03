@@ -30,6 +30,42 @@
         resize: true,
         gridLineColor: '#E5E5E5'
     });
+
+    /* Line dashboard chart */
+    Morris.Line({
+      element: 'dashboard-line-1',
+      data: [
+        { y: '2017-06', a: {{ movimentacao.entradas.meses_6_atras|safe }} , b: {{ movimentacao.saidas.meses_6_atras|safe }} },
+        { y: '2017-07', a: {{ movimentacao.entradas.meses_5_atras|safe }} , b: {{ movimentacao.saidas.meses_5_atras|safe }} },
+        { y: '2017-08', a: {{ movimentacao.entradas.meses_4_atras|safe }} , b: {{ movimentacao.saidas.meses_4_atras|safe }} },
+        { y: '2017-09', a: {{ movimentacao.entradas.meses_3_atras|safe }} , b: {{ movimentacao.saidas.meses_3_atras|safe }} },
+        { y: '2017-10', a: {{ movimentacao.entradas.meses_2_atras|safe }} , b: {{ movimentacao.saidas.meses_2_atras|safe }} },
+        { y: '2017-11', a: {{movimentacao.entradas.mes_anterior|safe }},b: {{ movimentacao.saidas.mes_anterior|safe }} }
+      ],
+      xkey: 'y',
+      ykeys: ['a','b'],
+      labels: ['Entradas','Saidas'],
+      resize: true,
+      hideHover: true,
+      xLabels: 'month',
+        xLabelFormat: function (x) {
+            var IndexToMonth = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ];
+            var month = IndexToMonth[ x.getMonth() ];
+            var year = x.getFullYear();
+            return month + '/' + year;
+        },
+        dateFormat: function (x) {
+            var IndexToMonth = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ];
+            var month = IndexToMonth[ new Date(x).getMonth() ];
+            var year = new Date(x).getFullYear();
+            return month + '/' + year;
+        },
+        gridTextSize: '10px',
+        lineColors: ['#1caf9a','red'],
+        gridLineColor: '#E5E5E5',
+        preUnits: 'R$ '
+    });
+    /* EMD Line dashboard chart */
 </script>
 {% endblock %}
 {% block content %}
@@ -113,8 +149,25 @@
     </div>
     <!-- END WIDGETS -->
     <div id="sum_box" class="row mbl">
-        <div class="col-sm-6 col-md-6">
+        <div class="col-sm-4 col-md-4">
             <div class="panel profit db mbm">
+                <div class="panel-heading">
+                    <div class="panel-title-box">
+                        <h3>Vendas e Recebimentos</h3>
+                        <span>Mês em curso</span>
+                    </div>
+                    <ul class="panel-controls" style="margin-top: 2px;">
+                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
                 <div class="panel-body">
                     <h3>Entradas</h3>
                     <div class="col-md-4">
@@ -122,33 +175,50 @@
                             <i class="icon fa fa-arrow-circle-o-down" style="font-size: 55px"></i>
                         </p>
                         <h2 class="value">
-                            <span>R$ </span><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">{{ entradas.total }}</span>
+                            <span>R$ </span>
+                            <span
+                                    data-counter=""
+                                    data-start="10"
+                                    data-end="50"
+                                    data-step="1"
+                                    data-duration="0">{{ movimentacao.entradas.mes_atual.total }}</span>
                         </h2>
                     </div>
                     <div class="col-md-8">
                         <div class="progress-list">
                             <div class="pull-left"><i class="icon fa fa-money"></i></div>
-                            <div class="pull-right"><strong> R$ {{ entradas.total_dinheiro }}</strong></div>
+                            <div class="pull-right"><strong> R$ {{ movimentacao.entradas.mes_atual.total__dinheiro }}</strong></div>
                             <div class="progress progress-striped active" style="margin-bottom: 5px">
                                 <div class="progress-bar progress-bar-warning"
-                                    role="progressbar"
-                                    aria-valuenow="50"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100" style="width: {{ entradas.total_dinheiro_porcento }}%;">{{ entradas.total_dinheiro_porcento }}%</div>
+                                     role="progressbar"
+                                     aria-valuenow="50"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{ movimentacao.entradas.mes_atual.total_dinheiro_porcento }}%;">{{ movimentacao.entradas.mes_atual.total_dinheiro_porcento }}%</div>
                             </div>
                         </div>
                         <div class="progress-list">
                             <div class="pull-left"><i class="icon fa fa-credit-card"></i></div>
-                            <div class="pull-right"><strong> R$ {{ entradas.total_cartao }}</strong></div>
+                            <div class="pull-right"><strong> R$ {{ movimentacao.entradas.mes_atual.total_cartao }}</strong></div>
                             <div class="progress progress-striped active" style="margin-bottom: 5px">
-                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ entradas.total_cartao_porcento }}%;">{{ entradas.total_cartao_porcento }}%</div>
+                                <div class="progress-bar progress-bar-warning"
+                                     role="progressbar"
+                                     aria-valuenow="50"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{ movimentacao.entradas.mes_atual.total_cartao_porcento }}%;">{{ movimentacao.entradas.mes_atual.total_cartao_porcento }}%</div>
                             </div>
                         </div>
                         <div class="progress-list">
                             <div class="pull-left"><i class="icon fa fa-pencil"></i></div>
-                            <div class="pull-right"><strong> R$ {{ entradas.total_fiado }}</strong></div>
+                            <div class="pull-right"><strong> R$ {{ movimentacao.entradas.mes_atual.total_fiado }}</strong></div>
                             <div class="progress progress-striped active" style="margin-bottom: 5px">
-                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ entradas.total_fiado_porcento }}%;">{{ entradas.total_fiado_porcento }}%</div>
+                                <div class="progress-bar progress-bar-warning"
+                                     role="progressbar"
+                                     aria-valuenow="50"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{ movimentacao.entradas.mes_atual.total_fiado_porcento }}%;">{{ movimentacao.entradas.mes_atual.total_fiado_porcento }}%</div>
                             </div>
                         </div>
                         <!--
@@ -158,8 +228,25 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-6">
+        <div class="col-sm-4 col-md-4">
             <div class="panel income db mbm" style="min-height: 194px;">
+                <div class="panel-heading">
+                    <div class="panel-title-box">
+                        <h3>Gastos e Pagamentos</h3>
+                        <span>Mês em curso</span>
+                    </div>
+                    <ul class="panel-controls" style="margin-top: 2px;">
+                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
                 <div class="panel-body">
                     <h3>Saídas</h3>
                     <div class="col-md-4">
@@ -167,16 +254,75 @@
                             <i class="icon fa fa-arrow-circle-o-up" style="font-size: 55px"></i>
                         </p>
                         <h2 class="value">
-                            <span>R$ </span><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">{{ total_saidas }}</span>
+                            <span>R$ </span><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">{{ movimentacao.saidas.mes_atual.total }}</span>
                         </h2>
                     </div>
-                    <div class="progress progress-sm mbn">
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                            <span class="sr-only">60% Complete (success)</span>
+                    <div class="col-md-8">
+                        <div class="progress-list">
+                            <div class="pull-left">Retirada de Socios</i></div>
+                            <div class="pull-right"><strong> R$ {{ movimentacao.saidas.mes_atual.total_socios|safe }}</strong></div>
+                            <div class="progress progress-striped active" style="margin-bottom: 5px">
+                                <div class="progress-bar progress-bar-danger"
+                                     role="progressbar"
+                                     aria-valuenow="60"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{ movimentacao.saidas.mes_atual.total_socios_porcento }}%;">{{ movimentacao.saidas.mes_atual.total_socios_porcento }}%</div>
+                            </div>
+                        </div>
+                        <div class="progress-list">
+                            <div class="pull-left">Salarios</i></div>
+                            <div class="pull-right"><strong> R$ {{ movimentacao.saidas.mes_atual.total_salarios|safe }}</strong></div>
+                            <div class="progress progress-striped active" style="margin-bottom: 5px">
+                                <div class="progress-bar progress-bar-danger"
+                                     role="progressbar"
+                                     aria-valuenow="60"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{ movimentacao.saidas.mes_atual.total_salarios_porcento }}%;">{{ movimentacao.saidas.mes_atual.total_salarios_porcento }}%</div>
+                            </div>
+                        </div>
+                        <div class="progress-list">
+                            <div class="pull-left">Outros</i></div>
+                            <div class="pull-right"><strong> R$ {{ movimentacao.saidas.mes_atual.total_outros|safe }}</strong></div>
+                            <div class="progress progress-striped active" style="margin-bottom: 5px">
+                                <div class="progress-bar progress-bar-danger"
+                                     role="progressbar"
+                                     aria-valuenow="60"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{ movimentacao.saidas.mes_atual.total_outros_porcento }}%;">{{ movimentacao.saidas.mes_atual.total_outros_porcento }}%</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <!-- START SALES & EVENTS BLOCK -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box">
+                        <h3>Entradas e Saidas</h3>
+                        <span>Últimos 6 meses</span>
+                    </div>
+                    <ul class="panel-controls" style="margin-top: 2px;">
+                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body padding-0">
+                    <div class="chart-holder" id="dashboard-line-1" style="height: 200px;"></div>
+                </div>
+            </div>
+            <!-- END SALES & EVENTS BLOCK -->
         </div>
     </div>
     <div class="row">
@@ -212,7 +358,7 @@
                 <div class="panel-heading">
                     <div class="panel-title-box">
                         <h3>Faturamento</h3>
-                        <span>Mês corrente</span>
+                        <span>Semana corrente</span>
                     </div>
                     <ul class="panel-controls" style="margin-top: 2px;">
                         <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>

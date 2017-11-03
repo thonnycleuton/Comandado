@@ -29,4 +29,4 @@ class Movimentacao(models.Model):
     link = models.URLField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.cod_movimentacao
+        return self.fonte_destino

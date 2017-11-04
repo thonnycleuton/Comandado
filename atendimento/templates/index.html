@@ -411,7 +411,7 @@
                                 {% for colaborador in colaboradores %}
                                 <tr>
                                     <td>
-                                        <div class="pull-left"><strong>{{ colaborador.first_name }}</strong></div>
+                                        <div class="pull-left"><a href="{% url 'contas:alterar' colaborador.id %}"><strong>{{ colaborador.first_name }}</strong></a></div>
                                     </td>
                                     <td style="padding: 0" width="300">
                                         <a href="#" class="tile tile-primary" style="margin-bottom: 0; min-height: 0">

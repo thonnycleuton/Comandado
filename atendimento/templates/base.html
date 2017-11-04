@@ -42,24 +42,24 @@
                             <div class="profile-controls">
                                 <a href="{% url 'contas:perfil' %}" class="profile-control-left"><span class="fa fa-info"></span></a>
                             </div>
-                        </div>                                                                        
+                        </div>
                     </li>
 
                     <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
-                        {% if user.profile.is_gerente %}
-                            <li><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
-                            <li class="xn-openable">
-                                <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
-                                <ul>
-                                    <li><a href="{% url 'movimentacao:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Movimentação</span></a></li>
-                                    <li><a href="{% url 'movimentacao:tipo_list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Evento</span></a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a></li>
-                            <li><a href="{% url 'servicos:list' %}"><span class="fa fa-server"></span> <span class="xn-text">Servicos</span></a></li>
-                            <li><a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a></li>
-                        {% endif %}
-                    <li class="active"><a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a></li>
+                    {% if user.profile.is_gerente %}
+                        <li{% if request.path == '/painel/' %} class="active" {% endif %}><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
+                        <li class="xn-openable">
+                            <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
+                            <ul>
+                                <li {% if request.path == '/movimentacao/' %} class="active" {% endif %}><a href="{% url 'movimentacao:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Movimentação</span></a></li>
+                                <li{% if request.path == '/movimentacao/tipo/' %} class="active" {% endif %}><a href="{% url 'movimentacao:tipo_list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Evento</span></a></li>
+                            </ul>
+                        </li>
+                        <li {% if request.path == '/clientes/' %} class="active" {% endif %} ><a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a></li>
+                        <li {% if request.path == '/servicos/' %} class="active" {% endif %} ><a href="{% url 'servicos:list' %}"><span class="fa fa-server"></span> <span class="xn-text">Servicos</span></a></li>
+                        <li {% if request.path == '/contas/usuarios/' %} class="active" {% endif %} ><a href="{% url 'contas:list' %}"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a></li>
+                    {% endif %}
+                    <li {% if request.path == '/' %}class="active" {% endif %}><a href="{% url 'vendas:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Vendas</span></a></li>
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -216,7 +216,6 @@
         <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/actions.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/demo_dashboard.js' %}"></script>
-
         <!-- END TEMPLATE -->
     <!-- END SCRIPTS -->         
     </body>

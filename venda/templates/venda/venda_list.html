@@ -3,6 +3,13 @@
 {% block javascript %}
     <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#vendas_table').DataTable( {
+                "order": [[ 2, "desc" ]]
+            } );
+        } );
+    </script>
 {% endblock %}
 {% block content %}
     <!-- PAGE CONTENT WRAPPER -->

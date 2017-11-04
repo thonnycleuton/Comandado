@@ -4,6 +4,13 @@
 {% block javascript %}
     <script type="text/javascript" src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'js/plugins/pessoais/alerts.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tabela').DataTable( {
+                "order": [[ 1, "desc" ]]
+            } );
+        } );
+    </script>
 {% endblock %}
 
 {% block content %}

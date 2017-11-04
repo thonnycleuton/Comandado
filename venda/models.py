@@ -25,7 +25,7 @@ class Venda(models.Model):
     valor_final = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
-        ordering = ('-valor_venda',)
+        ordering = ('-data_venda',)
         verbose_name = 'venda'
         verbose_name_plural = 'vendas'
 

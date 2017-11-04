@@ -48,7 +48,7 @@
                     <li class="xn-title">{{ user.profile.get_funcao_display }}</li>
                     {% if user.profile.is_gerente %}
                         <li{% if request.path == '/painel/' %} class="active" {% endif %}><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
-                        <li class="xn-openable {% if '/movimentacao/' in request.path %} active" {% endif %} >
+                        <li class="xn-openable {% if '/movimentacao/' in request.path %} active" {% else %} "{% endif %} >
                             <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
                             <ul>
                                 <li><a href="{% url 'movimentacao:list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Movimentação</span></a></li>

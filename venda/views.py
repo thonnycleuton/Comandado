@@ -20,7 +20,6 @@ from django.contrib.auth.decorators import login_required
 class VendaList(ListView):
     model = Venda
     context_object_name = 'venda_list'
-    ordering = '-valor_venda'
 
     def get_queryset(self):
 

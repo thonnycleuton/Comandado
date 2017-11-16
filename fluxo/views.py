@@ -1,12 +1,16 @@
 from datetime import datetime, timedelta
 
-from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 from fluxo.form import MovimentacaoForm
 from fluxo.models import Movimentacao, Tipo
+from venda.models import Venda
+
+
+class ListReceber(ListView):
+    model = Venda
 
 
 class ListMovimentacao(ListView):
@@ -22,7 +26,8 @@ class ListMovimentacao(ListView):
             date += timedelta(days=1)
             movimentacoes = Movimentacao.objects.filter(data__range=(data_inicial, date))
         else:
-            movimentacoes = Movimentacao.objects.filter(data__year=datetime.today().year, data__month=datetime.today().month)
+            movimentacoes = Movimentacao.objects.filter(data__year=datetime.today().year,
+                                                        data__month=datetime.today().month)
 
         return movimentacoes
 
@@ -41,6 +46,22 @@ class CreateMovimentacao(CreateView):
         f.valor = f.valor * (-1) if f.tipo.tipo == 2 else f.valor
         f.save()
         return super(CreateMovimentacao, self).form_valid(form)
+
+
+class UpdateMovimentacao(UpdateView):
+    model = Movimentacao
+    form_class = MovimentacaoForm
+    success_url = reverse_lazy('movimentacao:list')
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+
+        f = form.save(commit=False)
+        f.user = self.request.user
+        f.valor = f.valor * (-1) if f.tipo.tipo == 2 else f.valor
+        f.save()
+        return super(UpdateMovimentacao, self).form_valid(form)
 
 
 class ListMovimentacaoTipo(ListView):

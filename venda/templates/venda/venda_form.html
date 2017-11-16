@@ -154,7 +154,7 @@
 
                                         <!-- START DATE AND TIME PICKER -->
                                         <div class="block" >
-                                            <div class="form-group" id="tipo-2" style="display: none;">
+                                            <div class="form-group" id="tipo-2" {% if object.tipo != 2 %} style="display: none;"{% endif %}>
                                                 <label class="col-md-3 control-label">Dia do Pagamento</label>
                                                 <div class="col-md-2">
                                                     <div class="input-group" >
@@ -196,6 +196,13 @@
     </div>
 {% endblock %}
 {% block javascript %}
+    <script>
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '0d',
+            autoclose: true,
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $("input[name$='tipo']").click(function() {

@@ -108,6 +108,7 @@ def home(request):
         saidas_mes_anterior_valor += saida.valor
 
     vendas = Venda.objects.all()
+    vendas_pendentes = vendas.filter(tipo=2, data_pagamento=datetime.date.today())
 
     vendas_outubro = vendas.filter(data_venda__year='2017', data_venda__month='10')
     for venda in vendas_outubro:
@@ -126,6 +127,7 @@ def home(request):
     context = {
         'gerencia': gerencia,
         'servicos': servico,
+        'vendas_pendentes': vendas_pendentes,
         'colaboradores': colaboradores,
         'faturamento': faturamento,
         'data_atual': hoje,

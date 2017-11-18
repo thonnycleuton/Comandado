@@ -162,11 +162,17 @@
                                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                     </div>
                                                 </div>
+                                                {% if not object.comanda %}<a href="{% url 'movimentacao:novo_prazo' object.cod_venda %}" type="button" class="btn btn-success">Efetuar Pagamento</a>{% endif %}
                                             </div>
                                         </div>
                                         <!-- END DATE AND TIME PICKER -->
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- warning -->
+                        <div class="message-box message-box-warning animated fadeIn" id="message-box-warning">
+                            <div class="mb-container">
                             </div>
                         </div>
                     </div>

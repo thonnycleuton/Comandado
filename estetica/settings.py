@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'servico',
     'venda',
     'fluxo',
+    'pendencias',
     'search',
 ]
 

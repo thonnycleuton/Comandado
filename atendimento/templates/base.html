@@ -50,11 +50,10 @@
                     {% if user.profile.is_gerente %}
                         <li{% if request.path == '/painel/' %} class="active" {% endif %}><a href="{% url 'painel' %}"><span class="fa fa-dashboard"></span> <span class="xn-text">Painel</span></a></li>
                         <li class="xn-openable {% if '/movimentacao/' in request.path %} active" {% else %} "{% endif %} >
-                            <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Entradas/Saidas</span></a>
+                            <a href="#"><span class="fa fa-bar-chart"></span> <span class="xn-text">Movimentação</span></a>
                             <ul>
-                                <li><a href="{% url 'movimentacao:list' %}"><span class="glyphicon glyphicon-transfer"></span> <span class="xn-text">Movimentação</span></a></li>
+                                <li><a href="{% url 'movimentacao:list' %}"><span class="glyphicon glyphicon-transfer"></span> <span class="xn-text">Entradas/Saidas</span></a></li>
                                 <li><a href="{% url 'movimentacao:tipo_list' %}"><span class="fa fa-dollar"></span> <span class="xn-text">Evento</span></a></li>
-                                <li><a href="{% url 'provisionado:list' %}"><span class="fa fa-money"></span> <span class="xn-text">A Receber</span></a></li>
                             </ul>
                         </li>
                         <li {% if request.path == '/clientes/' %} class="active" {% endif %} ><a href="{% url 'clientes:list' %}"><span class="fa fa-users"></span> <span class="xn-text">Clientes</span></a></li>

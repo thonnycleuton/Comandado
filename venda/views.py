@@ -46,7 +46,7 @@ class VendaList(ListView):
         context = super(VendaList, self).get_context_data()
         total_vendas = 0
 
-        for venda in self.object_list:
+        for venda in self.object_list.filter(comanda=False):
             total_vendas += venda.valor_final
 
         context['total_vendas'] = total_vendas

@@ -22,7 +22,7 @@ class Movimentacao(models.Model):
     user = models.ForeignKey(User, verbose_name='Usuario responsável', null=True, blank=True)
     tipo = models.ForeignKey(Tipo, verbose_name='Evento',
                              help_text='Evento refere-se a quaisquer tipo de transação de entrada e saida de capital.', null=True, blank=True)
-    fonte_destino = models.CharField(max_length=20, verbose_name='Fonte/Destino', help_text='De onde veio ou para '
+    fonte_destino = models.CharField(max_length=50, verbose_name='Fonte/Destino', help_text='De onde veio ou para '
                                                                                             'onde foi o dinheiro '
                                                                                             'referente à transação.')
     observacao = models.TextField(max_length=400, blank=True)

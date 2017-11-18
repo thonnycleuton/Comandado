@@ -8,7 +8,6 @@ from django.db import models
 # Create your models here.
 from cliente.models import Cliente
 from fluxo.models import Movimentacao
-from pendencias.models import Receber
 from servico.models import Servico
 
 

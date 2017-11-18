@@ -72,7 +72,7 @@ def home(request):
                 elif entrada.tipo.id == 3:
                     total_entradas_cartao += entrada.valor
                 # calcula o valor total de entradas de recebimento de fiados (25)
-                elif entrada.tipo.id == 25:
+                elif entrada.tipo.id == 27:
                     total_entradas_fiado += entrada.valor
 
     saidas = Movimentacao.objects.filter(tipo__tipo=2)

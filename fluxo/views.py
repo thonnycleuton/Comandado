@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 # Create your views here.
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 
@@ -83,4 +84,4 @@ def create_prazo(request, cod_venda):
 
     venda = Venda.objects.get(cod_venda=cod_venda)
     Movimentacao.objects.create(valor=venda.valor_final, user=request.user, tipo_id=27, fonte_destino=venda.cod_cliente.nome, link=venda.get_absolute_url())
-    return reverse_lazy('movimentacao:list')
+    return redirect(reverse_lazy('movimentacao:list'))

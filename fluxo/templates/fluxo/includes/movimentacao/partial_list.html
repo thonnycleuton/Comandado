@@ -2,7 +2,7 @@
 {% for movimentacao in movimentacao_list %}
     <tr >
         <td><a href="{% url 'movimentacao:edite' movimentacao.id %}">{{ movimentacao }}</a></td>
-        <td>{{ movimentacao.data }}</td>
+        <td>{{ movimentacao.data|date:"D d M, Y. f" }}</td>
         <td>{{ movimentacao.tipo.get_tipo_display }}</td>
         <td>{{ movimentacao.tipo }}</td>
         <td>{% if movimentacao.link %}<a href="{{ movimentacao.link }}">{% endif %}{{ movimentacao.fonte_destino }}</a></td>

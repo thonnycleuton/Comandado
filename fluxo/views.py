@@ -32,6 +32,18 @@ class ListMovimentacao(ListView):
 
         return movimentacoes
 
+    def get_context_data(self, **kwargs):
+
+        context = super(ListMovimentacao, self).get_context_data()
+        movimento_total = 0
+
+        for movimento in self.object_list.all():
+            movimento_total += movimento.valor
+
+        context['movimento_total'] = movimento_total
+
+        return context
+
 
 class CreateMovimentacao(CreateView):
     model = Movimentacao
@@ -81,7 +93,7 @@ class CreateMovimentacaoTipo(CreateView):
 
 
 def create_prazo(request, cod_venda):
-
     venda = Venda.objects.get(cod_venda=cod_venda)
-    Movimentacao.objects.create(valor=venda.valor_final, user=request.user, tipo_id=27, fonte_destino=venda.cod_cliente.nome, link=venda.get_absolute_url())
+    Movimentacao.objects.create(valor=venda.valor_final, user=request.user, tipo_id=27,
+                                fonte_destino=venda.cod_cliente.nome, link=venda.get_absolute_url())
     return redirect(reverse_lazy('movimentacao:list'))

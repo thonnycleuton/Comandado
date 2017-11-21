@@ -38,7 +38,10 @@ class ListMovimentacao(ListView):
         movimento_total = 0
 
         for movimento in self.object_list.all():
-            movimento_total += movimento.valor
+            try:
+                movimento_total += movimento.valor
+            except Exception as e:
+                print(e, " - ", movimento)
 
         context['movimento_total'] = movimento_total
 
@@ -93,7 +96,10 @@ class CreateMovimentacaoTipo(CreateView):
 
 
 def create_prazo(request, cod_venda):
+
     venda = Venda.objects.get(cod_venda=cod_venda)
+    venda.pago = True
+    venda.save()
     Movimentacao.objects.create(valor=venda.valor_final, user=request.user, tipo_id=27,
                                 fonte_destino=venda.cod_cliente.nome, link=venda.get_absolute_url())
     return redirect(reverse_lazy('movimentacao:list'))

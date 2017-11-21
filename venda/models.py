@@ -23,6 +23,7 @@ class Venda(models.Model):
     comanda = models.BooleanField(default=True, verbose_name="Comanda")
     desconto = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
     valor_final = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    pago = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-data_venda',)
@@ -73,6 +74,7 @@ class Venda(models.Model):
                 movimentacao.user_id = 1
                 movimentacao.data = self.data_venda
                 movimentacao.save()
+                self.pago = True
 
             # se Pagamento for em Debito (3) ou Credito (4)
             if self.tipo == 3 or self.tipo == 4:
@@ -84,6 +86,7 @@ class Venda(models.Model):
                 movimentacao.user_id = 1
                 movimentacao.data = self.data_venda
                 movimentacao.save()
+                self.pago = True
 
         # self.data_pagamento = datetime.today() + timedelta(days=1)
 

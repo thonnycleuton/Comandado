@@ -36,14 +36,29 @@ class ListMovimentacao(ListView):
 
         context = super(ListMovimentacao, self).get_context_data()
         movimento_total = 0
+        movimento_total_vista = 0
+        movimento_total_cartao = 0
+        movimento_total_fiado = 0
 
         for movimento in self.object_list.all():
             try:
                 movimento_total += movimento.valor
+                print(movimento.tipo.pk)
+                print(movimento.tipo)
+                if movimento.tipo.pk == 4:
+                    movimento_total_vista += movimento.valor
+                elif movimento.tipo.pk == 3:
+                    movimento_total_cartao += movimento.valor
+                elif movimento.tipo.pk == 27:
+                    movimento_total_fiado += movimento.valor
+
             except Exception as e:
                 print(e, " - ", movimento)
 
         context['movimento_total'] = movimento_total
+        context['movimento_total_vista'] = movimento_total_vista
+        context['movimento_total_cartao'] = movimento_total_cartao
+        context['movimento_total_fiado'] = movimento_total_fiado
 
         return context
 

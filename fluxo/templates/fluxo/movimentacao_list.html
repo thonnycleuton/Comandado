@@ -69,13 +69,40 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Movimentacao</h3>
                         <ul class="panel-controls">
-                        <H2 class="pull-left"> R$ {{ movimento_total }} </H2>
                             <li><a href="{% url 'movimentacao:novo' %}"><span class="fa fa-plus"></span></a></li>
                             <!--<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                             <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                             <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                             -->
                         </ul>
+
+                        <div class="col-md-3 pull-right" style="right: -160px">
+                            <div class="col-md-5">
+                                <div class="progress-list">
+                                    <div class="pull-left"><i class="icon fa fa-money">  R$ </i></div>
+                                    <div class="pull-right"> {{ movimento_total_vista }}</div>
+                                </div>
+                                <div class="progress-list">
+                                    <div class="pull-left"><i class="icon fa fa-credit-card">  R$ </i></div>
+                                    <div class="pull-right">{{ movimento_total_cartao }}</div>
+                                </div>
+                                <div class="progress-list">
+                                    <div class="pull-left"><i class="icon fa fa-pencil">  R$ </i></div>
+                                    <div class="pull-right">{{ movimento_total_fiado }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h2 class="value">
+                                    <span>R$ </span>
+                                    <span
+                                            data-counter=""
+                                            data-start="10"
+                                            data-end="50"
+                                            data-step="1"
+                                            data-duration="0">{{ movimento_total }}</span>
+                                </h2>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <table class="table datatable" id="tabela">

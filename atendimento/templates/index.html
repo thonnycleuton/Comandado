@@ -403,8 +403,8 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Colaborador</th>
-                                    <th width="40%">Semanal</th>
-                                    <th width="40%">Mensal</th>
+                                    <th width="40%">Semanal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_semanal }}</small></th>
+                                    <th width="40%">Mensal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_novembro }}</small></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -423,7 +423,7 @@
                                                             progress-bar-danger "
                                                         {% else %}
                                                             progress-bar-success"
-                                                     {% endif %}
+                                                        {% endif %}
                                                      role="progressbar"
                                                      aria-valuenow="100"
                                                      aria-valuemin="0"

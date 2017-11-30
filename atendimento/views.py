@@ -27,6 +27,7 @@ def home(request):
     total_saidas_outros = 0
 
     saidas_mes_atual_valor = 0
+    faturamento_semanal = 0
     faturamento_outubro = 0
     faturamento_novembro = 0
 
@@ -109,7 +110,14 @@ def home(request):
 
     vendas = Venda.objects.all()
 
+    segunda = datetime.date.today() - datetime.timedelta(datetime.date.today().weekday())
+
+    vendas_semanal = vendas.filter(data_venda__range=(segunda, datetime.date.today() + datetime.timedelta(days=1)))
+    for venda in vendas_semanal:
+        faturamento_semanal += venda.valor_final
+
     vendas_outubro = vendas.filter(data_venda__year='2017', data_venda__month='10')
+    lista_de_colaboradores = []
     for venda in vendas_outubro:
         faturamento_outubro += venda.valor_final
 
@@ -133,6 +141,7 @@ def home(request):
         'quant_clientes_novos': quant_clientes_novos,
         'perfil': perfil,
         'metas_realizacoes': {
+            'faturamento_semanal': faturamento_semanal,
             'meta_outubro': meta_geral,
             'faturamento_outubro': faturamento_outubro,
             'meta_novembro': meta_geral,

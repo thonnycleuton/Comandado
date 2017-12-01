@@ -18,8 +18,8 @@
     Morris.Bar({
         element: 'dashboard-bar-1',
         data: [
-            { y: 'Out/17', a: {{ meta_geral|safe }}, b: {{ metas_realizacoes.faturamento_outubro|safe }} } ,
-            { y: 'Nov/17', a: {{ meta_geral|safe }}, b: {{ metas_realizacoes.faturamento_novembro|safe }} }
+            { y: 'Out/17', a: {{ meta_geral|safe }}, b: {{ metas_realizacoes.faturamento_mes_anterior|safe }} } ,
+            { y: 'Nov/17', a: {{ meta_geral|safe }}, b: {{ metas_realizacoes.faturamento_mes_atual|safe }} }
         ],
         xkey: 'y',
         ykeys: ['a', 'b'],
@@ -78,7 +78,7 @@
             <div class="widget widget-primary">
                 <div class="widget-title">TOTAL</div>
                 <div class="widget-subtitle">{{ data_atual }}</div>
-                <div class="widget-int">R$ <span data-toggle="counter" data-to="1564">{{ metas_realizacoes.faturamento_novembro|safe }}</span></div>
+                <div class="widget-int">R$ <span data-toggle="counter" data-to="1564">{{ metas_realizacoes.faturamento_mes_atual|safe }}</span></div>
                 <div class="widget-controls">
                     <a href="#" class="widget-control-left"><span class="fa fa-upload"></span></a>
                     <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
@@ -404,7 +404,7 @@
                                 <tr>
                                     <th width="20%">Colaborador</th>
                                     <th width="40%">Semanal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_semanal }}</small></th>
-                                    <th width="40%">Mensal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_novembro }}</small></th>
+                                    <th width="40%">Mensal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_mes_atual }}</small></th>
                                 </tr>
                             </thead>
                             <tbody>

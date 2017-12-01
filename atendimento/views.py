@@ -37,8 +37,8 @@ def home(request):
 
     saidas_mes_atual_valor = 0
     faturamento_semanal = 0
-    faturamento_outubro = 0
-    faturamento_novembro = 0
+    faturamento_mes_anterior = 0
+    faturamento_mes_atual = 0
 
     saidas_mes_anterior_valor = 0
     total_entradas = []
@@ -125,14 +125,14 @@ def home(request):
     for venda in vendas_semanal:
         faturamento_semanal += venda.valor_final
 
-    vendas_outubro = vendas.filter(data_venda__year='2017', data_venda__month='10')
+    vendas_mes_anterior = vendas.filter(data_venda__month=datetime.date.today().month - 1, comanda=False)
     lista_de_colaboradores = []
-    for venda in vendas_outubro:
-        faturamento_outubro += venda.valor_final
+    for venda in vendas_mes_anterior:
+        faturamento_mes_anterior += venda.valor_final
 
-    vendas_novembro = vendas.filter(data_venda__year='2017', data_venda__month='11', comanda=False)
-    for venda in vendas_novembro:
-        faturamento_novembro += venda.valor_final
+    vendas_mes_atual = vendas.filter(data_venda__month=datetime.date.today().month, comanda=False)
+    for venda in vendas_mes_atual:
+        faturamento_mes_atual += venda.valor_final
 
     for s in servico:
         faturamento += s.get_faturamento()
@@ -152,9 +152,9 @@ def home(request):
         'metas_realizacoes': {
             'faturamento_semanal': faturamento_semanal,
             'meta_outubro': meta_geral,
-            'faturamento_outubro': faturamento_outubro,
+            'faturamento_mes_anterior': faturamento_mes_anterior,
             'meta_novembro': meta_geral,
-            'faturamento_novembro': faturamento_novembro,
+            'faturamento_mes_atual': faturamento_mes_atual,
         },
         'meta_geral': meta_geral,
         'movimentacao': {

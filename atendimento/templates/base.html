@@ -92,23 +92,31 @@
                     <!-- MESSAGES -->
                     <li class="xn-icon-button pull-right">
                         <a href="#"><span class="fa fa-comments"></span></a>
-                        {% if vendas_pendentes %}
-                            <div class="informer informer-danger">{{ vendas_pendentes|length }}</div>
+                        {% if alertas %}
+                            <div class="informer informer-danger">{{ alertas.tamanho }}</div>
                         {% endif %}
                         <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><span class="fa fa-comments"></span> Mensagens</h3>
                                 <div class="pull-right">
-                                    <span class="label label-danger">{{ vendas_pendentes|length }}</span>
+                                    <span class="label label-danger">{{ alertas.tamanho }}</span>
                                 </div>
                             </div>
                             <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
-                                {% for pendentes in vendas_pendentes %}
+                                {% for pendentes in alertas.vendas_pendentes %}
                                     <a href="{{ pendentes.get_absolute_url }}" class="list-group-item">
                                         <div class="list-group-status status-online"></div>
                                         <img src="{{ pendentes.cod_cliente.foto.url }}" class="pull-left" alt="{{ pendentes.cod_cliente.nome }}"/>
                                         <span class="contacts-title">{{ pendentes.cod_cliente.nome }}</span>
                                         <p>{{ pendentes.cod_venda }}</p>
+                                    </a>
+                                {% endfor %}
+                                {% for aniversariante in alertas.aniversariantes %}
+                                    <a href="{{ aniversariante.get_absolute_url }}" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <img src="{{ aniversariante.foto.url }}" class="pull-left" alt="{{ aniversariante.nome }}"/>
+                                        <span class="contacts-title">{{ aniversariante.nome }}</span>
+                                        <p>{{ aniversariante.nascimento }}</p>
                                     </a>
                                 {% endfor %}
                             </div>

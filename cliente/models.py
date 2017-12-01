@@ -59,6 +59,9 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nome
 
+    def get_absolute_url(self):
+        return "/clientes/editar/" + str(self.pk)
+
     def get_gasto_total(self):
         from venda.models import Venda
 

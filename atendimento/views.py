@@ -13,6 +13,15 @@ from cliente.models import Cliente
 from venda.models import Venda
 
 
+# funcao que divide um numero cuidando caso ele seja divido por zero
+def safe_division(x, y):
+
+    try:
+        return x / y
+    except ZeroDivisionError:
+        return 0
+
+
 @login_required(login_url=settings.LOGIN_URL)
 def home(request):
     faturamento = 0
@@ -152,11 +161,11 @@ def home(request):
             'entradas': {
                 'mes_atual': {
                     'total__dinheiro': total_entradas_dinheiro,
-                    'total_dinheiro_porcento': int(total_entradas_dinheiro * 100 / total_entradas[0]),
+                    'total_dinheiro_porcento': int(safe_division(total_entradas_dinheiro * 100, total_entradas[0])),
                     'total_cartao': total_entradas_cartao,
-                    'total_cartao_porcento': int(total_entradas_cartao * 100 / total_entradas[0]),
+                    'total_cartao_porcento': int(safe_division(total_entradas_cartao * 100, total_entradas[0])),
                     'total_fiado': total_entradas_fiado,
-                    'total_fiado_porcento': int(total_entradas_fiado * 100 / total_entradas[0]),
+                    'total_fiado_porcento': int(safe_division(total_entradas_fiado * 100, total_entradas[0])),
                     'total': total_entradas[0],
                 },
                 'mes_anterior': total_entradas[1],
@@ -169,11 +178,11 @@ def home(request):
             'saidas': {
                 'mes_atual': {
                     'total_socios': total_saidas_socios * (-1),
-                    'total_socios_porcento': int(total_saidas_socios * 100 / total_saidas[0]),
+                    'total_socios_porcento': int(safe_division(total_saidas_socios * 100, total_saidas[0])),
                     'total_salarios': total_saidas_salarios * (-1),
-                    'total_salarios_porcento': int(total_saidas_salarios * 100 / total_saidas[0]),
+                    'total_salarios_porcento': int(safe_division(total_saidas_salarios * 100, total_saidas[0])),
                     'total_outros': total_saidas_outros * (-1),
-                    'total_outros_porcento': int(total_saidas_outros * 100 / total_saidas[0]),
+                    'total_outros_porcento': int(safe_division(total_saidas_outros * 100, total_saidas[0])),
                     'total': total_saidas[0] * (-1),
                 },
                 'mes_anterior': total_saidas[1] * (-1),

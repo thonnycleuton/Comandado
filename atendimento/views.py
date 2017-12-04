@@ -26,6 +26,7 @@ def safe_division(x, y):
 def home(request):
     faturamento = 0
     meta_geral = 0
+    meta_semanal = 0
 
     total_entradas_dinheiro = 0
     total_entradas_cartao = 0
@@ -139,6 +140,7 @@ def home(request):
 
     for colaborador in colaboradores:
         meta_geral += colaborador.meta
+        meta_semanal += colaborador.get_meta_semanal()
 
     context = {
         'gerencia': gerencia,
@@ -151,9 +153,9 @@ def home(request):
         'perfil': perfil,
         'metas_realizacoes': {
             'faturamento_semanal': faturamento_semanal,
-            'meta_outubro': meta_geral,
+            'meta_semanal': meta_semanal,
             'faturamento_mes_anterior': faturamento_mes_anterior,
-            'meta_novembro': meta_geral,
+            'meta_geral': meta_geral,
             'faturamento_mes_atual': faturamento_mes_atual,
         },
         'meta_geral': meta_geral,

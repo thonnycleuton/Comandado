@@ -403,8 +403,20 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Colaborador</th>
-                                    <th width="40%">Semanal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_semanal }}</small></th>
-                                    <th width="40%">Mensal <small class="label label-danger">R$ {{ metas_realizacoes.faturamento_mes_atual }}</small></th>
+                                    <th width="40%" style="padding: 0">
+                                        <a href="#" class="tile tile-info tile-valign" style="min-height: 30px; font-size: 20px; line-height: 0; margin-bottom: 0">
+                                            <div style="padding-top: 10px; font-size: 12px">Semanal</div>
+                                            <div class="informer informer-default dir-tr" style="margin-top: -7px; font-size: 9px;">R$ {{ metas_realizacoes.faturamento_semanal }}</div>
+                                            <div class="informer informer-default dir-tl" style="margin-top: -7px; font-size: 9px;">R$ {{ metas_realizacoes.meta_semanal }}</div>
+                                        </a>
+                                    </th>
+                                    <th width="40%" style="padding: 0">
+                                        <a href="#" class="tile tile-info tile-valign" style="min-height: 30px; font-size: 20px; line-height: 0; margin-bottom: 0">
+                                            <div style="padding-top: 10px; font-size: 12px">Mensal</div>
+                                            <div class="informer informer-default dir-tr" style="margin-top: -7px; font-size: 9px;">R$ {{ metas_realizacoes.faturamento_mes_atual }}</div>
+                                            <div class="informer informer-default dir-tl" style="margin-top: -7px; font-size: 9px;">R$ {{ metas_realizacoes.meta_geral }}</div>
+                                        </a>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>

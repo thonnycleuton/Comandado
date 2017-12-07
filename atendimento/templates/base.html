@@ -105,7 +105,9 @@
                             <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
                                 {% for pendentes in alertas.vendas_pendentes %}
                                     <a href="{{ pendentes.get_absolute_url }}" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
+                                        <div class="list-group-status">
+                                            <img style="width: 17px; border: none;" src="{{ MEDIA_URL }}dinheiro.png"/>
+                                        </div>
                                         <img src="{{ pendentes.cod_cliente.foto.url }}" class="pull-left" alt="{{ pendentes.cod_cliente.nome }}"/>
                                         <span class="contacts-title">{{ pendentes.cod_cliente.nome }}</span>
                                         <p>{{ pendentes.cod_venda }}</p>
@@ -113,7 +115,9 @@
                                 {% endfor %}
                                 {% for aniversariante in alertas.aniversariantes %}
                                     <a href="{{ aniversariante.get_absolute_url }}" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
+                                        <div class="list-group-status">
+                                            <img style="width: 17px; border: none;" src="{{ MEDIA_URL }}bolo.png"/>
+                                        </div>
                                         <img src="{{ aniversariante.foto.url }}" class="pull-left" alt="{{ aniversariante.nome }}"/>
                                         <span class="contacts-title">{{ aniversariante.nome }}</span>
                                         <p>{{ aniversariante.nascimento }}</p>

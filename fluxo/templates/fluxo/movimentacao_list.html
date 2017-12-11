@@ -34,9 +34,9 @@
                             <form class="form-horizontal" method="GET" action="">
                             {% csrf_token %}
                             <div class="container">
-                                <div class='col-sm-5'>
+                                <div class='col-sm-3'>
                                     <div class="form-group">
-                                        <div class="col-md-9">
+                                        <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                                 <input type="text" class="form-control datepicker" name="data_inicial" placeholder="data inicial">
@@ -44,9 +44,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class='col-sm-5'>
+                                <div class='col-sm-3'>
                                     <div class="form-group">
-                                        <div class="col-md-9">
+                                        <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                                 <input type="text" class="form-control datepicker" name="data_final" placeholder="data final">
@@ -54,7 +54,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class='col-sm-3'>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-sort"></span></span>
+                                                <select name="tipo" class="form-control select">
+                                                    <option value="0">Todas</option>
+                                                    <option value="1">Entrada</option>
+                                                    <option value="2">Saida</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
                                     <button class="btn btn-primary col-sm-12">Filtrar</button>
                                 </div>
                             </div>

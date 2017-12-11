@@ -18,17 +18,23 @@ class ListMovimentacao(ListView):
     model = Movimentacao
 
     def get_queryset(self):
+        # data inicial e final sao parametros que vem do form.
+        # Quando o filtro eh setado esse
 
         data_inicial = self.request.GET.get('data_inicial')
         data_final = self.request.GET.get('data_final')
+        tipo = self.request.GET.get('tipo')
 
         if data_final or data_inicial:
             date = datetime.strptime(data_final, '%Y-%m-%d')
             date += timedelta(days=1)
             movimentacoes = Movimentacao.objects.filter(data__range=(data_inicial, date))
         else:
-            movimentacoes = Movimentacao.objects.filter(data__year=datetime.today().year,
-                                                        data__month=datetime.today().month)
+            movimentacoes = Movimentacao.objects.filter(data__month=datetime.today().month)
+
+        if tipo:
+            if tipo != '0':
+                movimentacoes = movimentacoes.filter(tipo__tipo=int(tipo))
 
         return movimentacoes
 
@@ -43,8 +49,6 @@ class ListMovimentacao(ListView):
         for movimento in self.object_list.all():
             try:
                 movimento_total += movimento.valor
-                print(movimento.tipo.pk)
-                print(movimento.tipo)
                 if movimento.tipo.pk == 4:
                     movimento_total_vista += movimento.valor
                 elif movimento.tipo.pk == 3:

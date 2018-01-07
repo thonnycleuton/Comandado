@@ -34,13 +34,15 @@ class Profile(User):
 
         return self.meta/4
 
-    def get_rendimento(self, initial=None):
+    def get_rendimento(self, initial=None, final=None):
 
         faturamento = 0
         if initial is None:
             initial = datetime.date.today().replace(day=1)
+        if final is None:
+            final = datetime.date.today() + datetime.timedelta(days=1)
 
-        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, datetime.date.today() + datetime.timedelta(days=1))):
+        for vendas in ItensVenda.objects.filter(vendedor=self.id, cod_venda__data_venda__range=(initial, final)):
 
             if not vendas.cod_venda.comanda:
                 faturamento += vendas.valor

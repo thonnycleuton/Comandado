@@ -53,7 +53,6 @@ class ListPerfil(ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-
         context = super(ListPerfil, self).get_context_data(**kwargs)
         colaborador = context['object_list']
         today = datetime.date.today()
@@ -101,10 +100,14 @@ class UpdatePerfil(UpdateView):
         segunda = today - datetime.timedelta(today.weekday())
         primeiro_do_mes = today.replace(day=1)
 
+        data_inicial = self.request.GET.get('data_inicial')
+        data_final = self.request.GET.get('data_final')
+
         context['today'] = today
         context['vendas_hoje'] = colaborador.get_rendimento(today)
         context['vendas_semana'] = colaborador.get_rendimento(segunda)
         context['vendas_mes'] = colaborador.get_rendimento(primeiro_do_mes)
+        context['vendas_filtrada'] = colaborador.get_rendimento(data_inicial, data_final)
 
         return context
 
@@ -141,7 +144,6 @@ def save_book_form(request, form, template_name):
 
 
 def profile_delete(request, pk):
-
     profile = get_object_or_404(Profile, pk=pk)
     data = dict()
     if request.method == 'POST' and request.user.is_superuser:

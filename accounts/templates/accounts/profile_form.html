@@ -6,11 +6,11 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-7 pull-left" style="padding-top: 10px">
+                <div class="col-md-9 pull-left" style="padding-top: 10px">
                     <form class="form-horizontal" method="GET" action="">
                     {% csrf_token %}
                     <div class="container">
-                        <div class='col-sm-3'>
+                        <div class='col-sm-5'>
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="input-group">
@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class='col-sm-3'>
+                        <div class='col-sm-5'>
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="input-group">
@@ -30,14 +30,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <button class="btn btn-primary col-sm-12">Filtrar</button>
                         </div>
                     </div>
                 </form>
                 </div>
                 <div class="col-md-3">
-                    <a href="#" class="tile tile-info tile-valign" style="margin-bottom: 0; font-size: 22px; min-height: 48px">
+                    <a href="#" class="tile tile-info tile-valign" style="margin-bottom: 0; font-size: 22px; min-height: 48px; line-height: 0">
                         <div class="widget-big-int">R$ <span class="num-count">{{ vendas_filtrada }}</span></div>
                     </a>
                 </div>

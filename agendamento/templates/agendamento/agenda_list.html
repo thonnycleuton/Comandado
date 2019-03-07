@@ -1,0 +1,25 @@
+﻿{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- CONTACT ITEM -->
+                <div class="panel panel-default">
+                    <div class="panel-body profile">
+                        <div class="profile-data">
+                            {% for agenda in agenda_list %}
+                                {{ agenda.customer }}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
+{% endblock %}

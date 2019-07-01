@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'estetica.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db_comandante'),
+    'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432'),
     # 'default': dj_database_url.config(default='postgres://postgres:postgres@localhost:5432/db')
 }
 
